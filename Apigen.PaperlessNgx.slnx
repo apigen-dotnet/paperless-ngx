@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Apigen.PaperlessNgx.Client/Apigen.PaperlessNgx.Client.csproj" />
+    <Project Path="src/Apigen.PaperlessNgx.Models/Apigen.PaperlessNgx.Models.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Apigen.PaperlessNgx.Client'">
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeModelsInPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+  <Target Name="IncludeModelsInPackage">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)Apigen.PaperlessNgx.Models.dll" />
+    </ItemGroup>
+  </Target>
+</Project>

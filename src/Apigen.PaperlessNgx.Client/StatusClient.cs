@@ -1,0 +1,61 @@
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Apigen.PaperlessNgx.Models;
+using Microsoft.Extensions.Logging;
+
+#nullable enable
+
+namespace Apigen.PaperlessNgx.Client;
+
+/// <summary>
+/// Client for status operations
+/// </summary>
+public class StatusClient
+{
+  private readonly HttpClient _httpClient;
+  private readonly ILogger? _logger;
+
+  internal StatusClient(HttpClient httpClient, ILogger? logger = null)
+  {
+    _httpClient = httpClient;
+    _logger = logger;
+  }
+
+  /// <summary>
+  /// 
+  /// Operation: GET /api/status/
+  /// </summary>
+  public async Task<SystemStatus> StatusRetrieveAsync()
+  {
+    string url = "status/";
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpResponseMessage response = await _httpClient.GetAsync(url);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    SystemStatus? result = JsonSerializer.Deserialize<SystemStatus>(responseContent, JsonConfig.Default);
+    return result ?? new SystemStatus();
+  }
+
+
+}

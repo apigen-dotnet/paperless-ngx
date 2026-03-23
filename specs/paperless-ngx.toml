@@ -1,0 +1,101 @@
+# ApiGenerator Configuration File for Paperless-ngx
+# This file configures how C# models and API clients are generated from OpenAPI specifications
+
+input_path = "specs/paperless-ngx.yaml"
+output_path = "src"
+target_framework = "net10.0"
+generate_nullable_reference_types = true
+generate_data_annotations = true
+
+# Global using statements added to all generated files
+global_usings = [
+    "System.Text.Json.Serialization"
+]
+
+# Models Generation Settings
+[models]
+namespace = "Apigen.PaperlessNgx.Models"
+project_name = "Apigen.PaperlessNgx.Models"
+
+# Model generation strategy
+[model_generation]
+strategy = "SeparateWithDeduplication"  # Options: "AlwaysSeparate", "SeparateWithDeduplication", "SingleModel"
+request_suffix = "Request"
+response_suffix = ""
+generate_to_request_extensions = true
+
+# Enum generation configuration
+[enum_generation]
+generation_mode = "Smart"  # Paperless uses integer enums, needs smart name generation
+unknown_value_handling = "UseDefault"
+add_description_attributes = true
+add_json_string_enum_converter = false  # Integer enums need custom converter
+
+[enum_generation.name_generation]
+remove_words = ["Type", "Types"]
+casing = "PascalCase"
+max_length = 50
+handle_numbers = "prefix_underscore"
+invalid_char_replacement = ""
+preserve_acronyms = true
+
+# JSON Serialization Settings
+[serialization]
+nullable_for_optional_properties = true  # Make optional value types nullable (e.g., int? instead of int)
+ignore_condition = "WhenWritingNull"  # Don't serialize null values
+
+# API Client Generation Settings
+[client]
+generate_client = true
+namespace = "Apigen.PaperlessNgx.Client"
+project_name = "Apigen.PaperlessNgx.Client"
+client_class_name = "PaperlessNgxApiClient"
+use_async_suffix = true
+generate_interfaces = true
+use_ilogger = true
+
+# Request class organization
+[client.request_organization]
+strategy = "individual_files"  # Options: "single_file", "individual_files", "by_resource"
+directory = "Requests"
+include_base_classes = true
+
+# Authentication settings (paperless-ngx supports token auth)
+[client.authentication]
+token_header = "Authorization"
+required_headers = []
+
+# Naming convention overrides
+[naming]
+
+# Code formatting preferences
+[formatting]
+use_spaces = true
+indent_width = 2
+
+# Auto-generated file headers
+[header]
+include_header = true
+include_timestamp = false
+include_source = true
+include_generator_info = true
+include_config_info = false
+custom_text = "Paperless-ngx API Models - Auto-generated from OpenAPI specification"
+
+# Type name overrides to avoid conflicts
+[[type_name_overrides]]
+original_name = "Task"
+new_name = "PaperlessTask"
+reason = "Conflicts with System.Threading.Task"
+
+[[type_name_overrides]]
+original_name = "Oauth"
+new_name = "OAuth"
+reason = "Proper casing for OAuth acronym"
+
+# Response type overrides for API spec mismatches
+[[response_type_overrides]]
+operation_filter = "documents_notes_create"
+original_type = "PaginatedNotesList"
+target_type = "List<Notes>"
+reason = "API returns array of Notes, not paginated list"

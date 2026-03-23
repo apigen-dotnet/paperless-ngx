@@ -1,0 +1,911 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
+using System.Web;
+
+#nullable enable
+
+namespace Apigen.PaperlessNgx.Client;
+
+/// <summary>
+/// Request parameters for 
+/// Operation: GET /api/documents/
+/// </summary>
+public class DocumentsListRequest : BaseRequest
+{
+  /// <summary>
+  /// added__date__gt
+  /// </summary>
+  [JsonPropertyName("added__date__gt")]
+  public string? AddedDateGt { get; set; }
+
+  /// <summary>
+  /// added__date__gte
+  /// </summary>
+  [JsonPropertyName("added__date__gte")]
+  public string? AddedDateGte { get; set; }
+
+  /// <summary>
+  /// added__date__lt
+  /// </summary>
+  [JsonPropertyName("added__date__lt")]
+  public string? AddedDateLt { get; set; }
+
+  /// <summary>
+  /// added__date__lte
+  /// </summary>
+  [JsonPropertyName("added__date__lte")]
+  public string? AddedDateLte { get; set; }
+
+  /// <summary>
+  /// added__day
+  /// </summary>
+  [JsonPropertyName("added__day")]
+  public decimal? AddedDay { get; set; }
+
+  /// <summary>
+  /// added__gt
+  /// </summary>
+  [JsonPropertyName("added__gt")]
+  public string? AddedGt { get; set; }
+
+  /// <summary>
+  /// added__gte
+  /// </summary>
+  [JsonPropertyName("added__gte")]
+  public string? AddedGte { get; set; }
+
+  /// <summary>
+  /// added__lt
+  /// </summary>
+  [JsonPropertyName("added__lt")]
+  public string? AddedLt { get; set; }
+
+  /// <summary>
+  /// added__lte
+  /// </summary>
+  [JsonPropertyName("added__lte")]
+  public string? AddedLte { get; set; }
+
+  /// <summary>
+  /// added__month
+  /// </summary>
+  [JsonPropertyName("added__month")]
+  public decimal? AddedMonth { get; set; }
+
+  /// <summary>
+  /// added__year
+  /// </summary>
+  [JsonPropertyName("added__year")]
+  public decimal? AddedYear { get; set; }
+
+  /// <summary>
+  /// archive_serial_number
+  /// </summary>
+  [JsonPropertyName("archive_serial_number")]
+  public int? ArchiveSerialNumber { get; set; }
+
+  /// <summary>
+  /// archive_serial_number__gt
+  /// </summary>
+  [JsonPropertyName("archive_serial_number__gt")]
+  public int? ArchiveSerialNumberGt { get; set; }
+
+  /// <summary>
+  /// archive_serial_number__gte
+  /// </summary>
+  [JsonPropertyName("archive_serial_number__gte")]
+  public int? ArchiveSerialNumberGte { get; set; }
+
+  /// <summary>
+  /// archive_serial_number__isnull
+  /// </summary>
+  [JsonPropertyName("archive_serial_number__isnull")]
+  public bool? ArchiveSerialNumberIsnull { get; set; }
+
+  /// <summary>
+  /// archive_serial_number__lt
+  /// </summary>
+  [JsonPropertyName("archive_serial_number__lt")]
+  public int? ArchiveSerialNumberLt { get; set; }
+
+  /// <summary>
+  /// archive_serial_number__lte
+  /// </summary>
+  [JsonPropertyName("archive_serial_number__lte")]
+  public int? ArchiveSerialNumberLte { get; set; }
+
+  /// <summary>
+  /// checksum__icontains
+  /// </summary>
+  [JsonPropertyName("checksum__icontains")]
+  public string? ChecksumIcontains { get; set; }
+
+  /// <summary>
+  /// checksum__iendswith
+  /// </summary>
+  [JsonPropertyName("checksum__iendswith")]
+  public string? ChecksumIendswith { get; set; }
+
+  /// <summary>
+  /// checksum__iexact
+  /// </summary>
+  [JsonPropertyName("checksum__iexact")]
+  public string? ChecksumIexact { get; set; }
+
+  /// <summary>
+  /// checksum__istartswith
+  /// </summary>
+  [JsonPropertyName("checksum__istartswith")]
+  public string? ChecksumIstartswith { get; set; }
+
+  /// <summary>
+  /// content__icontains
+  /// </summary>
+  [JsonPropertyName("content__icontains")]
+  public string? ContentIcontains { get; set; }
+
+  /// <summary>
+  /// content__iendswith
+  /// </summary>
+  [JsonPropertyName("content__iendswith")]
+  public string? ContentIendswith { get; set; }
+
+  /// <summary>
+  /// content__iexact
+  /// </summary>
+  [JsonPropertyName("content__iexact")]
+  public string? ContentIexact { get; set; }
+
+  /// <summary>
+  /// content__istartswith
+  /// </summary>
+  [JsonPropertyName("content__istartswith")]
+  public string? ContentIstartswith { get; set; }
+
+  /// <summary>
+  /// correspondent__id
+  /// </summary>
+  [JsonPropertyName("correspondent__id")]
+  public int? CorrespondentId { get; set; }
+
+  /// <summary>
+  /// Multiple values may be separated by commas.
+  /// </summary>
+  [JsonPropertyName("correspondent__id__in")]
+  public string[]? CorrespondentIdIn { get; set; }
+
+  /// <summary>
+  /// correspondent__id__none
+  /// </summary>
+  [JsonPropertyName("correspondent__id__none")]
+  public int? CorrespondentIdNone { get; set; }
+
+  /// <summary>
+  /// correspondent__isnull
+  /// </summary>
+  [JsonPropertyName("correspondent__isnull")]
+  public bool? CorrespondentIsnull { get; set; }
+
+  /// <summary>
+  /// correspondent__name__icontains
+  /// </summary>
+  [JsonPropertyName("correspondent__name__icontains")]
+  public string? CorrespondentNameIcontains { get; set; }
+
+  /// <summary>
+  /// correspondent__name__iendswith
+  /// </summary>
+  [JsonPropertyName("correspondent__name__iendswith")]
+  public string? CorrespondentNameIendswith { get; set; }
+
+  /// <summary>
+  /// correspondent__name__iexact
+  /// </summary>
+  [JsonPropertyName("correspondent__name__iexact")]
+  public string? CorrespondentNameIexact { get; set; }
+
+  /// <summary>
+  /// correspondent__name__istartswith
+  /// </summary>
+  [JsonPropertyName("correspondent__name__istartswith")]
+  public string? CorrespondentNameIstartswith { get; set; }
+
+  /// <summary>
+  /// created__date__gt
+  /// </summary>
+  [JsonPropertyName("created__date__gt")]
+  public string? CreatedDateGt { get; set; }
+
+  /// <summary>
+  /// created__date__gte
+  /// </summary>
+  [JsonPropertyName("created__date__gte")]
+  public string? CreatedDateGte { get; set; }
+
+  /// <summary>
+  /// created__date__lt
+  /// </summary>
+  [JsonPropertyName("created__date__lt")]
+  public string? CreatedDateLt { get; set; }
+
+  /// <summary>
+  /// created__date__lte
+  /// </summary>
+  [JsonPropertyName("created__date__lte")]
+  public string? CreatedDateLte { get; set; }
+
+  /// <summary>
+  /// created__day
+  /// </summary>
+  [JsonPropertyName("created__day")]
+  public decimal? CreatedDay { get; set; }
+
+  /// <summary>
+  /// created__gt
+  /// </summary>
+  [JsonPropertyName("created__gt")]
+  public string? CreatedGt { get; set; }
+
+  /// <summary>
+  /// created__gte
+  /// </summary>
+  [JsonPropertyName("created__gte")]
+  public string? CreatedGte { get; set; }
+
+  /// <summary>
+  /// created__lt
+  /// </summary>
+  [JsonPropertyName("created__lt")]
+  public string? CreatedLt { get; set; }
+
+  /// <summary>
+  /// created__lte
+  /// </summary>
+  [JsonPropertyName("created__lte")]
+  public string? CreatedLte { get; set; }
+
+  /// <summary>
+  /// created__month
+  /// </summary>
+  [JsonPropertyName("created__month")]
+  public decimal? CreatedMonth { get; set; }
+
+  /// <summary>
+  /// created__year
+  /// </summary>
+  [JsonPropertyName("created__year")]
+  public decimal? CreatedYear { get; set; }
+
+  /// <summary>
+  /// custom_field_query
+  /// </summary>
+  [JsonPropertyName("custom_field_query")]
+  public string? CustomFieldQuery { get; set; }
+
+  /// <summary>
+  /// custom_fields__icontains
+  /// </summary>
+  [JsonPropertyName("custom_fields__icontains")]
+  public string? CustomFieldsIcontains { get; set; }
+
+  /// <summary>
+  /// custom_fields__id__all
+  /// </summary>
+  [JsonPropertyName("custom_fields__id__all")]
+  public int? CustomFieldsIdAll { get; set; }
+
+  /// <summary>
+  /// custom_fields__id__in
+  /// </summary>
+  [JsonPropertyName("custom_fields__id__in")]
+  public int? CustomFieldsIdIn { get; set; }
+
+  /// <summary>
+  /// custom_fields__id__none
+  /// </summary>
+  [JsonPropertyName("custom_fields__id__none")]
+  public int? CustomFieldsIdNone { get; set; }
+
+  /// <summary>
+  /// document_type__id
+  /// </summary>
+  [JsonPropertyName("document_type__id")]
+  public int? DocumentTypeId { get; set; }
+
+  /// <summary>
+  /// Multiple values may be separated by commas.
+  /// </summary>
+  [JsonPropertyName("document_type__id__in")]
+  public string[]? DocumentTypeIdIn { get; set; }
+
+  /// <summary>
+  /// document_type__id__none
+  /// </summary>
+  [JsonPropertyName("document_type__id__none")]
+  public int? DocumentTypeIdNone { get; set; }
+
+  /// <summary>
+  /// document_type__isnull
+  /// </summary>
+  [JsonPropertyName("document_type__isnull")]
+  public bool? DocumentTypeIsnull { get; set; }
+
+  /// <summary>
+  /// document_type__name__icontains
+  /// </summary>
+  [JsonPropertyName("document_type__name__icontains")]
+  public string? DocumentTypeNameIcontains { get; set; }
+
+  /// <summary>
+  /// document_type__name__iendswith
+  /// </summary>
+  [JsonPropertyName("document_type__name__iendswith")]
+  public string? DocumentTypeNameIendswith { get; set; }
+
+  /// <summary>
+  /// document_type__name__iexact
+  /// </summary>
+  [JsonPropertyName("document_type__name__iexact")]
+  public string? DocumentTypeNameIexact { get; set; }
+
+  /// <summary>
+  /// document_type__name__istartswith
+  /// </summary>
+  [JsonPropertyName("document_type__name__istartswith")]
+  public string? DocumentTypeNameIstartswith { get; set; }
+
+  /// <summary>
+  /// fields
+  /// </summary>
+  [JsonPropertyName("fields")]
+  public string[]? Fields { get; set; }
+
+  /// <summary>
+  /// full_perms
+  /// </summary>
+  [JsonPropertyName("full_perms")]
+  public bool? FullPerms { get; set; }
+
+  /// <summary>
+  /// Has custom field
+  /// </summary>
+  [JsonPropertyName("has_custom_fields")]
+  public bool? HasCustomFields { get; set; }
+
+  /// <summary>
+  /// id
+  /// </summary>
+  [JsonPropertyName("id")]
+  public int? Id { get; set; }
+
+  /// <summary>
+  /// Multiple values may be separated by commas.
+  /// </summary>
+  [JsonPropertyName("id__in")]
+  public string[]? IdIn { get; set; }
+
+  /// <summary>
+  /// is_in_inbox
+  /// </summary>
+  [JsonPropertyName("is_in_inbox")]
+  public bool? IsInInbox { get; set; }
+
+  /// <summary>
+  /// Is tagged
+  /// </summary>
+  [JsonPropertyName("is_tagged")]
+  public bool? IsTagged { get; set; }
+
+  /// <summary>
+  /// mime_type
+  /// </summary>
+  [JsonPropertyName("mime_type")]
+  public string? MimeType { get; set; }
+
+  /// <summary>
+  /// modified__date__gt
+  /// </summary>
+  [JsonPropertyName("modified__date__gt")]
+  public string? ModifiedDateGt { get; set; }
+
+  /// <summary>
+  /// modified__date__gte
+  /// </summary>
+  [JsonPropertyName("modified__date__gte")]
+  public string? ModifiedDateGte { get; set; }
+
+  /// <summary>
+  /// modified__date__lt
+  /// </summary>
+  [JsonPropertyName("modified__date__lt")]
+  public string? ModifiedDateLt { get; set; }
+
+  /// <summary>
+  /// modified__date__lte
+  /// </summary>
+  [JsonPropertyName("modified__date__lte")]
+  public string? ModifiedDateLte { get; set; }
+
+  /// <summary>
+  /// modified__day
+  /// </summary>
+  [JsonPropertyName("modified__day")]
+  public decimal? ModifiedDay { get; set; }
+
+  /// <summary>
+  /// modified__gt
+  /// </summary>
+  [JsonPropertyName("modified__gt")]
+  public string? ModifiedGt { get; set; }
+
+  /// <summary>
+  /// modified__gte
+  /// </summary>
+  [JsonPropertyName("modified__gte")]
+  public string? ModifiedGte { get; set; }
+
+  /// <summary>
+  /// modified__lt
+  /// </summary>
+  [JsonPropertyName("modified__lt")]
+  public string? ModifiedLt { get; set; }
+
+  /// <summary>
+  /// modified__lte
+  /// </summary>
+  [JsonPropertyName("modified__lte")]
+  public string? ModifiedLte { get; set; }
+
+  /// <summary>
+  /// modified__month
+  /// </summary>
+  [JsonPropertyName("modified__month")]
+  public decimal? ModifiedMonth { get; set; }
+
+  /// <summary>
+  /// modified__year
+  /// </summary>
+  [JsonPropertyName("modified__year")]
+  public decimal? ModifiedYear { get; set; }
+
+  /// <summary>
+  /// Which field to use when ordering the results.
+  /// </summary>
+  [JsonPropertyName("ordering")]
+  public string? Ordering { get; set; }
+
+  /// <summary>
+  /// original_filename__icontains
+  /// </summary>
+  [JsonPropertyName("original_filename__icontains")]
+  public string? OriginalFilenameIcontains { get; set; }
+
+  /// <summary>
+  /// original_filename__iendswith
+  /// </summary>
+  [JsonPropertyName("original_filename__iendswith")]
+  public string? OriginalFilenameIendswith { get; set; }
+
+  /// <summary>
+  /// original_filename__iexact
+  /// </summary>
+  [JsonPropertyName("original_filename__iexact")]
+  public string? OriginalFilenameIexact { get; set; }
+
+  /// <summary>
+  /// original_filename__istartswith
+  /// </summary>
+  [JsonPropertyName("original_filename__istartswith")]
+  public string? OriginalFilenameIstartswith { get; set; }
+
+  /// <summary>
+  /// owner__id
+  /// </summary>
+  [JsonPropertyName("owner__id")]
+  public int? OwnerId { get; set; }
+
+  /// <summary>
+  /// Multiple values may be separated by commas.
+  /// </summary>
+  [JsonPropertyName("owner__id__in")]
+  public string[]? OwnerIdIn { get; set; }
+
+  /// <summary>
+  /// owner__id__none
+  /// </summary>
+  [JsonPropertyName("owner__id__none")]
+  public int? OwnerIdNone { get; set; }
+
+  /// <summary>
+  /// owner__isnull
+  /// </summary>
+  [JsonPropertyName("owner__isnull")]
+  public bool? OwnerIsnull { get; set; }
+
+  /// <summary>
+  /// A page number within the paginated result set.
+  /// </summary>
+  [JsonPropertyName("page")]
+  public int? Page { get; set; }
+
+  /// <summary>
+  /// Number of results to return per page.
+  /// </summary>
+  [JsonPropertyName("page_size")]
+  public int? PageSize { get; set; }
+
+  /// <summary>
+  /// Advanced search query string
+  /// </summary>
+  [JsonPropertyName("query")]
+  public string? Query { get; set; }
+
+  /// <summary>
+  /// A search term.
+  /// </summary>
+  [JsonPropertyName("search")]
+  public string? Search { get; set; }
+
+  /// <summary>
+  /// shared_by__id
+  /// </summary>
+  [JsonPropertyName("shared_by__id")]
+  public bool? SharedById { get; set; }
+
+  /// <summary>
+  /// storage_path__id
+  /// </summary>
+  [JsonPropertyName("storage_path__id")]
+  public int? StoragePathId { get; set; }
+
+  /// <summary>
+  /// Multiple values may be separated by commas.
+  /// </summary>
+  [JsonPropertyName("storage_path__id__in")]
+  public string[]? StoragePathIdIn { get; set; }
+
+  /// <summary>
+  /// storage_path__id__none
+  /// </summary>
+  [JsonPropertyName("storage_path__id__none")]
+  public int? StoragePathIdNone { get; set; }
+
+  /// <summary>
+  /// storage_path__isnull
+  /// </summary>
+  [JsonPropertyName("storage_path__isnull")]
+  public bool? StoragePathIsnull { get; set; }
+
+  /// <summary>
+  /// storage_path__name__icontains
+  /// </summary>
+  [JsonPropertyName("storage_path__name__icontains")]
+  public string? StoragePathNameIcontains { get; set; }
+
+  /// <summary>
+  /// storage_path__name__iendswith
+  /// </summary>
+  [JsonPropertyName("storage_path__name__iendswith")]
+  public string? StoragePathNameIendswith { get; set; }
+
+  /// <summary>
+  /// storage_path__name__iexact
+  /// </summary>
+  [JsonPropertyName("storage_path__name__iexact")]
+  public string? StoragePathNameIexact { get; set; }
+
+  /// <summary>
+  /// storage_path__name__istartswith
+  /// </summary>
+  [JsonPropertyName("storage_path__name__istartswith")]
+  public string? StoragePathNameIstartswith { get; set; }
+
+  /// <summary>
+  /// tags__id
+  /// </summary>
+  [JsonPropertyName("tags__id")]
+  public int? TagsId { get; set; }
+
+  /// <summary>
+  /// tags__id__all
+  /// </summary>
+  [JsonPropertyName("tags__id__all")]
+  public int? TagsIdAll { get; set; }
+
+  /// <summary>
+  /// tags__id__in
+  /// </summary>
+  [JsonPropertyName("tags__id__in")]
+  public int? TagsIdIn { get; set; }
+
+  /// <summary>
+  /// tags__id__none
+  /// </summary>
+  [JsonPropertyName("tags__id__none")]
+  public int? TagsIdNone { get; set; }
+
+  /// <summary>
+  /// tags__name__icontains
+  /// </summary>
+  [JsonPropertyName("tags__name__icontains")]
+  public string? TagsNameIcontains { get; set; }
+
+  /// <summary>
+  /// tags__name__iendswith
+  /// </summary>
+  [JsonPropertyName("tags__name__iendswith")]
+  public string? TagsNameIendswith { get; set; }
+
+  /// <summary>
+  /// tags__name__iexact
+  /// </summary>
+  [JsonPropertyName("tags__name__iexact")]
+  public string? TagsNameIexact { get; set; }
+
+  /// <summary>
+  /// tags__name__istartswith
+  /// </summary>
+  [JsonPropertyName("tags__name__istartswith")]
+  public string? TagsNameIstartswith { get; set; }
+
+  /// <summary>
+  /// title__icontains
+  /// </summary>
+  [JsonPropertyName("title__icontains")]
+  public string? TitleIcontains { get; set; }
+
+  /// <summary>
+  /// title__iendswith
+  /// </summary>
+  [JsonPropertyName("title__iendswith")]
+  public string? TitleIendswith { get; set; }
+
+  /// <summary>
+  /// title__iexact
+  /// </summary>
+  [JsonPropertyName("title__iexact")]
+  public string? TitleIexact { get; set; }
+
+  /// <summary>
+  /// title__istartswith
+  /// </summary>
+  [JsonPropertyName("title__istartswith")]
+  public string? TitleIstartswith { get; set; }
+
+  /// <summary>
+  /// title_content
+  /// </summary>
+  [JsonPropertyName("title_content")]
+  public string? TitleContent { get; set; }
+
+  public override string ToQueryString()
+  {
+    Dictionary<string, object> queryParams = new Dictionary<string, object>();
+
+    if (AddedDateGt != null)
+      queryParams["added__date__gt"] = AddedDateGt;
+    if (AddedDateGte != null)
+      queryParams["added__date__gte"] = AddedDateGte;
+    if (AddedDateLt != null)
+      queryParams["added__date__lt"] = AddedDateLt;
+    if (AddedDateLte != null)
+      queryParams["added__date__lte"] = AddedDateLte;
+    if (AddedDay != null)
+      queryParams["added__day"] = AddedDay;
+    if (AddedGt != null)
+      queryParams["added__gt"] = AddedGt;
+    if (AddedGte != null)
+      queryParams["added__gte"] = AddedGte;
+    if (AddedLt != null)
+      queryParams["added__lt"] = AddedLt;
+    if (AddedLte != null)
+      queryParams["added__lte"] = AddedLte;
+    if (AddedMonth != null)
+      queryParams["added__month"] = AddedMonth;
+    if (AddedYear != null)
+      queryParams["added__year"] = AddedYear;
+    if (ArchiveSerialNumber != null)
+      queryParams["archive_serial_number"] = ArchiveSerialNumber;
+    if (ArchiveSerialNumberGt != null)
+      queryParams["archive_serial_number__gt"] = ArchiveSerialNumberGt;
+    if (ArchiveSerialNumberGte != null)
+      queryParams["archive_serial_number__gte"] = ArchiveSerialNumberGte;
+    if (ArchiveSerialNumberIsnull != null)
+      queryParams["archive_serial_number__isnull"] = ArchiveSerialNumberIsnull;
+    if (ArchiveSerialNumberLt != null)
+      queryParams["archive_serial_number__lt"] = ArchiveSerialNumberLt;
+    if (ArchiveSerialNumberLte != null)
+      queryParams["archive_serial_number__lte"] = ArchiveSerialNumberLte;
+    if (ChecksumIcontains != null)
+      queryParams["checksum__icontains"] = ChecksumIcontains;
+    if (ChecksumIendswith != null)
+      queryParams["checksum__iendswith"] = ChecksumIendswith;
+    if (ChecksumIexact != null)
+      queryParams["checksum__iexact"] = ChecksumIexact;
+    if (ChecksumIstartswith != null)
+      queryParams["checksum__istartswith"] = ChecksumIstartswith;
+    if (ContentIcontains != null)
+      queryParams["content__icontains"] = ContentIcontains;
+    if (ContentIendswith != null)
+      queryParams["content__iendswith"] = ContentIendswith;
+    if (ContentIexact != null)
+      queryParams["content__iexact"] = ContentIexact;
+    if (ContentIstartswith != null)
+      queryParams["content__istartswith"] = ContentIstartswith;
+    if (CorrespondentId != null)
+      queryParams["correspondent__id"] = CorrespondentId;
+    if (CorrespondentIdIn != null)
+      queryParams["correspondent__id__in"] = CorrespondentIdIn;
+    if (CorrespondentIdNone != null)
+      queryParams["correspondent__id__none"] = CorrespondentIdNone;
+    if (CorrespondentIsnull != null)
+      queryParams["correspondent__isnull"] = CorrespondentIsnull;
+    if (CorrespondentNameIcontains != null)
+      queryParams["correspondent__name__icontains"] = CorrespondentNameIcontains;
+    if (CorrespondentNameIendswith != null)
+      queryParams["correspondent__name__iendswith"] = CorrespondentNameIendswith;
+    if (CorrespondentNameIexact != null)
+      queryParams["correspondent__name__iexact"] = CorrespondentNameIexact;
+    if (CorrespondentNameIstartswith != null)
+      queryParams["correspondent__name__istartswith"] = CorrespondentNameIstartswith;
+    if (CreatedDateGt != null)
+      queryParams["created__date__gt"] = CreatedDateGt;
+    if (CreatedDateGte != null)
+      queryParams["created__date__gte"] = CreatedDateGte;
+    if (CreatedDateLt != null)
+      queryParams["created__date__lt"] = CreatedDateLt;
+    if (CreatedDateLte != null)
+      queryParams["created__date__lte"] = CreatedDateLte;
+    if (CreatedDay != null)
+      queryParams["created__day"] = CreatedDay;
+    if (CreatedGt != null)
+      queryParams["created__gt"] = CreatedGt;
+    if (CreatedGte != null)
+      queryParams["created__gte"] = CreatedGte;
+    if (CreatedLt != null)
+      queryParams["created__lt"] = CreatedLt;
+    if (CreatedLte != null)
+      queryParams["created__lte"] = CreatedLte;
+    if (CreatedMonth != null)
+      queryParams["created__month"] = CreatedMonth;
+    if (CreatedYear != null)
+      queryParams["created__year"] = CreatedYear;
+    if (CustomFieldQuery != null)
+      queryParams["custom_field_query"] = CustomFieldQuery;
+    if (CustomFieldsIcontains != null)
+      queryParams["custom_fields__icontains"] = CustomFieldsIcontains;
+    if (CustomFieldsIdAll != null)
+      queryParams["custom_fields__id__all"] = CustomFieldsIdAll;
+    if (CustomFieldsIdIn != null)
+      queryParams["custom_fields__id__in"] = CustomFieldsIdIn;
+    if (CustomFieldsIdNone != null)
+      queryParams["custom_fields__id__none"] = CustomFieldsIdNone;
+    if (DocumentTypeId != null)
+      queryParams["document_type__id"] = DocumentTypeId;
+    if (DocumentTypeIdIn != null)
+      queryParams["document_type__id__in"] = DocumentTypeIdIn;
+    if (DocumentTypeIdNone != null)
+      queryParams["document_type__id__none"] = DocumentTypeIdNone;
+    if (DocumentTypeIsnull != null)
+      queryParams["document_type__isnull"] = DocumentTypeIsnull;
+    if (DocumentTypeNameIcontains != null)
+      queryParams["document_type__name__icontains"] = DocumentTypeNameIcontains;
+    if (DocumentTypeNameIendswith != null)
+      queryParams["document_type__name__iendswith"] = DocumentTypeNameIendswith;
+    if (DocumentTypeNameIexact != null)
+      queryParams["document_type__name__iexact"] = DocumentTypeNameIexact;
+    if (DocumentTypeNameIstartswith != null)
+      queryParams["document_type__name__istartswith"] = DocumentTypeNameIstartswith;
+    if (Fields != null)
+      queryParams["fields"] = Fields;
+    if (FullPerms != null)
+      queryParams["full_perms"] = FullPerms;
+    if (HasCustomFields != null)
+      queryParams["has_custom_fields"] = HasCustomFields;
+    if (Id != null)
+      queryParams["id"] = Id;
+    if (IdIn != null)
+      queryParams["id__in"] = IdIn;
+    if (IsInInbox != null)
+      queryParams["is_in_inbox"] = IsInInbox;
+    if (IsTagged != null)
+      queryParams["is_tagged"] = IsTagged;
+    if (MimeType != null)
+      queryParams["mime_type"] = MimeType;
+    if (ModifiedDateGt != null)
+      queryParams["modified__date__gt"] = ModifiedDateGt;
+    if (ModifiedDateGte != null)
+      queryParams["modified__date__gte"] = ModifiedDateGte;
+    if (ModifiedDateLt != null)
+      queryParams["modified__date__lt"] = ModifiedDateLt;
+    if (ModifiedDateLte != null)
+      queryParams["modified__date__lte"] = ModifiedDateLte;
+    if (ModifiedDay != null)
+      queryParams["modified__day"] = ModifiedDay;
+    if (ModifiedGt != null)
+      queryParams["modified__gt"] = ModifiedGt;
+    if (ModifiedGte != null)
+      queryParams["modified__gte"] = ModifiedGte;
+    if (ModifiedLt != null)
+      queryParams["modified__lt"] = ModifiedLt;
+    if (ModifiedLte != null)
+      queryParams["modified__lte"] = ModifiedLte;
+    if (ModifiedMonth != null)
+      queryParams["modified__month"] = ModifiedMonth;
+    if (ModifiedYear != null)
+      queryParams["modified__year"] = ModifiedYear;
+    if (Ordering != null)
+      queryParams["ordering"] = Ordering;
+    if (OriginalFilenameIcontains != null)
+      queryParams["original_filename__icontains"] = OriginalFilenameIcontains;
+    if (OriginalFilenameIendswith != null)
+      queryParams["original_filename__iendswith"] = OriginalFilenameIendswith;
+    if (OriginalFilenameIexact != null)
+      queryParams["original_filename__iexact"] = OriginalFilenameIexact;
+    if (OriginalFilenameIstartswith != null)
+      queryParams["original_filename__istartswith"] = OriginalFilenameIstartswith;
+    if (OwnerId != null)
+      queryParams["owner__id"] = OwnerId;
+    if (OwnerIdIn != null)
+      queryParams["owner__id__in"] = OwnerIdIn;
+    if (OwnerIdNone != null)
+      queryParams["owner__id__none"] = OwnerIdNone;
+    if (OwnerIsnull != null)
+      queryParams["owner__isnull"] = OwnerIsnull;
+    if (Page != null)
+      queryParams["page"] = Page;
+    if (PageSize != null)
+      queryParams["page_size"] = PageSize;
+    if (Query != null)
+      queryParams["query"] = Query;
+    if (Search != null)
+      queryParams["search"] = Search;
+    if (SharedById != null)
+      queryParams["shared_by__id"] = SharedById;
+    if (StoragePathId != null)
+      queryParams["storage_path__id"] = StoragePathId;
+    if (StoragePathIdIn != null)
+      queryParams["storage_path__id__in"] = StoragePathIdIn;
+    if (StoragePathIdNone != null)
+      queryParams["storage_path__id__none"] = StoragePathIdNone;
+    if (StoragePathIsnull != null)
+      queryParams["storage_path__isnull"] = StoragePathIsnull;
+    if (StoragePathNameIcontains != null)
+      queryParams["storage_path__name__icontains"] = StoragePathNameIcontains;
+    if (StoragePathNameIendswith != null)
+      queryParams["storage_path__name__iendswith"] = StoragePathNameIendswith;
+    if (StoragePathNameIexact != null)
+      queryParams["storage_path__name__iexact"] = StoragePathNameIexact;
+    if (StoragePathNameIstartswith != null)
+      queryParams["storage_path__name__istartswith"] = StoragePathNameIstartswith;
+    if (TagsId != null)
+      queryParams["tags__id"] = TagsId;
+    if (TagsIdAll != null)
+      queryParams["tags__id__all"] = TagsIdAll;
+    if (TagsIdIn != null)
+      queryParams["tags__id__in"] = TagsIdIn;
+    if (TagsIdNone != null)
+      queryParams["tags__id__none"] = TagsIdNone;
+    if (TagsNameIcontains != null)
+      queryParams["tags__name__icontains"] = TagsNameIcontains;
+    if (TagsNameIendswith != null)
+      queryParams["tags__name__iendswith"] = TagsNameIendswith;
+    if (TagsNameIexact != null)
+      queryParams["tags__name__iexact"] = TagsNameIexact;
+    if (TagsNameIstartswith != null)
+      queryParams["tags__name__istartswith"] = TagsNameIstartswith;
+    if (TitleIcontains != null)
+      queryParams["title__icontains"] = TitleIcontains;
+    if (TitleIendswith != null)
+      queryParams["title__iendswith"] = TitleIendswith;
+    if (TitleIexact != null)
+      queryParams["title__iexact"] = TitleIexact;
+    if (TitleIstartswith != null)
+      queryParams["title__istartswith"] = TitleIstartswith;
+    if (TitleContent != null)
+      queryParams["title_content"] = TitleContent;
+
+    return queryParams.ToQueryString();
+  }
+}

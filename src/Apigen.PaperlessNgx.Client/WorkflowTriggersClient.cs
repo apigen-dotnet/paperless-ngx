@@ -1,0 +1,245 @@
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Apigen.PaperlessNgx.Models;
+using Microsoft.Extensions.Logging;
+
+#nullable enable
+
+namespace Apigen.PaperlessNgx.Client;
+
+/// <summary>
+/// Client for workflow_triggers operations
+/// </summary>
+public class WorkflowTriggersClient
+{
+  private readonly HttpClient _httpClient;
+  private readonly ILogger? _logger;
+
+  internal WorkflowTriggersClient(HttpClient httpClient, ILogger? logger = null)
+  {
+    _httpClient = httpClient;
+    _logger = logger;
+  }
+
+  /// <summary>
+  /// 
+  /// Operation: GET /api/workflow_triggers/
+  /// </summary>
+  public async Task<PaginatedWorkflowTriggerList> WorkflowTriggersListAsync(WorkflowTriggersListRequest? request = null)
+  {
+    string url = "workflow_triggers/".BuildUrl(request: request);
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpResponseMessage response = await _httpClient.GetAsync(url);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    PaginatedWorkflowTriggerList? result = JsonSerializer.Deserialize<PaginatedWorkflowTriggerList>(responseContent, JsonConfig.Default);
+    return result ?? new PaginatedWorkflowTriggerList();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: POST /api/workflow_triggers/
+  /// </summary>
+  public async Task<WorkflowTrigger> WorkflowTriggersCreateAsync(Apigen.PaperlessNgx.Models.WorkflowTriggerRequest workflowTriggerRequest)
+  {
+    string url = "workflow_triggers/";
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "POST", url);
+    string json = JsonSerializer.Serialize(workflowTriggerRequest, JsonConfig.Default);
+    HttpClientLog.RequestBody(_logger, "POST", json);
+    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+    HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    WorkflowTrigger? result = JsonSerializer.Deserialize<WorkflowTrigger>(responseContent, JsonConfig.Default);
+    return result ?? new WorkflowTrigger();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: GET /api/workflow_triggers/{id}/
+  /// </summary>
+  public async Task<WorkflowTrigger> WorkflowTriggersRetrieveAsync(int id)
+  {
+    Dictionary<string, object> pathParams = new()
+    {
+      ["id"] = id
+    };
+    string url = "workflow_triggers/{id}/".BuildUrl(pathParams);
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpResponseMessage response = await _httpClient.GetAsync(url);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    WorkflowTrigger? result = JsonSerializer.Deserialize<WorkflowTrigger>(responseContent, JsonConfig.Default);
+    return result ?? new WorkflowTrigger();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: PUT /api/workflow_triggers/{id}/
+  /// </summary>
+  public async Task<WorkflowTrigger> WorkflowTriggersUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowTriggerRequest workflowTriggerRequest)
+  {
+    Dictionary<string, object> pathParams = new()
+    {
+      ["id"] = id
+    };
+    string url = "workflow_triggers/{id}/".BuildUrl(pathParams);
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "PUT", url);
+    string json = JsonSerializer.Serialize(workflowTriggerRequest, JsonConfig.Default);
+    HttpClientLog.RequestBody(_logger, "PUT", json);
+    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+    HttpResponseMessage response = await _httpClient.PutAsync(url, content);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "PUT", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "PUT", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    WorkflowTrigger? result = JsonSerializer.Deserialize<WorkflowTrigger>(responseContent, JsonConfig.Default);
+    return result ?? new WorkflowTrigger();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: PATCH /api/workflow_triggers/{id}/
+  /// </summary>
+  public async Task<WorkflowTrigger> WorkflowTriggersPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedWorkflowTriggerRequest patchedWorkflowTriggerRequest)
+  {
+    Dictionary<string, object> pathParams = new()
+    {
+      ["id"] = id
+    };
+    string url = "workflow_triggers/{id}/".BuildUrl(pathParams);
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "PATCH", url);
+    string json = JsonSerializer.Serialize(patchedWorkflowTriggerRequest, JsonConfig.Default);
+    HttpClientLog.RequestBody(_logger, "PATCH", json);
+    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+    HttpResponseMessage response = await _httpClient.PatchAsync(url, content);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "PATCH", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    WorkflowTrigger? result = JsonSerializer.Deserialize<WorkflowTrigger>(responseContent, JsonConfig.Default);
+    return result ?? new WorkflowTrigger();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: DELETE /api/workflow_triggers/{id}/
+  /// </summary>
+  public async Task WorkflowTriggersDestroyAsync(int id)
+  {
+    Dictionary<string, object> pathParams = new()
+    {
+      ["id"] = id
+    };
+    string url = "workflow_triggers/{id}/".BuildUrl(pathParams);
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.RequestStarted(_logger, "DELETE", url);
+    HttpResponseMessage response = await _httpClient.DeleteAsync(url);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
+
+    try
+    {
+      response.EnsureSuccessStatusCode();
+    }
+    catch (HttpRequestException ex)
+    {
+      string responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
+      throw;
+    }
+  }
+
+
+}
