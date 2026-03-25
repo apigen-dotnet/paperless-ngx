@@ -1,0 +1,38 @@
+# Apigen.PaperlessNgx
+
+Generated C# client for the [Paperless-ngx](https://docs.paperless-ngx.com/) document management API.
+
+## Installation
+
+```bash
+dotnet add package Apigen.PaperlessNgx.Client
+```
+
+## Usage
+
+```csharp
+using Apigen.PaperlessNgx.Client;
+using Apigen.PaperlessNgx.Models;
+
+// Create client with API key
+var client = PaperlessNgxApiClient.WithApiKey(
+    "your-api-key",
+    "https://your-paperless-instance/api");
+
+// Or with basic authentication
+var client = PaperlessNgxApiClient.WithBasicAuth(
+    "username", "password",
+    "https://your-paperless-instance/api");
+
+// Or with cookie-based session
+var client = PaperlessNgxApiClient.WithCookie(
+    "session-token",
+    "https://your-paperless-instance/api");
+
+// Or use a pre-configured HttpClient
+var client = new PaperlessNgxApiClient(httpClient);
+```
+
+## License
+
+MIT
