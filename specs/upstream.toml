@@ -1,0 +1,4 @@
+enabled = false
+# No known stable upstream URL for the OpenAPI spec
+# url = ""
+# target = ""
