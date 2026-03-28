@@ -36,14 +36,14 @@ public enum ObjectTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "tags")]
-    _tags,
+    Tags,
 
     [EnumMember(Value = "correspondents")]
-    _correspondents,
+    Correspondents,
 
     [EnumMember(Value = "document_types")]
-    _document_types,
+    DocumentTypes,
 
     [EnumMember(Value = "storage_paths")]
-    _storage_paths
+    StoragePaths
 }

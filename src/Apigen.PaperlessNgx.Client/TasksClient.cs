@@ -34,10 +34,10 @@ public class TasksClient
     string url = "tasks/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -48,11 +48,11 @@ public class TasksClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     List<TasksView>? result = JsonSerializer.Deserialize<List<TasksView>>(responseContent, JsonConfig.Default);
     return result ?? new List<TasksView>();
   }
@@ -71,10 +71,10 @@ public class TasksClient
     string url = "tasks/{id}/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -85,11 +85,11 @@ public class TasksClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     TasksView? result = JsonSerializer.Deserialize<TasksView>(responseContent, JsonConfig.Default);
     return result ?? new TasksView();
   }
@@ -104,13 +104,13 @@ public class TasksClient
     string url = "tasks/acknowledge/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(acknowledgeTasksRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -121,11 +121,11 @@ public class TasksClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     AcknowledgeTasks? result = JsonSerializer.Deserialize<AcknowledgeTasks>(responseContent, JsonConfig.Default);
     return result ?? new AcknowledgeTasks();
   }
@@ -140,13 +140,13 @@ public class TasksClient
     string url = "tasks/run/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(tasksViewRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -157,11 +157,11 @@ public class TasksClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     TasksView? result = JsonSerializer.Deserialize<TasksView>(responseContent, JsonConfig.Default);
     return result ?? new TasksView();
   }

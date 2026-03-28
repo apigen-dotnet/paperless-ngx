@@ -34,8 +34,8 @@ public enum FileVersionEnum
     Unknown = -1,
 
     [EnumMember(Value = "archive")]
-    _archive,
+    Archive,
 
     [EnumMember(Value = "original")]
-    _original
+    Original
 }

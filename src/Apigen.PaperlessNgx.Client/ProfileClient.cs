@@ -34,10 +34,10 @@ public class ProfileClient
     string url = "profile/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -48,11 +48,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Profile? result = JsonSerializer.Deserialize<Profile>(responseContent, JsonConfig.Default);
     return result ?? new Profile();
   }
@@ -67,13 +67,13 @@ public class ProfileClient
     string url = "profile/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "PATCH", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "PATCH", url);
     string json = JsonSerializer.Serialize(patchedProfileRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "PATCH", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "PATCH", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PatchAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
 
     string responseContent;
     try
@@ -84,11 +84,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "PATCH", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "PATCH", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Profile? result = JsonSerializer.Deserialize<Profile>(responseContent, JsonConfig.Default);
     return result ?? new Profile();
   }
@@ -103,13 +103,13 @@ public class ProfileClient
     string url = "profile/disconnect_social_account/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(profileDisconnectSocialAccountCreateRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -120,11 +120,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -139,10 +139,10 @@ public class ProfileClient
     string url = "profile/generate_auth_token/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     HttpResponseMessage response = await _httpClient.PostAsync(url, null);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -153,11 +153,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -172,10 +172,10 @@ public class ProfileClient
     string url = "profile/social_account_providers/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -186,11 +186,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -205,10 +205,10 @@ public class ProfileClient
     string url = "profile/totp/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -219,11 +219,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -238,13 +238,13 @@ public class ProfileClient
     string url = "profile/totp/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(profileTotpCreateRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -255,11 +255,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -274,10 +274,10 @@ public class ProfileClient
     string url = "profile/totp/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "DELETE", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "DELETE", url);
     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
 
     string responseContent;
     try
@@ -288,11 +288,11 @@ public class ProfileClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }

@@ -35,11 +35,11 @@ public enum ContentEnum
     Unknown = -1,
 
     [EnumMember(Value = "archive")]
-    _archive,
+    Archive,
 
     [EnumMember(Value = "originals")]
-    _originals,
+    Originals,
 
     [EnumMember(Value = "both")]
-    _both
+    Both
 }

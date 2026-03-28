@@ -39,23 +39,23 @@ public enum StatusEnum
     Unknown = -1,
 
     [EnumMember(Value = "FAILURE")]
-    _FAILURE,
+    Failure,
 
     [EnumMember(Value = "PENDING")]
-    _PENDING,
+    Pending,
 
     [EnumMember(Value = "RECEIVED")]
-    _RECEIVED,
+    Received,
 
     [EnumMember(Value = "RETRY")]
-    _RETRY,
+    Retry,
 
     [EnumMember(Value = "REVOKED")]
-    _REVOKED,
+    Revoked,
 
     [EnumMember(Value = "STARTED")]
-    _STARTED,
+    Started,
 
     [EnumMember(Value = "SUCCESS")]
-    _SUCCESS
+    Success
 }

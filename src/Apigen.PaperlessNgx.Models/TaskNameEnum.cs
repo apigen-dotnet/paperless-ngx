@@ -36,14 +36,14 @@ public enum TaskNameEnum
     Unknown = -1,
 
     [EnumMember(Value = "consume_file")]
-    _consume_file,
+    ConsumeFile,
 
     [EnumMember(Value = "train_classifier")]
-    _train_classifier,
+    TrainClassifier,
 
     [EnumMember(Value = "check_sanity")]
-    _check_sanity,
+    CheckSanity,
 
     [EnumMember(Value = "index_optimize")]
-    _index_optimize
+    IndexOptimize
 }

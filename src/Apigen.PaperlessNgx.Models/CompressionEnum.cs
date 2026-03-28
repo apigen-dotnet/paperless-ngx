@@ -36,14 +36,14 @@ public enum CompressionEnum
     Unknown = -1,
 
     [EnumMember(Value = "none")]
-    _none,
+    None,
 
     [EnumMember(Value = "deflated")]
-    _deflated,
+    Deflated,
 
     [EnumMember(Value = "bzip2")]
-    _bzip2,
+    Bzip2,
 
     [EnumMember(Value = "lzma")]
-    _lzma
+    Lzma
 }

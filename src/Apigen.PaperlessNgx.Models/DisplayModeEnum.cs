@@ -35,11 +35,11 @@ public enum DisplayModeEnum
     Unknown = -1,
 
     [EnumMember(Value = "table")]
-    _table,
+    Table,
 
     [EnumMember(Value = "smallCards")]
-    _smallCards,
+    SmallCards,
 
     [EnumMember(Value = "largeCards")]
-    _largeCards
+    LargeCards
 }

@@ -34,12 +34,13 @@ public class TokenClient
     string url = "token/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     FormUrlEncodedContent content = paperlessAuthTokenRequest.ToFormUrlEncodedContent();
-    HttpClientLog.RequestBody(_logger, "POST", "[application/x-www-form-urlencoded]");
+    string formBody = await content.ReadAsStringAsync();
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/x-www-form-urlencoded", formBody);
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -50,11 +51,11 @@ public class TokenClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     PaperlessAuthToken? result = JsonSerializer.Deserialize<PaperlessAuthToken>(responseContent, JsonConfig.Default);
     return result ?? new PaperlessAuthToken();
   }

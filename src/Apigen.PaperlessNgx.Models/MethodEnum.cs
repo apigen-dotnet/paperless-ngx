@@ -47,47 +47,47 @@ public enum MethodEnum
     Unknown = -1,
 
     [EnumMember(Value = "set_correspondent")]
-    _set_correspondent,
+    SetCorrespondent,
 
     [EnumMember(Value = "set_document_type")]
-    _set_document_type,
+    SetDocumentType,
 
     [EnumMember(Value = "set_storage_path")]
-    _set_storage_path,
+    SetStoragePath,
 
     [EnumMember(Value = "add_tag")]
-    _add_tag,
+    AddTag,
 
     [EnumMember(Value = "remove_tag")]
-    _remove_tag,
+    RemoveTag,
 
     [EnumMember(Value = "modify_tags")]
-    _modify_tags,
+    ModifyTags,
 
     [EnumMember(Value = "modify_custom_fields")]
-    _modify_custom_fields,
+    ModifyCustomFields,
 
     [EnumMember(Value = "delete")]
-    _delete,
+    Delete,
 
     [EnumMember(Value = "reprocess")]
-    _reprocess,
+    Reprocess,
 
     [EnumMember(Value = "set_permissions")]
-    _set_permissions,
+    SetPermissions,
 
     [EnumMember(Value = "rotate")]
-    _rotate,
+    Rotate,
 
     [EnumMember(Value = "merge")]
-    _merge,
+    Merge,
 
     [EnumMember(Value = "split")]
-    _split,
+    Split,
 
     [EnumMember(Value = "delete_pages")]
-    _delete_pages,
+    DeletePages,
 
     [EnumMember(Value = "edit_pdf")]
-    _edit_pdf
+    EditPdf
 }

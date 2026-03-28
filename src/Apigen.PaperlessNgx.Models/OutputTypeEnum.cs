@@ -37,17 +37,17 @@ public enum OutputTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "pdf")]
-    _pdf,
+    Pdf,
 
     [EnumMember(Value = "pdfa")]
-    _pdfa,
+    Pdfa,
 
     [EnumMember(Value = "pdfa-1")]
-    _pdfa1,
+    Pdfa1,
 
     [EnumMember(Value = "pdfa-2")]
-    _pdfa2,
+    Pdfa2,
 
     [EnumMember(Value = "pdfa-3")]
-    _pdfa3
+    Pdfa3
 }

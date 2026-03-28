@@ -34,8 +34,8 @@ public enum TrashActionEnum
     Unknown = -1,
 
     [EnumMember(Value = "restore")]
-    _restore,
+    Restore,
 
     [EnumMember(Value = "empty")]
-    _empty
+    Empty
 }

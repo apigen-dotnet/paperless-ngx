@@ -34,8 +34,8 @@ public enum OperationEnum
     Unknown = -1,
 
     [EnumMember(Value = "set_permissions")]
-    _set_permissions,
+    SetPermissions,
 
     [EnumMember(Value = "delete")]
-    _delete
+    Delete
 }

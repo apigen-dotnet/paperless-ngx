@@ -35,11 +35,11 @@ public enum SkipArchiveFileEnum
     Unknown = -1,
 
     [EnumMember(Value = "never")]
-    _never,
+    Never,
 
     [EnumMember(Value = "with_text")]
-    _with_text,
+    WithText,
 
     [EnumMember(Value = "always")]
-    _always
+    Always
 }

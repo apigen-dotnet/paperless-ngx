@@ -37,17 +37,17 @@ public enum ColorConversionStrategyEnum
     Unknown = -1,
 
     [EnumMember(Value = "LeaveColorUnchanged")]
-    _LeaveColorUnchanged,
+    LeaveColorUnchanged,
 
     [EnumMember(Value = "RGB")]
-    _RGB,
+    Rgb,
 
     [EnumMember(Value = "UseDeviceIndependentColor")]
-    _UseDeviceIndependentColor,
+    UseDeviceIndependentColor,
 
     [EnumMember(Value = "Gray")]
-    _Gray,
+    Gray,
 
     [EnumMember(Value = "CMYK")]
-    _CMYK
+    Cmyk
 }

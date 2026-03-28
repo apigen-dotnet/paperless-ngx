@@ -35,11 +35,11 @@ public enum UnpaperCleanEnum
     Unknown = -1,
 
     [EnumMember(Value = "clean")]
-    _clean,
+    Clean,
 
     [EnumMember(Value = "clean-final")]
-    _cleanfinal,
+    CleanFinal,
 
     [EnumMember(Value = "none")]
-    _none
+    None
 }

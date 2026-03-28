@@ -34,10 +34,10 @@ public class DocumentsClient
     string url = "documents/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -48,11 +48,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     PaginatedDocumentList? result = JsonSerializer.Deserialize<PaginatedDocumentList>(responseContent, JsonConfig.Default);
     return result ?? new PaginatedDocumentList();
   }
@@ -71,10 +71,10 @@ public class DocumentsClient
     string url = "documents/{id}/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -85,11 +85,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Document? result = JsonSerializer.Deserialize<Document>(responseContent, JsonConfig.Default);
     return result ?? new Document();
   }
@@ -108,13 +108,13 @@ public class DocumentsClient
     string url = "documents/{id}/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "PUT", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "PUT", url);
     string json = JsonSerializer.Serialize(documentRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "PUT", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "PUT", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PutAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "PUT", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "PUT", url, durationMs);
 
     string responseContent;
     try
@@ -125,11 +125,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "PUT", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "PUT", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Document? result = JsonSerializer.Deserialize<Document>(responseContent, JsonConfig.Default);
     return result ?? new Document();
   }
@@ -148,13 +148,13 @@ public class DocumentsClient
     string url = "documents/{id}/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "PATCH", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "PATCH", url);
     string json = JsonSerializer.Serialize(patchedDocumentRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "PATCH", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "PATCH", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PatchAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
 
     string responseContent;
     try
@@ -165,11 +165,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "PATCH", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "PATCH", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Document? result = JsonSerializer.Deserialize<Document>(responseContent, JsonConfig.Default);
     return result ?? new Document();
   }
@@ -188,10 +188,10 @@ public class DocumentsClient
     string url = "documents/{id}/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "DELETE", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "DELETE", url);
     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
 
     try
     {
@@ -200,7 +200,7 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       string responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
       throw;
     }
   }
@@ -219,10 +219,10 @@ public class DocumentsClient
     string url = "documents/{id}/download/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -233,11 +233,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -256,13 +256,13 @@ public class DocumentsClient
     string url = "documents/{id}/email/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(emailRequestRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -273,11 +273,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     EmailResponse? result = JsonSerializer.Deserialize<EmailResponse>(responseContent, JsonConfig.Default);
     return result ?? new EmailResponse();
   }
@@ -296,10 +296,10 @@ public class DocumentsClient
     string url = "documents/{id}/history/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -310,11 +310,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     PaginatedLogEntryList? result = JsonSerializer.Deserialize<PaginatedLogEntryList>(responseContent, JsonConfig.Default);
     return result ?? new PaginatedLogEntryList();
   }
@@ -333,10 +333,10 @@ public class DocumentsClient
     string url = "documents/{id}/metadata/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -347,11 +347,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Metadata? result = JsonSerializer.Deserialize<Metadata>(responseContent, JsonConfig.Default);
     return result ?? new Metadata();
   }
@@ -370,10 +370,10 @@ public class DocumentsClient
     string url = "documents/{id}/notes/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -384,11 +384,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     PaginatedNotesList? result = JsonSerializer.Deserialize<PaginatedNotesList>(responseContent, JsonConfig.Default);
     return result ?? new PaginatedNotesList();
   }
@@ -407,13 +407,13 @@ public class DocumentsClient
     string url = "documents/{id}/notes/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(noteCreateRequestRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -424,11 +424,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     List<Notes>? result = JsonSerializer.Deserialize<List<Notes>>(responseContent, JsonConfig.Default);
     return result ?? new List<Notes>();
   }
@@ -447,10 +447,10 @@ public class DocumentsClient
     string url = "documents/{id}/notes/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "DELETE", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "DELETE", url);
     HttpResponseMessage response = await _httpClient.DeleteAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "DELETE", url, durationMs);
 
     string responseContent;
     try
@@ -461,11 +461,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "DELETE", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     PaginatedNotesList? result = JsonSerializer.Deserialize<PaginatedNotesList>(responseContent, JsonConfig.Default);
     return result ?? new PaginatedNotesList();
   }
@@ -484,10 +484,10 @@ public class DocumentsClient
     string url = "documents/{id}/preview/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -498,11 +498,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -521,10 +521,10 @@ public class DocumentsClient
     string url = "documents/{id}/share_links/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -535,11 +535,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -558,10 +558,10 @@ public class DocumentsClient
     string url = "documents/{id}/suggestions/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -572,11 +572,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     Suggestions? result = JsonSerializer.Deserialize<Suggestions>(responseContent, JsonConfig.Default);
     return result ?? new Suggestions();
   }
@@ -595,10 +595,10 @@ public class DocumentsClient
     string url = "documents/{id}/thumb/".BuildUrl(pathParams);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -609,11 +609,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -628,13 +628,13 @@ public class DocumentsClient
     string url = "documents/bulk_download/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(bulkDownloadRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -645,11 +645,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     BulkDownload? result = JsonSerializer.Deserialize<BulkDownload>(responseContent, JsonConfig.Default);
     return result ?? new BulkDownload();
   }
@@ -664,13 +664,13 @@ public class DocumentsClient
     string url = "documents/bulk_edit/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     string json = JsonSerializer.Serialize(bulkEditRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -681,11 +681,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     BulkEditDocumentsResult? result = JsonSerializer.Deserialize<BulkEditDocumentsResult>(responseContent, JsonConfig.Default);
     return result ?? new BulkEditDocumentsResult();
   }
@@ -700,10 +700,10 @@ public class DocumentsClient
     string url = "documents/next_asn/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -714,11 +714,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -733,12 +733,12 @@ public class DocumentsClient
     string url = "documents/post_document/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     MultipartFormDataContent content = postDocumentRequest.ToMultipartContent();
-    HttpClientLog.RequestBody(_logger, "POST", "[multipart/form-data]");
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "multipart/form-data", "[binary content]");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -749,11 +749,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }
@@ -768,12 +768,12 @@ public class DocumentsClient
     string url = "documents/selection_data/";
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "POST", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
     MultipartFormDataContent content = documentListRequest.ToMultipartContent();
-    HttpClientLog.RequestBody(_logger, "POST", "[multipart/form-data]");
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "multipart/form-data", "[binary content]");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
 
     string responseContent;
     try
@@ -784,11 +784,11 @@ public class DocumentsClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     SelectionData? result = JsonSerializer.Deserialize<SelectionData>(responseContent, JsonConfig.Default);
     return result ?? new SelectionData();
   }

@@ -41,29 +41,29 @@ public enum DataTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "string")]
-    _string,
+    String,
 
     [EnumMember(Value = "url")]
-    _url,
+    Url,
 
     [EnumMember(Value = "date")]
-    _date,
+    Date,
 
     [EnumMember(Value = "boolean")]
-    _boolean,
+    Boolean,
 
     [EnumMember(Value = "integer")]
-    _integer,
+    Integer,
 
     [EnumMember(Value = "float")]
-    _float,
+    Float,
 
     [EnumMember(Value = "monetary")]
-    _monetary,
+    Monetary,
 
     [EnumMember(Value = "documentlink")]
-    _documentlink,
+    Documentlink,
 
     [EnumMember(Value = "select")]
-    _select
+    Select
 }

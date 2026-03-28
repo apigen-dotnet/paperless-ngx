@@ -36,14 +36,14 @@ public enum ModeEnum
     Unknown = -1,
 
     [EnumMember(Value = "skip")]
-    _skip,
+    Skip,
 
     [EnumMember(Value = "redo")]
-    _redo,
+    Redo,
 
     [EnumMember(Value = "force")]
-    _force,
+    Force,
 
     [EnumMember(Value = "skip_noarchive")]
-    _skip_noarchive
+    SkipNoarchive
 }

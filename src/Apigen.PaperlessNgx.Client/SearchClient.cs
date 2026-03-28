@@ -34,10 +34,10 @@ public class SearchClient
     string url = "search/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -48,11 +48,11 @@ public class SearchClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     SearchResult? result = JsonSerializer.Deserialize<SearchResult>(responseContent, JsonConfig.Default);
     return result ?? new SearchResult();
   }
@@ -67,10 +67,10 @@ public class SearchClient
     string url = "search/autocomplete/".BuildUrl(request: request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-    HttpClientLog.RequestStarted(_logger, "GET", url);
+    HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
     HttpResponseMessage response = await _httpClient.GetAsync(url);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-    HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
     string responseContent;
     try
@@ -81,11 +81,11 @@ public class SearchClient
     catch (HttpRequestException ex)
     {
       responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.RequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
       throw;
     }
 
-    HttpClientLog.ResponseBody(_logger, url, responseContent);
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
     return result;
   }

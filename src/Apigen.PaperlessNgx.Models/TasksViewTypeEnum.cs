@@ -35,11 +35,11 @@ public enum TasksViewTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "auto_task")]
-    _auto_task,
+    AutoTask,
 
     [EnumMember(Value = "scheduled_task")]
-    _scheduled_task,
+    ScheduledTask,
 
     [EnumMember(Value = "manual_task")]
-    _manual_task
+    ManualTask
 }

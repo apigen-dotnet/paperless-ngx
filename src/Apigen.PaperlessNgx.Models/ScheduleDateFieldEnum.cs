@@ -36,14 +36,14 @@ public enum ScheduleDateFieldEnum
     Unknown = -1,
 
     [EnumMember(Value = "added")]
-    _added,
+    Added,
 
     [EnumMember(Value = "created")]
-    _created,
+    Created,
 
     [EnumMember(Value = "modified")]
-    _modified,
+    Modified,
 
     [EnumMember(Value = "custom_field")]
-    _custom_field
+    CustomField
 }
