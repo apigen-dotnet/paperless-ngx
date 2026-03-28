@@ -35,9 +35,8 @@ public class TokenClient
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
     HttpClientLog.RequestStarted(_logger, "POST", url);
-    string json = JsonSerializer.Serialize(paperlessAuthTokenRequest, JsonConfig.Default);
-    HttpClientLog.RequestBody(_logger, "POST", json);
-    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+    FormUrlEncodedContent content = paperlessAuthTokenRequest.ToFormUrlEncodedContent();
+    HttpClientLog.RequestBody(_logger, "POST", "[application/x-www-form-urlencoded]");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     HttpClientLog.RequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
