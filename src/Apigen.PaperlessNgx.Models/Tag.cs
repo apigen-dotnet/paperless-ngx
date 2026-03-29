@@ -73,4 +73,11 @@ public class Tag
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("user_can_change")]
   public bool UserCanChange { get; set; }
+
+  [System.Text.Json.Serialization.JsonPropertyName("parent")]
+  public int? Parent { get; set; }
+
+  [Required]
+  [System.Text.Json.Serialization.JsonPropertyName("children")]
+  public List<int>? Children { get; set; }
 }

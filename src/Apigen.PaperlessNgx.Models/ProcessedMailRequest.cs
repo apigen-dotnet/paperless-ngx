@@ -21,14 +21,11 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// DocumentsNotesCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/DocumentsNotesCreateRequest
+/// ProcessedMailRequest from OpenAPI schema.
+/// Schema path: #/components/schemas/ProcessedMailRequest
 /// </summary>
-public class DocumentsNotesCreateRequest
+public class ProcessedMailRequest
 {
-  [Required]
-  [MinLength(1)]
-  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
-  [System.Text.Json.Serialization.JsonPropertyName("note")]
-  public string? Note { get; set; }
+  [System.Text.Json.Serialization.JsonPropertyName("owner")]
+  public int? Owner { get; set; }
 }

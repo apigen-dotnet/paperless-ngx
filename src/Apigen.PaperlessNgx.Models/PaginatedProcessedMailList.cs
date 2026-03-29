@@ -21,10 +21,10 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// PaginatedNotesList from OpenAPI schema.
-/// Schema path: #/components/schemas/PaginatedNotesList
+/// PaginatedProcessedMailList from OpenAPI schema.
+/// Schema path: #/components/schemas/PaginatedProcessedMailList
 /// </summary>
-public class PaginatedNotesList
+public class PaginatedProcessedMailList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]
@@ -40,7 +40,7 @@ public class PaginatedNotesList
 
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("results")]
-  public List<Notes>? Results { get; set; }
+  public List<ProcessedMail>? Results { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("all")]
   public List<int>? All { get; set; }

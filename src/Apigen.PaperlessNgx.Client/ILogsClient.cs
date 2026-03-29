@@ -21,6 +21,6 @@ public interface ILogsClient
   /// 
   /// Operation: GET /api/logs/{id}/
   /// </summary>
-  Task<JsonElement> RetrieveLogAsync(string id);
+  Task<JsonElement> RetrieveLogAsync(string id, RetrieveLogRequest? request = null);
 
 }

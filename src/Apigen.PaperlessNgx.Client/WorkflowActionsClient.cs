@@ -175,7 +175,7 @@ public class WorkflowActionsClient
   /// 
   /// Operation: PATCH /api/workflow_actions/{id}/
   /// </summary>
-  public async Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedWorkflowActionRequest patchedWorkflowActionRequest)
+  public async Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -185,7 +185,7 @@ public class WorkflowActionsClient
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
     HttpClientLog.LogDebugRequestStarted(_logger, "PATCH", url);
-    string json = JsonSerializer.Serialize(patchedWorkflowActionRequest, JsonConfig.Default);
+    string json = JsonSerializer.Serialize(workflowActionRequest, JsonConfig.Default);
     HttpClientLog.LogTraceRequestBody(_logger, "PATCH", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PatchAsync(url, content);

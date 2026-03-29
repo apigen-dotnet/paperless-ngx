@@ -71,11 +71,40 @@ public class WorkflowTriggerRequest
   [System.Text.Json.Serialization.JsonPropertyName("filter_has_tags")]
   public List<int>? FilterHasTags { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_all_tags")]
+  public List<int>? FilterHasAllTags { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_not_tags")]
+  public List<int>? FilterHasNotTags { get; set; }
+
+  /// <summary>
+  /// JSON-encoded custom field query expression.
+  /// </summary>
+  [System.Text.Json.Serialization.JsonPropertyName("filter_custom_field_query")]
+  public string? FilterCustomFieldQuery { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_not_correspondents")]
+  public List<int>? FilterHasNotCorrespondents { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_not_document_types")]
+  public List<int>? FilterHasNotDocumentTypes { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_not_storage_paths")]
+  public List<int>? FilterHasNotStoragePaths { get; set; }
+
   [System.Text.Json.Serialization.JsonPropertyName("filter_has_correspondent")]
   public int? FilterHasCorrespondent { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("filter_has_document_type")]
   public int? FilterHasDocumentType { get; set; }
+
+  [System.Text.Json.Serialization.JsonPropertyName("filter_has_storage_path")]
+  public int? FilterHasStoragePath { get; set; }
 
   /// <summary>
   /// The number of days to offset the schedule trigger by.

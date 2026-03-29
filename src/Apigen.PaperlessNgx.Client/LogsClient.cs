@@ -62,13 +62,13 @@ public class LogsClient
   /// 
   /// Operation: GET /api/logs/{id}/
   /// </summary>
-  public async Task<JsonElement> RetrieveLogAsync(string id)
+  public async Task<JsonElement> RetrieveLogAsync(string id, RetrieveLogRequest? request = null)
   {
     Dictionary<string, object> pathParams = new()
     {
       ["id"] = id
     };
-    string url = "logs/{id}/".BuildUrl(pathParams);
+    string url = "logs/{id}/".BuildUrl(pathParams, request);
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
     HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);

@@ -58,8 +58,14 @@ public class SavedViewRequest
   [System.Text.Json.Serialization.JsonPropertyName("page_size")]
   public int? PageSize { get; set; }
 
+  /// <summary>
+  /// table - Table
+  /// smallCards - Small Cards
+  /// largeCards - Large Cards
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("display_mode")]
-  public object? DisplayMode { get; set; }
+  public DisplayModeEnum? DisplayMode { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("display_fields")]
   public object? DisplayFields { get; set; }

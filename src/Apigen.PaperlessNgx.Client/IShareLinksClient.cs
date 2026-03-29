@@ -39,7 +39,7 @@ public interface IShareLinksClient
   /// 
   /// Operation: PATCH /api/share_links/{id}/
   /// </summary>
-  Task<ShareLink> ShareLinksPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedShareLinkRequest patchedShareLinkRequest);
+  Task<ShareLink> ShareLinksPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.ShareLinkRequest shareLinkRequest);
 
   /// <summary>
   /// 

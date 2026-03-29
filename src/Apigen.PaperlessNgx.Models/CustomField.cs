@@ -45,6 +45,7 @@ public class CustomField
   /// monetary - monetary
   /// documentlink - documentlink
   /// select - select
+  /// longtext - longtext
   /// </summary>
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("data_type")]

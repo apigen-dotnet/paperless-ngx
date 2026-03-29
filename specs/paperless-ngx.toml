@@ -70,6 +70,7 @@ required_headers = []
 
 # Naming convention overrides
 [naming]
+overrides = { "longtext" = "LongText", "documentlink" = "DocumentLink" }
 
 # Code formatting preferences
 [formatting]
@@ -95,6 +96,13 @@ reason = "Conflicts with System.Threading.Task"
 original_name = "Oauth"
 new_name = "OAuth"
 reason = "Proper casing for OAuth acronym"
+
+[[type_name_overrides]]
+original_name = "EmailDocumentRequestRequest"
+new_name = "EmailDocumentRequest"
+reason = "Remove duplicate Request suffix from upstream Django naming"
+
+
 
 # Response type overrides for API spec mismatches
 [[response_type_overrides]]

@@ -30,6 +30,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// monetary - monetary
 /// documentlink - documentlink
 /// select - select
+/// longtext - longtext
 /// </summary>
 public enum DataTypeEnum
 {
@@ -62,8 +63,11 @@ public enum DataTypeEnum
     Monetary,
 
     [EnumMember(Value = "documentlink")]
-    Documentlink,
+    DocumentLink,
 
     [EnumMember(Value = "select")]
-    Select
+    Select,
+
+    [EnumMember(Value = "longtext")]
+    LongText
 }

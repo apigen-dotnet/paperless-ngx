@@ -39,7 +39,7 @@ public interface IWorkflowActionsClient
   /// 
   /// Operation: PATCH /api/workflow_actions/{id}/
   /// </summary>
-  Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedWorkflowActionRequest patchedWorkflowActionRequest);
+  Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest);
 
   /// <summary>
   /// 

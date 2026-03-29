@@ -42,6 +42,7 @@ public class PatchedCustomFieldRequest
   /// monetary - monetary
   /// documentlink - documentlink
   /// select - select
+  /// longtext - longtext
   /// </summary>
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("data_type")]

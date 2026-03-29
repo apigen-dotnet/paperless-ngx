@@ -64,4 +64,7 @@ public class PatchedTagRequest
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("set_permissions")]
   public object? SetPermissions { get; set; }
+
+  [System.Text.Json.Serialization.JsonPropertyName("parent")]
+  public int? Parent { get; set; }
 }

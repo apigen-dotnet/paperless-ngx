@@ -60,8 +60,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application
-          settings.
+        description: A unique integer value identifying this paperless application settings.
         required: true
       tags:
       - config
@@ -83,8 +82,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application
-          settings.
+        description: A unique integer value identifying this paperless application settings.
         required: true
       tags:
       - config
@@ -118,8 +116,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application
-          settings.
+        description: A unique integer value identifying this paperless application settings.
         required: true
       tags:
       - config
@@ -152,8 +149,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application
-          settings.
+        description: A unique integer value identifying this paperless application settings.
         required: true
       tags:
       - config
@@ -167,6 +163,7 @@ paths:
   /api/correspondents/:
     get:
       operationId: correspondents_list
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -234,6 +231,7 @@ paths:
           description: ''
     post:
       operationId: correspondents_create
+      description: Mixin to add document count to queryset, permissions-aware if needed
       tags:
       - correspondents
       requestBody:
@@ -262,6 +260,7 @@ paths:
   /api/correspondents/{id}/:
     get:
       operationId: correspondents_retrieve
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -288,6 +287,7 @@ paths:
           description: ''
     put:
       operationId: correspondents_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -322,6 +322,7 @@ paths:
           description: ''
     patch:
       operationId: correspondents_partial_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -355,6 +356,7 @@ paths:
           description: ''
     delete:
       operationId: correspondents_destroy
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -374,6 +376,7 @@ paths:
   /api/custom_fields/:
     get:
       operationId: custom_fields_list
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: id
@@ -437,6 +440,7 @@ paths:
           description: ''
     post:
       operationId: custom_fields_create
+      description: Mixin to add document count to queryset, permissions-aware if needed
       tags:
       - custom_fields
       requestBody:
@@ -465,6 +469,7 @@ paths:
   /api/custom_fields/{id}/:
     get:
       operationId: custom_fields_retrieve
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -487,6 +492,7 @@ paths:
           description: ''
     put:
       operationId: custom_fields_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -521,6 +527,7 @@ paths:
           description: ''
     patch:
       operationId: custom_fields_partial_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -554,6 +561,7 @@ paths:
           description: ''
     delete:
       operationId: custom_fields_destroy
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -573,6 +581,7 @@ paths:
   /api/document_types/:
     get:
       operationId: document_types_list
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -640,6 +649,7 @@ paths:
           description: ''
     post:
       operationId: document_types_create
+      description: Mixin to add document count to queryset, permissions-aware if needed
       tags:
       - document_types
       requestBody:
@@ -668,6 +678,7 @@ paths:
   /api/document_types/{id}/:
     get:
       operationId: document_types_retrieve
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -694,6 +705,7 @@ paths:
           description: ''
     put:
       operationId: document_types_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -728,6 +740,7 @@ paths:
           description: ''
     patch:
       operationId: document_types_partial_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -761,6 +774,7 @@ paths:
           description: ''
     delete:
       operationId: document_types_destroy
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -1474,24 +1488,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmailRequestRequest'
+              $ref: '#/components/schemas/EmailDocumentRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/EmailRequestRequest'
+              $ref: '#/components/schemas/EmailDocumentRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/EmailRequestRequest'
+              $ref: '#/components/schemas/EmailDocumentRequestRequest'
         required: true
       security:
       - PaperelessBasicAuthentication: []
       - tokenAuth: []
       - cookieAuth: []
+      deprecated: true
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmailResponse'
+                $ref: '#/components/schemas/EmailDocumentResponse'
           description: ''
         '400':
           description: No response body
@@ -1589,18 +1604,6 @@ paths:
         schema:
           type: integer
         description: Note ID to delete (used only for DELETE requests)
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
       tags:
       - documents
       security:
@@ -1612,7 +1615,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedNotesList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notes'
           description: ''
         '400':
           description: No response body
@@ -1635,18 +1640,6 @@ paths:
         schema:
           type: integer
         description: Note ID to delete (used only for DELETE requests)
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
       tags:
       - documents
       requestBody:
@@ -1670,7 +1663,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedNotesList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notes'
           description: ''
         '400':
           description: No response body
@@ -1693,18 +1688,6 @@ paths:
         schema:
           type: integer
         description: Note ID to delete (used only for DELETE requests)
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: page_size
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
       tags:
       - documents
       security:
@@ -1716,7 +1699,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedNotesList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notes'
           description: ''
         '400':
           description: No response body
@@ -1894,6 +1879,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/BulkEditDocumentsResult'
           description: ''
+  /api/documents/email/:
+    post:
+      operationId: email_documents
+      description: Email one or more documents as attachments to one or more recipients.
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailDocumentResponse'
+          description: ''
+        '400':
+          description: No response body
+        '403':
+          description: No response body
+        '404':
+          description: No response body
+        '500':
+          description: No response body
   /api/documents/next_asn/:
     get:
       operationId: documents_next_asn_retrieve
@@ -2178,6 +2200,11 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: Return only the last N entries from the log file
       tags:
       - logs
       security:
@@ -2609,6 +2636,99 @@ paths:
       responses:
         '200':
           description: No response body
+  /api/processed_mail/:
+    get:
+      operationId: processed_mail_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: rule
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+      tags:
+      - processed_mail
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProcessedMailList'
+          description: ''
+  /api/processed_mail/{id}/:
+    get:
+      operationId: processed_mail_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this processed mail.
+        required: true
+      tags:
+      - processed_mail
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessedMail'
+          description: ''
+  /api/processed_mail/bulk_delete/:
+    post:
+      operationId: processed_mail_bulk_delete_create
+      tags:
+      - processed_mail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProcessedMailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProcessedMailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProcessedMailRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessedMail'
+          description: ''
   /api/profile/:
     get:
       operationId: profile_retrieve
@@ -3345,6 +3465,7 @@ paths:
   /api/storage_paths/:
     get:
       operationId: storage_paths_list
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -3428,6 +3549,7 @@ paths:
           description: ''
     post:
       operationId: storage_paths_create
+      description: Mixin to add document count to queryset, permissions-aware if needed
       tags:
       - storage_paths
       requestBody:
@@ -3456,6 +3578,7 @@ paths:
   /api/storage_paths/{id}/:
     get:
       operationId: storage_paths_retrieve
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -3482,6 +3605,7 @@ paths:
           description: ''
     put:
       operationId: storage_paths_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -3516,6 +3640,7 @@ paths:
           description: ''
     patch:
       operationId: storage_paths_partial_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -3600,6 +3725,7 @@ paths:
   /api/tags/:
     get:
       operationId: tags_list
+      description: Build a children map once to avoid per-parent queries in the serializer.
       parameters:
       - in: query
         name: full_perms
@@ -3618,6 +3744,11 @@ paths:
         description: Multiple values may be separated by commas.
         explode: false
         style: form
+      - in: query
+        name: is_root
+        schema:
+          type: boolean
+        description: Is root tag
       - in: query
         name: name__icontains
         schema:
@@ -3667,6 +3798,7 @@ paths:
           description: ''
     post:
       operationId: tags_create
+      description: Mixin to add document count to queryset, permissions-aware if needed
       tags:
       - tags
       requestBody:
@@ -3695,6 +3827,7 @@ paths:
   /api/tags/{id}/:
     get:
       operationId: tags_retrieve
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: query
         name: full_perms
@@ -3721,6 +3854,7 @@ paths:
           description: ''
     put:
       operationId: tags_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -3755,6 +3889,7 @@ paths:
           description: ''
     patch:
       operationId: tags_partial_update
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -3788,6 +3923,7 @@ paths:
           description: ''
     delete:
       operationId: tags_destroy
+      description: Mixin to add document count to queryset, permissions-aware if needed
       parameters:
       - in: path
         name: id
@@ -4858,10 +4994,7 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          oneOf:
-          - $ref: '#/components/schemas/OutputTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/OutputTypeEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -4876,17 +5009,11 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          oneOf:
-          - $ref: '#/components/schemas/ModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ModeEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/SkipArchiveFileEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -4896,10 +5023,7 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          oneOf:
-          - $ref: '#/components/schemas/UnpaperCleanEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/UnpaperCleanEnum'
         deskew:
           type: boolean
           nullable: true
@@ -4923,10 +5047,7 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          oneOf:
-          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ColorConversionStrategyEnum'
         app_title:
           type: string
           nullable: true
@@ -5000,10 +5121,7 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          oneOf:
-          - $ref: '#/components/schemas/OutputTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/OutputTypeEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -5018,17 +5136,11 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          oneOf:
-          - $ref: '#/components/schemas/ModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ModeEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/SkipArchiveFileEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -5038,10 +5150,7 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          oneOf:
-          - $ref: '#/components/schemas/UnpaperCleanEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/UnpaperCleanEnum'
         deskew:
           type: boolean
           nullable: true
@@ -5065,10 +5174,7 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          oneOf:
-          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ColorConversionStrategyEnum'
         app_title:
           type: string
           nullable: true
@@ -5169,8 +5275,7 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         first_name:
@@ -5188,8 +5293,7 @@ components:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         first_name:
@@ -5200,9 +5304,6 @@ components:
           maxLength: 150
       required:
       - username
-    BlankEnum:
-      enum:
-      - ''
     BulkDownload:
       type: object
       properties:
@@ -5589,6 +5690,7 @@ components:
       - monetary
       - documentlink
       - select
+      - longtext
       type: string
       description: |-
         * `string` - string
@@ -5600,6 +5702,7 @@ components:
         * `monetary` - monetary
         * `documentlink` - documentlink
         * `select` - select
+        * `longtext` - longtext
     Database:
       type: object
       properties:
@@ -5650,8 +5753,7 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily
-            used for searching.
+          description: The raw, text-only data of the document. This field is primarily used for searching.
         tags:
           type: array
           items:
@@ -5785,8 +5887,7 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily
-            used for searching.
+          description: The raw, text-only data of the document. This field is primarily used for searching.
         tags:
           type: array
           items:
@@ -5974,32 +6075,67 @@ components:
           writeOnly: true
       required:
       - name
-    EmailRequestRequest:
+    EmailDocumentRequestRequest:
       type: object
       properties:
         addresses:
           type: string
           minLength: 1
+          title: Email addresses
+          description: Comma-separated email addresses
         subject:
           type: string
           minLength: 1
+          title: Email subject
         message:
           type: string
           minLength: 1
+          title: Email message
         use_archive_version:
           type: boolean
           default: true
+          description: Use archive version of documents if available
       required:
       - addresses
       - message
       - subject
-    EmailResponse:
+    EmailDocumentResponse:
       type: object
       properties:
         message:
           type: string
       required:
       - message
+    EmailRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        addresses:
+          type: string
+          minLength: 1
+          title: Email addresses
+          description: Comma-separated email addresses
+        subject:
+          type: string
+          minLength: 1
+          title: Email subject
+        message:
+          type: string
+          minLength: 1
+          title: Email message
+        use_archive_version:
+          type: boolean
+          default: true
+          description: Use archive version of documents if available
+      required:
+      - addresses
+      - documents
+      - message
+      - subject
     FileVersionEnum:
       enum:
       - archive
@@ -6102,8 +6238,7 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections,
-            and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -6116,8 +6251,7 @@ components:
           type: string
         character_set:
           type: string
-          description: The character set to use when communicating with the mail server,
-            such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -6167,8 +6301,7 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections,
-            and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -6184,8 +6317,7 @@ components:
         character_set:
           type: string
           minLength: 1
-          description: The character set to use when communicating with the mail server,
-            such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -6256,8 +6388,7 @@ components:
           type: boolean
         folder:
           type: string
-          description: Subfolders must be separated by a delimiter, often a dot ('.')
-            or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -6279,15 +6410,13 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename
-            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -6388,8 +6517,7 @@ components:
         folder:
           type: string
           minLength: 1
-          description: Subfolders must be separated by a delimiter, often a dot ('.')
-            or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -6411,15 +6539,13 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename
-            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -6670,9 +6796,6 @@ components:
         created:
           type: string
           format: date-time
-    NullEnum:
-      enum:
-      - null
     ObjectTypeEnum:
       enum:
       - tags
@@ -6931,7 +7054,7 @@ components:
           example: '[1, 2, 3]'
           items:
             type: integer
-    PaginatedNotesList:
+    PaginatedProcessedMailList:
       type: object
       required:
       - count
@@ -6953,7 +7076,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/Notes'
+            $ref: '#/components/schemas/ProcessedMail'
         all:
           type: array
           example: '[1, 2, 3]'
@@ -7220,10 +7343,7 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          oneOf:
-          - $ref: '#/components/schemas/OutputTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/OutputTypeEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -7238,17 +7358,11 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          oneOf:
-          - $ref: '#/components/schemas/ModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ModeEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/SkipArchiveFileEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -7258,10 +7372,7 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          oneOf:
-          - $ref: '#/components/schemas/UnpaperCleanEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/UnpaperCleanEnum'
         deskew:
           type: boolean
           nullable: true
@@ -7285,10 +7396,7 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          oneOf:
-          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/ColorConversionStrategyEnum'
         app_title:
           type: string
           nullable: true
@@ -7424,8 +7532,7 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily
-            used for searching.
+          description: The raw, text-only data of the document. This field is primarily used for searching.
         tags:
           type: array
           items:
@@ -7560,8 +7667,7 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections,
-            and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -7577,8 +7683,7 @@ components:
         character_set:
           type: string
           minLength: 1
-          description: The character set to use when communicating with the mail server,
-            such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -7636,8 +7741,7 @@ components:
         folder:
           type: string
           minLength: 1
-          description: Subfolders must be separated by a delimiter, often a dot ('.')
-            or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -7659,15 +7763,13 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename
-            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -7804,10 +7906,7 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          oneOf:
-          - $ref: '#/components/schemas/DisplayModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/DisplayModeEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -7897,8 +7996,7 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents
-            will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
         owner:
           type: integer
           nullable: true
@@ -7928,14 +8026,16 @@ components:
                   items:
                     type: integer
           writeOnly: true
+        parent:
+          type: integer
+          nullable: true
     PatchedUserRequest:
       type: object
       properties:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -7962,19 +8062,16 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
+          description: Designates that this user has all permissions without explicitly assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions
-            granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -7995,9 +8092,7 @@ components:
         assign_title:
           type: string
           nullable: true
-          description: Assign a document title, can include some placeholders, see
-            documentation.
-          maxLength: 256
+          description: Assign a document title, must  be a Jinja2 template, see documentation.
         assign_tags:
           type: array
           items:
@@ -8172,14 +8267,12 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified.
-            Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
@@ -8201,6 +8294,40 @@ components:
             type: integer
             title: Has these tag(s)
           title: Has these tag(s)
+        filter_has_all_tags:
+          type: array
+          items:
+            type: integer
+            title: Has all of these tag(s)
+          title: Has all of these tag(s)
+        filter_has_not_tags:
+          type: array
+          items:
+            type: integer
+            title: Does not have these tag(s)
+          title: Does not have these tag(s)
+        filter_custom_field_query:
+          type: string
+          nullable: true
+          description: JSON-encoded custom field query expression.
+        filter_has_not_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Does not have these correspondent(s)
+          title: Does not have these correspondent(s)
+        filter_has_not_document_types:
+          type: array
+          items:
+            type: integer
+            title: Does not have these document type(s)
+          title: Does not have these document type(s)
+        filter_has_not_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Does not have these storage path(s)
+          title: Does not have these storage path(s)
         filter_has_correspondent:
           type: integer
           nullable: true
@@ -8209,6 +8336,10 @@ components:
           type: integer
           nullable: true
           title: Has this document type
+        filter_has_storage_path:
+          type: integer
+          nullable: true
+          title: Has this storage path
         schedule_offset_days:
           type: integer
           maximum: 2147483647
@@ -8293,18 +8424,70 @@ components:
           writeOnly: true
           title: ASN
         custom_fields:
+          writeOnly: true
           type: array
           items:
             type: integer
             writeOnly: true
             title: Custom fields
-          writeOnly: true
         from_webui:
           type: boolean
           writeOnly: true
           title: Documents are from Paperless-ngx WebUI
       required:
       - document
+    ProcessedMail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        owner:
+          type: integer
+          nullable: true
+        rule:
+          type: integer
+          readOnly: true
+        folder:
+          type: string
+          readOnly: true
+        uid:
+          type: string
+          readOnly: true
+        subject:
+          type: string
+          readOnly: true
+        received:
+          type: string
+          format: date-time
+          readOnly: true
+        processed:
+          type: string
+          format: date-time
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        error:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - error
+      - folder
+      - id
+      - processed
+      - received
+      - rule
+      - status
+      - subject
+      - uid
+    ProcessedMailRequest:
+      type: object
+      properties:
+        owner:
+          type: integer
+          nullable: true
     Profile:
       type: object
       properties:
@@ -8484,10 +8667,7 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          oneOf:
-          - $ref: '#/components/schemas/DisplayModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/DisplayModeEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -8562,10 +8742,7 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          oneOf:
-          - $ref: '#/components/schemas/DisplayModeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/DisplayModeEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -8989,8 +9166,7 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents
-            will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
         document_count:
           type: integer
           readOnly: true
@@ -9000,7 +9176,16 @@ components:
         user_can_change:
           type: boolean
           readOnly: true
+        parent:
+          type: integer
+          nullable: true
+        children:
+          type: array
+          items:
+            type: integer
+          readOnly: true
       required:
+      - children
       - document_count
       - id
       - name
@@ -9040,8 +9225,7 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents
-            will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
         owner:
           type: integer
           nullable: true
@@ -9071,6 +9255,9 @@ components:
                   items:
                     type: integer
           writeOnly: true
+        parent:
+          type: integer
+          nullable: true
       required:
       - name
     TaskNameEnum:
@@ -9120,9 +9307,7 @@ components:
             * `train_classifier` - Train Classifier
             * `check_sanity` - Check Sanity
             * `index_optimize` - Index Optimize
-          oneOf:
-          - $ref: '#/components/schemas/TaskNameEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/TaskNameEnum'
         task_file_name:
           type: string
           nullable: true
@@ -9201,9 +9386,7 @@ components:
             * `train_classifier` - Train Classifier
             * `check_sanity` - Check Sanity
             * `index_optimize` - Index Optimize
-          oneOf:
-          - $ref: '#/components/schemas/TaskNameEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          $ref: '#/components/schemas/TaskNameEnum'
         task_file_name:
           type: string
           nullable: true
@@ -9330,8 +9513,7 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -9357,19 +9539,16 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
+          description: Designates that this user has all permissions without explicitly assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions
-            granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -9393,8 +9572,7 @@ components:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
-            only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -9421,19 +9599,16 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect
-            this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly
-            assigning them.
+          description: Designates that this user has all permissions without explicitly assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions
-            granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -9482,9 +9657,7 @@ components:
         assign_title:
           type: string
           nullable: true
-          description: Assign a document title, can include some placeholders, see
-            documentation.
-          maxLength: 256
+          description: Assign a document title, must  be a Jinja2 template, see documentation.
         assign_tags:
           type: array
           items:
@@ -9628,14 +9801,12 @@ components:
         subject:
           type: string
           title: Email subject
-          description: The subject of the email, can include some placeholders, see
-            documentation.
+          description: The subject of the email, can include some placeholders, see documentation.
           maxLength: 256
         body:
           type: string
           title: Email body
-          description: The body (message) of the email, can include some placeholders,
-            see documentation.
+          description: The body (message) of the email, can include some placeholders, see documentation.
         to:
           type: string
           title: Emails to
@@ -9657,15 +9828,13 @@ components:
           type: string
           minLength: 1
           title: Email subject
-          description: The subject of the email, can include some placeholders, see
-            documentation.
+          description: The subject of the email, can include some placeholders, see documentation.
           maxLength: 256
         body:
           type: string
           minLength: 1
           title: Email body
-          description: The body (message) of the email, can include some placeholders,
-            see documentation.
+          description: The body (message) of the email, can include some placeholders, see documentation.
         to:
           type: string
           minLength: 1
@@ -9693,9 +9862,7 @@ components:
         assign_title:
           type: string
           nullable: true
-          description: Assign a document title, can include some placeholders, see
-            documentation.
-          maxLength: 256
+          description: Assign a document title, must  be a Jinja2 template, see documentation.
         assign_tags:
           type: array
           items:
@@ -9957,14 +10124,12 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified.
-            Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
@@ -9986,6 +10151,40 @@ components:
             type: integer
             title: Has these tag(s)
           title: Has these tag(s)
+        filter_has_all_tags:
+          type: array
+          items:
+            type: integer
+            title: Has all of these tag(s)
+          title: Has all of these tag(s)
+        filter_has_not_tags:
+          type: array
+          items:
+            type: integer
+            title: Does not have these tag(s)
+          title: Does not have these tag(s)
+        filter_custom_field_query:
+          type: string
+          nullable: true
+          description: JSON-encoded custom field query expression.
+        filter_has_not_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Does not have these correspondent(s)
+          title: Does not have these correspondent(s)
+        filter_has_not_document_types:
+          type: array
+          items:
+            type: integer
+            title: Does not have these document type(s)
+          title: Does not have these document type(s)
+        filter_has_not_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Does not have these storage path(s)
+          title: Does not have these storage path(s)
         filter_has_correspondent:
           type: integer
           nullable: true
@@ -9994,6 +10193,10 @@ components:
           type: integer
           nullable: true
           title: Has this document type
+        filter_has_storage_path:
+          type: integer
+          nullable: true
+          title: Has this storage path
         schedule_offset_days:
           type: integer
           maximum: 2147483647
@@ -10060,14 +10263,12 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified.
-            Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if
-            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
@@ -10089,6 +10290,40 @@ components:
             type: integer
             title: Has these tag(s)
           title: Has these tag(s)
+        filter_has_all_tags:
+          type: array
+          items:
+            type: integer
+            title: Has all of these tag(s)
+          title: Has all of these tag(s)
+        filter_has_not_tags:
+          type: array
+          items:
+            type: integer
+            title: Does not have these tag(s)
+          title: Does not have these tag(s)
+        filter_custom_field_query:
+          type: string
+          nullable: true
+          description: JSON-encoded custom field query expression.
+        filter_has_not_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Does not have these correspondent(s)
+          title: Does not have these correspondent(s)
+        filter_has_not_document_types:
+          type: array
+          items:
+            type: integer
+            title: Does not have these document type(s)
+          title: Does not have these document type(s)
+        filter_has_not_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Does not have these storage path(s)
+          title: Does not have these storage path(s)
         filter_has_correspondent:
           type: integer
           nullable: true
@@ -10097,6 +10332,10 @@ components:
           type: integer
           nullable: true
           title: Has this document type
+        filter_has_storage_path:
+          type: integer
+          nullable: true
+          title: Has this storage path
         schedule_offset_days:
           type: integer
           maximum: 2147483647

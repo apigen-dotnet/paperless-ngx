@@ -33,9 +33,8 @@ public class WorkflowAction
   public WorkflowActionTypeEnum? Type { get; set; }
 
   /// <summary>
-  /// Assign a document title, can include some placeholders, see documentation.
+  /// Assign a document title, must  be a Jinja2 template, see documentation.
   /// </summary>
-  [MaxLength(256)]
   [System.Text.Json.Serialization.JsonPropertyName("assign_title")]
   public string? AssignTitle { get; set; }
 

@@ -175,7 +175,7 @@ public class ShareLinksClient
   /// 
   /// Operation: PATCH /api/share_links/{id}/
   /// </summary>
-  public async Task<ShareLink> ShareLinksPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedShareLinkRequest patchedShareLinkRequest)
+  public async Task<ShareLink> ShareLinksPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.ShareLinkRequest shareLinkRequest)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -185,7 +185,7 @@ public class ShareLinksClient
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
     HttpClientLog.LogDebugRequestStarted(_logger, "PATCH", url);
-    string json = JsonSerializer.Serialize(patchedShareLinkRequest, JsonConfig.Default);
+    string json = JsonSerializer.Serialize(shareLinkRequest, JsonConfig.Default);
     HttpClientLog.LogTraceRequestBody(_logger, "PATCH", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PatchAsync(url, content);

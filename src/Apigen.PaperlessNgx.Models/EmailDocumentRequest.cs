@@ -21,33 +21,36 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// WorkflowsCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/WorkflowsCreateRequest
+/// EmailDocumentRequestRequest from OpenAPI schema.
+/// Schema path: #/components/schemas/EmailDocumentRequestRequest
 /// </summary>
-public class WorkflowsCreateRequest
+public class EmailDocumentRequest
 {
+  /// <summary>
+  /// Comma-separated email addresses
+  /// </summary>
   [Required]
   [MinLength(1)]
-  [MaxLength(256)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
-  [System.Text.Json.Serialization.JsonPropertyName("name")]
-  public string? Name { get; set; }
-
-  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-  [System.Text.Json.Serialization.JsonPropertyName("order")]
-  public int? Order { get; set; }
-
-  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-  [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-  public bool? Enabled { get; set; }
+  [System.Text.Json.Serialization.JsonPropertyName("addresses")]
+  public string? Addresses { get; set; }
 
   [Required]
+  [MinLength(1)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
-  [System.Text.Json.Serialization.JsonPropertyName("triggers")]
-  public List<WorkflowTriggerRequest>? Triggers { get; set; }
+  [System.Text.Json.Serialization.JsonPropertyName("subject")]
+  public string? Subject { get; set; }
 
   [Required]
+  [MinLength(1)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
-  [System.Text.Json.Serialization.JsonPropertyName("actions")]
-  public List<WorkflowActionRequest>? Actions { get; set; }
+  [System.Text.Json.Serialization.JsonPropertyName("message")]
+  public string? Message { get; set; }
+
+  /// <summary>
+  /// Use archive version of documents if available
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("use_archive_version")]
+  public bool? UseArchiveVersion { get; set; }
 }

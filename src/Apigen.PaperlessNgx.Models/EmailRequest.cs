@@ -21,11 +21,19 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// DocumentsEmailCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/DocumentsEmailCreateRequest
+/// EmailRequest from OpenAPI schema.
+/// Schema path: #/components/schemas/EmailRequest
 /// </summary>
-public class DocumentsEmailCreateRequest
+public class EmailRequest
 {
+  [Required]
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
+  [System.Text.Json.Serialization.JsonPropertyName("documents")]
+  public List<int>? Documents { get; set; }
+
+  /// <summary>
+  /// Comma-separated email addresses
+  /// </summary>
   [Required]
   [MinLength(1)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]
@@ -44,6 +52,9 @@ public class DocumentsEmailCreateRequest
   [System.Text.Json.Serialization.JsonPropertyName("message")]
   public string? Message { get; set; }
 
+  /// <summary>
+  /// Use archive version of documents if available
+  /// </summary>
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("use_archive_version")]
   public bool? UseArchiveVersion { get; set; }

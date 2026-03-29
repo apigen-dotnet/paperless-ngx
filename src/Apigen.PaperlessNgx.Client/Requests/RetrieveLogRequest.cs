@@ -9,22 +9,22 @@ namespace Apigen.PaperlessNgx.Client;
 
 /// <summary>
 /// Request parameters for 
-/// Operation: DELETE /api/documents/{id}/notes/
+/// Operation: GET /api/logs/{id}/
 /// </summary>
-public class DocumentsNotesDestroyRequest : BaseRequest
+public class RetrieveLogRequest : BaseRequest
 {
   /// <summary>
-  /// Note ID to delete (used only for DELETE requests)
+  /// Return only the last N entries from the log file
   /// </summary>
-  [JsonPropertyName("id")]
-  public int? Id { get; set; }
+  [JsonPropertyName("limit")]
+  public int? Limit { get; set; }
 
   public override string ToQueryString()
   {
     Dictionary<string, object> queryParams = new Dictionary<string, object>();
 
-    if (Id != null)
-      queryParams["id"] = Id;
+    if (Limit != null)
+      queryParams["limit"] = Limit;
 
     return queryParams.ToQueryString();
   }

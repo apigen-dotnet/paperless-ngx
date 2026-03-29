@@ -247,7 +247,7 @@ public class DocumentsClient
   /// 
   /// Operation: POST /api/documents/{id}/email/
   /// </summary>
-  public async Task<EmailResponse> DocumentsEmailCreateAsync(int id, Apigen.PaperlessNgx.Models.EmailRequestRequest emailRequestRequest)
+  public async Task<EmailDocumentResponse> DocumentsEmailCreateAsync(int id, Apigen.PaperlessNgx.Models.EmailDocumentRequest emailDocumentRequest)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -257,7 +257,7 @@ public class DocumentsClient
 
     long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
     HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
-    string json = JsonSerializer.Serialize(emailRequestRequest, JsonConfig.Default);
+    string json = JsonSerializer.Serialize(emailDocumentRequest, JsonConfig.Default);
     HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
     HttpResponseMessage response = await _httpClient.PostAsync(url, content);
@@ -278,8 +278,8 @@ public class DocumentsClient
     }
 
     HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    EmailResponse? result = JsonSerializer.Deserialize<EmailResponse>(responseContent, JsonConfig.Default);
-    return result ?? new EmailResponse();
+    EmailDocumentResponse? result = JsonSerializer.Deserialize<EmailDocumentResponse>(responseContent, JsonConfig.Default);
+    return result ?? new EmailDocumentResponse();
   }
 
 
@@ -361,7 +361,7 @@ public class DocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/notes/
   /// </summary>
-  public async Task<PaginatedNotesList> DocumentsNotesListAsync(int id, DocumentsNotesListRequest? request = null)
+  public async Task<List<Notes>> DocumentsNotesListAsync(int id, DocumentsNotesListRequest? request = null)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -389,8 +389,8 @@ public class DocumentsClient
     }
 
     HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    PaginatedNotesList? result = JsonSerializer.Deserialize<PaginatedNotesList>(responseContent, JsonConfig.Default);
-    return result ?? new PaginatedNotesList();
+    List<Notes>? result = JsonSerializer.Deserialize<List<Notes>>(responseContent, JsonConfig.Default);
+    return result ?? new List<Notes>();
   }
 
 
@@ -438,7 +438,7 @@ public class DocumentsClient
   /// 
   /// Operation: DELETE /api/documents/{id}/notes/
   /// </summary>
-  public async Task<PaginatedNotesList> DocumentsNotesDestroyAsync(int id, DocumentsNotesDestroyRequest? request = null)
+  public async Task<List<Notes>> DocumentsNotesDestroyAsync(int id, DocumentsNotesDestroyRequest? request = null)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -466,8 +466,8 @@ public class DocumentsClient
     }
 
     HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    PaginatedNotesList? result = JsonSerializer.Deserialize<PaginatedNotesList>(responseContent, JsonConfig.Default);
-    return result ?? new PaginatedNotesList();
+    List<Notes>? result = JsonSerializer.Deserialize<List<Notes>>(responseContent, JsonConfig.Default);
+    return result ?? new List<Notes>();
   }
 
 
@@ -688,6 +688,42 @@ public class DocumentsClient
     HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
     BulkEditDocumentsResult? result = JsonSerializer.Deserialize<BulkEditDocumentsResult>(responseContent, JsonConfig.Default);
     return result ?? new BulkEditDocumentsResult();
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: POST /api/documents/email/
+  /// </summary>
+  public async Task<EmailDocumentResponse> EmailDocumentsAsync(Apigen.PaperlessNgx.Models.EmailRequest emailRequest)
+  {
+    string url = "documents/email/";
+
+    long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+    HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
+    string json = JsonSerializer.Serialize(emailRequest, JsonConfig.Default);
+    HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
+    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+    HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+    long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+    HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+
+    string responseContent;
+    try
+    {
+      response.EnsureSuccessStatusCode();
+      responseContent = await response.Content.ReadAsStringAsync();
+    }
+    catch (HttpRequestException ex)
+    {
+      responseContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, responseContent, ex);
+      throw;
+    }
+
+    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
+    EmailDocumentResponse? result = JsonSerializer.Deserialize<EmailDocumentResponse>(responseContent, JsonConfig.Default);
+    return result ?? new EmailDocumentResponse();
   }
 
 

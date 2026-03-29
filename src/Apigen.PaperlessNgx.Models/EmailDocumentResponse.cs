@@ -21,11 +21,12 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// UiSettingsCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/UiSettingsCreateRequest
+/// EmailDocumentResponse from OpenAPI schema.
+/// Schema path: #/components/schemas/EmailDocumentResponse
 /// </summary>
-public class UiSettingsCreateRequest
+public class EmailDocumentResponse
 {
-  [System.Text.Json.Serialization.JsonPropertyName("settings")]
-  public Dictionary<string, object?>? Settings { get; set; }
+  [Required]
+  [System.Text.Json.Serialization.JsonPropertyName("message")]
+  public string? Message { get; set; }
 }

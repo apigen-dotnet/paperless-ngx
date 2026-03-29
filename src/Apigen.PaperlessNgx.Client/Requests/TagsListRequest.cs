@@ -32,6 +32,12 @@ public class TagsListRequest : BaseRequest
   public string[]? IdIn { get; set; }
 
   /// <summary>
+  /// Is root tag
+  /// </summary>
+  [JsonPropertyName("is_root")]
+  public bool? IsRoot { get; set; }
+
+  /// <summary>
   /// name__icontains
   /// </summary>
   [JsonPropertyName("name__icontains")]
@@ -83,6 +89,8 @@ public class TagsListRequest : BaseRequest
       queryParams["id"] = Id;
     if (IdIn != null)
       queryParams["id__in"] = IdIn;
+    if (IsRoot != null)
+      queryParams["is_root"] = IsRoot;
     if (NameIcontains != null)
       queryParams["name__icontains"] = NameIcontains;
     if (NameIendswith != null)

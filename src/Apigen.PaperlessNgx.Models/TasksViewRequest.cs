@@ -37,15 +37,14 @@ public class TasksViewRequest
   public string? TaskId { get; set; }
 
   /// <summary>
-  /// Name of the task that was run
-  /// 
   /// consume_file - Consume File
   /// train_classifier - Train Classifier
   /// check_sanity - Check Sanity
   /// index_optimize - Index Optimize
   /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("task_name")]
-  public object? TaskName { get; set; }
+  public TaskNameEnum? TaskName { get; set; }
 
   /// <summary>
   /// Name of the file which the Task was run for

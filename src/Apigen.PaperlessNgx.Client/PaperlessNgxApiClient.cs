@@ -74,6 +74,11 @@ public class PaperlessNgxApiClient
   public OAuthClient OAuth { get; }
 
   /// <summary>
+  /// Client for processed_mail operations
+  /// </summary>
+  public ProcessedMailClient ProcessedMail { get; }
+
+  /// <summary>
   /// Client for profile operations
   /// </summary>
   public ProfileClient Profile { get; }
@@ -180,6 +185,7 @@ public class PaperlessNgxApiClient
     MailAccounts = new MailAccountsClient(_httpClient, _logger);
     MailRules = new MailRulesClient(_httpClient, _logger);
     OAuth = new OAuthClient(_httpClient, _logger);
+    ProcessedMail = new ProcessedMailClient(_httpClient, _logger);
     Profile = new ProfileClient(_httpClient, _logger);
     RemoteVersion = new RemoteVersionClient(_httpClient, _logger);
     SavedViews = new SavedViewsClient(_httpClient, _logger);
@@ -216,6 +222,7 @@ public class PaperlessNgxApiClient
     MailAccounts = new MailAccountsClient(_httpClient, _logger);
     MailRules = new MailRulesClient(_httpClient, _logger);
     OAuth = new OAuthClient(_httpClient, _logger);
+    ProcessedMail = new ProcessedMailClient(_httpClient, _logger);
     Profile = new ProfileClient(_httpClient, _logger);
     RemoteVersion = new RemoteVersionClient(_httpClient, _logger);
     SavedViews = new SavedViewsClient(_httpClient, _logger);

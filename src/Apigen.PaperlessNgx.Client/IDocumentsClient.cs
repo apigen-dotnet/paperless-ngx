@@ -51,7 +51,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: POST /api/documents/{id}/email/
   /// </summary>
-  Task<EmailResponse> DocumentsEmailCreateAsync(int id, Apigen.PaperlessNgx.Models.EmailRequestRequest emailRequestRequest);
+  Task<EmailDocumentResponse> DocumentsEmailCreateAsync(int id, Apigen.PaperlessNgx.Models.EmailDocumentRequest emailDocumentRequest);
 
   /// <summary>
   /// 
@@ -69,7 +69,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/notes/
   /// </summary>
-  Task<PaginatedNotesList> DocumentsNotesListAsync(int id, DocumentsNotesListRequest? request = null);
+  Task<List<Notes>> DocumentsNotesListAsync(int id, DocumentsNotesListRequest? request = null);
 
   /// <summary>
   /// 
@@ -81,7 +81,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: DELETE /api/documents/{id}/notes/
   /// </summary>
-  Task<PaginatedNotesList> DocumentsNotesDestroyAsync(int id, DocumentsNotesDestroyRequest? request = null);
+  Task<List<Notes>> DocumentsNotesDestroyAsync(int id, DocumentsNotesDestroyRequest? request = null);
 
   /// <summary>
   /// 
@@ -118,6 +118,12 @@ public interface IDocumentsClient
   /// Operation: POST /api/documents/bulk_edit/
   /// </summary>
   Task<BulkEditDocumentsResult> BulkAsync(Apigen.PaperlessNgx.Models.BulkEditRequest bulkEditRequest);
+
+  /// <summary>
+  /// 
+  /// Operation: POST /api/documents/email/
+  /// </summary>
+  Task<EmailDocumentResponse> EmailDocumentsAsync(Apigen.PaperlessNgx.Models.EmailRequest emailRequest);
 
   /// <summary>
   /// 
