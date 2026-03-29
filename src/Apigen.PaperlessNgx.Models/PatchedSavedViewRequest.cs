@@ -56,12 +56,6 @@ public class PatchedSavedViewRequest
   [System.Text.Json.Serialization.JsonPropertyName("page_size")]
   public int? PageSize { get; set; }
 
-  /// <summary>
-  /// table - Table
-  /// smallCards - Small Cards
-  /// largeCards - Large Cards
-  /// </summary>
-  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("display_mode")]
   public DisplayModeEnum? DisplayMode { get; set; }
 

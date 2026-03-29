@@ -60,7 +60,8 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application settings.
+        description: A unique integer value identifying this paperless application
+          settings.
         required: true
       tags:
       - config
@@ -82,7 +83,8 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application settings.
+        description: A unique integer value identifying this paperless application
+          settings.
         required: true
       tags:
       - config
@@ -116,7 +118,8 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application settings.
+        description: A unique integer value identifying this paperless application
+          settings.
         required: true
       tags:
       - config
@@ -149,7 +152,8 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this paperless application settings.
+        description: A unique integer value identifying this paperless application
+          settings.
         required: true
       tags:
       - config
@@ -1906,7 +1910,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmailDocumentResponse'
+                $ref: '#/components/schemas/EmailDocumentsResponse'
           description: ''
         '400':
           description: No response body
@@ -4994,7 +4998,10 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          $ref: '#/components/schemas/OutputTypeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/OutputTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -5009,11 +5016,17 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          $ref: '#/components/schemas/ModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          $ref: '#/components/schemas/SkipArchiveFileEnum'
+          oneOf:
+          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -5023,7 +5036,10 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          $ref: '#/components/schemas/UnpaperCleanEnum'
+          oneOf:
+          - $ref: '#/components/schemas/UnpaperCleanEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         deskew:
           type: boolean
           nullable: true
@@ -5047,7 +5063,10 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         app_title:
           type: string
           nullable: true
@@ -5121,7 +5140,10 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          $ref: '#/components/schemas/OutputTypeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/OutputTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -5136,11 +5158,17 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          $ref: '#/components/schemas/ModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          $ref: '#/components/schemas/SkipArchiveFileEnum'
+          oneOf:
+          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -5150,7 +5178,10 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          $ref: '#/components/schemas/UnpaperCleanEnum'
+          oneOf:
+          - $ref: '#/components/schemas/UnpaperCleanEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         deskew:
           type: boolean
           nullable: true
@@ -5174,7 +5205,10 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         app_title:
           type: string
           nullable: true
@@ -5275,7 +5309,8 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         first_name:
@@ -5293,7 +5328,8 @@ components:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         first_name:
@@ -5304,6 +5340,9 @@ components:
           maxLength: 150
       required:
       - username
+    BlankEnum:
+      enum:
+      - ''
     BulkDownload:
       type: object
       properties:
@@ -5753,7 +5792,8 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily used for searching.
+          description: The raw, text-only data of the document. This field is primarily
+            used for searching.
         tags:
           type: array
           items:
@@ -5887,7 +5927,8 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily used for searching.
+          description: The raw, text-only data of the document. This field is primarily
+            used for searching.
         tags:
           type: array
           items:
@@ -6106,6 +6147,13 @@ components:
           type: string
       required:
       - message
+    EmailDocumentsResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
     EmailRequest:
       type: object
       properties:
@@ -6238,7 +6286,8 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections,
+            and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -6251,7 +6300,8 @@ components:
           type: string
         character_set:
           type: string
-          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server,
+            such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -6301,7 +6351,8 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections,
+            and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -6317,7 +6368,8 @@ components:
         character_set:
           type: string
           minLength: 1
-          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server,
+            such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -6388,7 +6440,8 @@ components:
           type: boolean
         folder:
           type: string
-          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.')
+            or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -6410,13 +6463,15 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename
+            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -6517,7 +6572,8 @@ components:
         folder:
           type: string
           minLength: 1
-          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.')
+            or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -6539,13 +6595,15 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename
+            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -6796,6 +6854,9 @@ components:
         created:
           type: string
           format: date-time
+    NullEnum:
+      enum:
+      - null
     ObjectTypeEnum:
       enum:
       - tags
@@ -7343,7 +7404,10 @@ components:
         output_type:
           nullable: true
           title: Sets the output PDF type
-          $ref: '#/components/schemas/OutputTypeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/OutputTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
           maximum: 2147483647
@@ -7358,11 +7422,17 @@ components:
         mode:
           nullable: true
           title: Sets the OCR mode
-          $ref: '#/components/schemas/ModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         skip_archive_file:
           nullable: true
           title: Controls the generation of an archive file
-          $ref: '#/components/schemas/SkipArchiveFileEnum'
+          oneOf:
+          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
           maximum: 2147483647
@@ -7372,7 +7442,10 @@ components:
         unpaper_clean:
           nullable: true
           title: Controls the unpaper cleaning
-          $ref: '#/components/schemas/UnpaperCleanEnum'
+          oneOf:
+          - $ref: '#/components/schemas/UnpaperCleanEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         deskew:
           type: boolean
           nullable: true
@@ -7396,7 +7469,10 @@ components:
         color_conversion_strategy:
           nullable: true
           title: Sets the Ghostscript color conversion strategy
-          $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          oneOf:
+          - $ref: '#/components/schemas/ColorConversionStrategyEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         app_title:
           type: string
           nullable: true
@@ -7532,7 +7608,8 @@ components:
           maxLength: 128
         content:
           type: string
-          description: The raw, text-only data of the document. This field is primarily used for searching.
+          description: The raw, text-only data of the document. This field is primarily
+            used for searching.
         tags:
           type: array
           items:
@@ -7667,7 +7744,8 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          description: This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
+          description: This is usually 143 for unencrypted and STARTTLS connections,
+            and 993 for SSL connections.
         imap_security:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
@@ -7683,7 +7761,8 @@ components:
         character_set:
           type: string
           minLength: 1
-          description: The character set to use when communicating with the mail server, such as 'UTF-8' or 'US-ASCII'.
+          description: The character set to use when communicating with the mail server,
+            such as 'UTF-8' or 'US-ASCII'.
           maxLength: 256
         is_token:
           type: boolean
@@ -7741,7 +7820,8 @@ components:
         folder:
           type: string
           minLength: 1
-          description: Subfolders must be separated by a delimiter, often a dot ('.') or slash ('/'), but it varies by mail server.
+          description: Subfolders must be separated by a delimiter, often a dot ('.')
+            or slash ('/'), but it varies by mail server.
           maxLength: 256
         filter_from:
           type: string
@@ -7763,13 +7843,15 @@ components:
           type: string
           nullable: true
           title: Filter attachment filename inclusive
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_attachment_filename_exclude:
           type: string
           nullable: true
           title: Filter attachment filename exclusive
-          description: Do not consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Do not consume documents which entirely match this filename
+            if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         maximum_age:
           type: integer
@@ -7906,7 +7988,10 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          $ref: '#/components/schemas/DisplayModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/DisplayModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -7996,7 +8081,8 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents
+            will be tagged with inbox tags.'
         owner:
           type: integer
           nullable: true
@@ -8035,7 +8121,8 @@ components:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -8062,16 +8149,19 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly assigning them.
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions
+            granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -8267,12 +8357,14 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified.
+            Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
@@ -8425,11 +8517,6 @@ components:
           title: ASN
         custom_fields:
           writeOnly: true
-          type: array
-          items:
-            type: integer
-            writeOnly: true
-            title: Custom fields
         from_webui:
           type: boolean
           writeOnly: true
@@ -8667,7 +8754,10 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          $ref: '#/components/schemas/DisplayModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/DisplayModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -8742,7 +8832,10 @@ components:
         display_mode:
           nullable: true
           title: View display mode
-          $ref: '#/components/schemas/DisplayModeEnum'
+          oneOf:
+          - $ref: '#/components/schemas/DisplayModeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
         display_fields:
           nullable: true
           title: Document display fields
@@ -9166,7 +9259,8 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents
+            will be tagged with inbox tags.'
         document_count:
           type: integer
           readOnly: true
@@ -9225,7 +9319,8 @@ components:
           type: boolean
         is_inbox_tag:
           type: boolean
-          description: 'Marks this tag as an inbox tag: All newly consumed documents will be tagged with inbox tags.'
+          description: 'Marks this tag as an inbox tag: All newly consumed documents
+            will be tagged with inbox tags.'
         owner:
           type: integer
           nullable: true
@@ -9307,7 +9402,9 @@ components:
             * `train_classifier` - Train Classifier
             * `check_sanity` - Check Sanity
             * `index_optimize` - Index Optimize
-          $ref: '#/components/schemas/TaskNameEnum'
+          oneOf:
+          - $ref: '#/components/schemas/TaskNameEnum'
+          - $ref: '#/components/schemas/NullEnum'
         task_file_name:
           type: string
           nullable: true
@@ -9386,7 +9483,9 @@ components:
             * `train_classifier` - Train Classifier
             * `check_sanity` - Check Sanity
             * `index_optimize` - Index Optimize
-          $ref: '#/components/schemas/TaskNameEnum'
+          oneOf:
+          - $ref: '#/components/schemas/TaskNameEnum'
+          - $ref: '#/components/schemas/NullEnum'
         task_file_name:
           type: string
           nullable: true
@@ -9513,7 +9612,8 @@ components:
           readOnly: true
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -9539,16 +9639,19 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly assigning them.
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions
+            granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -9572,7 +9675,8 @@ components:
         username:
           type: string
           minLength: 1
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
         email:
@@ -9599,16 +9703,19 @@ components:
         is_active:
           type: boolean
           title: Active
-          description: Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
         is_superuser:
           type: boolean
           title: Superuser status
-          description: Designates that this user has all permissions without explicitly assigning them.
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
         groups:
           type: array
           items:
             type: integer
-          description: The groups this user belongs to. A user will get all permissions granted to each of their groups.
+          description: The groups this user belongs to. A user will get all permissions
+            granted to each of their groups.
         user_permissions:
           type: array
           items:
@@ -9801,12 +9908,14 @@ components:
         subject:
           type: string
           title: Email subject
-          description: The subject of the email, can include some placeholders, see documentation.
+          description: The subject of the email, can include some placeholders, see
+            documentation.
           maxLength: 256
         body:
           type: string
           title: Email body
-          description: The body (message) of the email, can include some placeholders, see documentation.
+          description: The body (message) of the email, can include some placeholders,
+            see documentation.
         to:
           type: string
           title: Emails to
@@ -9828,13 +9937,15 @@ components:
           type: string
           minLength: 1
           title: Email subject
-          description: The subject of the email, can include some placeholders, see documentation.
+          description: The subject of the email, can include some placeholders, see
+            documentation.
           maxLength: 256
         body:
           type: string
           minLength: 1
           title: Email body
-          description: The body (message) of the email, can include some placeholders, see documentation.
+          description: The body (message) of the email, can include some placeholders,
+            see documentation.
         to:
           type: string
           minLength: 1
@@ -10124,12 +10235,14 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified.
+            Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
@@ -10263,12 +10376,14 @@ components:
         filter_path:
           type: string
           nullable: true
-          description: Only consume documents with a path that matches this if specified. Wildcards specified as * are allowed. Case insensitive.
+          description: Only consume documents with a path that matches this if specified.
+            Wildcards specified as * are allowed. Case insensitive.
           maxLength: 256
         filter_filename:
           type: string
           nullable: true
-          description: Only consume documents which entirely match this filename if specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
+          description: Only consume documents which entirely match this filename if
+            specified. Wildcards such as *.pdf or *invoice* are allowed. Case insensitive.
           maxLength: 256
         filter_mailrule:
           type: integer
