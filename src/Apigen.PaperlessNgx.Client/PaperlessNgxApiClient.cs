@@ -261,7 +261,7 @@ public class PaperlessNgxApiClient
   }
 
   /// <summary>
-  /// Create client with API key authentication
+  /// Create client with Authorization authentication
   /// </summary>
   public static PaperlessNgxApiClient WithApiKey(string apiKey, string baseUrl = "https://localhost", ILogger? logger = null)
   {
