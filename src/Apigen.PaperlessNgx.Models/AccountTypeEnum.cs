@@ -35,11 +35,11 @@ public enum AccountTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "1")]
-    _1 = 1,
+    Imap = 1,
 
     [EnumMember(Value = "2")]
-    _2 = 2,
+    GmailOAuth = 2,
 
     [EnumMember(Value = "3")]
-    _3 = 3
+    OutlookOAuth = 3
 }

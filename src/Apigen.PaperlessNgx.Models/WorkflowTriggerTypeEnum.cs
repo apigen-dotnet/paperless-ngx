@@ -36,14 +36,14 @@ public enum WorkflowTriggerTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "1")]
-    _1 = 1,
+    ConsumptionStarted = 1,
 
     [EnumMember(Value = "2")]
-    _2 = 2,
+    DocumentAdded = 2,
 
     [EnumMember(Value = "3")]
-    _3 = 3,
+    DocumentUpdated = 3,
 
     [EnumMember(Value = "4")]
-    _4 = 4
+    Scheduled = 4
 }

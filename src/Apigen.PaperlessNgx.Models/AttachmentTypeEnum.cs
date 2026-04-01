@@ -34,8 +34,8 @@ public enum AttachmentTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "1")]
-    _1 = 1,
+    OnlyAttachments = 1,
 
     [EnumMember(Value = "2")]
-    _2 = 2
+    AllFiles = 2
 }

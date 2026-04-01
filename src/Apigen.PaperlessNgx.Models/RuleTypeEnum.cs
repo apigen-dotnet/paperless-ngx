@@ -80,146 +80,146 @@ public enum RuleTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "0")]
-    _0 = 0,
+    TitleContains = 0,
 
     [EnumMember(Value = "1")]
-    _1 = 1,
+    ContentContains = 1,
 
     [EnumMember(Value = "2")]
-    _2 = 2,
+    AsnIs = 2,
 
     [EnumMember(Value = "3")]
-    _3 = 3,
+    CorrespondentIs = 3,
 
     [EnumMember(Value = "4")]
-    _4 = 4,
+    DocumentTypeIs = 4,
 
     [EnumMember(Value = "5")]
-    _5 = 5,
+    IsInInbox = 5,
 
     [EnumMember(Value = "6")]
-    _6 = 6,
+    HasTag = 6,
 
     [EnumMember(Value = "7")]
-    _7 = 7,
+    HasAnyTag = 7,
 
     [EnumMember(Value = "8")]
-    _8 = 8,
+    CreatedBefore = 8,
 
     [EnumMember(Value = "9")]
-    _9 = 9,
+    CreatedAfter = 9,
 
     [EnumMember(Value = "10")]
-    _10 = 10,
+    CreatedYearIs = 10,
 
     [EnumMember(Value = "11")]
-    _11 = 11,
+    CreatedMonthIs = 11,
 
     [EnumMember(Value = "12")]
-    _12 = 12,
+    CreatedDayIs = 12,
 
     [EnumMember(Value = "13")]
-    _13 = 13,
+    AddedBefore = 13,
 
     [EnumMember(Value = "14")]
-    _14 = 14,
+    AddedAfter = 14,
 
     [EnumMember(Value = "15")]
-    _15 = 15,
+    ModifiedBefore = 15,
 
     [EnumMember(Value = "16")]
-    _16 = 16,
+    ModifiedAfter = 16,
 
     [EnumMember(Value = "17")]
-    _17 = 17,
+    DoesNotHaveTag = 17,
 
     [EnumMember(Value = "18")]
-    _18 = 18,
+    DoesNotHaveAsn = 18,
 
     [EnumMember(Value = "19")]
-    _19 = 19,
+    TitleOrContentContains = 19,
 
     [EnumMember(Value = "20")]
-    _20 = 20,
+    FulltextQuery = 20,
 
     [EnumMember(Value = "21")]
-    _21 = 21,
+    MoreLikeThis = 21,
 
     [EnumMember(Value = "22")]
-    _22 = 22,
+    HasTagsIn = 22,
 
     [EnumMember(Value = "23")]
-    _23 = 23,
+    AsnGreaterThan = 23,
 
     [EnumMember(Value = "24")]
-    _24 = 24,
+    AsnLessThan = 24,
 
     [EnumMember(Value = "25")]
-    _25 = 25,
+    StoragePathIs = 25,
 
     [EnumMember(Value = "26")]
-    _26 = 26,
+    HasCorrespondentIn = 26,
 
     [EnumMember(Value = "27")]
-    _27 = 27,
+    DoesNotHaveCorrespondentIn = 27,
 
     [EnumMember(Value = "28")]
-    _28 = 28,
+    HasDocumentTypeIn = 28,
 
     [EnumMember(Value = "29")]
-    _29 = 29,
+    DoesNotHaveDocumentTypeIn = 29,
 
     [EnumMember(Value = "30")]
-    _30 = 30,
+    HasStoragePathIn = 30,
 
     [EnumMember(Value = "31")]
-    _31 = 31,
+    DoesNotHaveStoragePathIn = 31,
 
     [EnumMember(Value = "32")]
-    _32 = 32,
+    OwnerIs = 32,
 
     [EnumMember(Value = "33")]
-    _33 = 33,
+    HasOwnerIn = 33,
 
     [EnumMember(Value = "34")]
-    _34 = 34,
+    DoesNotHaveOwner = 34,
 
     [EnumMember(Value = "35")]
-    _35 = 35,
+    DoesNotHaveOwnerIn = 35,
 
     [EnumMember(Value = "36")]
-    _36 = 36,
+    HasCustomFieldValue = 36,
 
     [EnumMember(Value = "37")]
-    _37 = 37,
+    IsSharedByMe = 37,
 
     [EnumMember(Value = "38")]
-    _38 = 38,
+    HasCustomFields = 38,
 
     [EnumMember(Value = "39")]
-    _39 = 39,
+    HasCustomFieldIn = 39,
 
     [EnumMember(Value = "40")]
-    _40 = 40,
+    DoesNotHaveCustomFieldIn = 40,
 
     [EnumMember(Value = "41")]
-    _41 = 41,
+    DoesNotHaveCustomField = 41,
 
     [EnumMember(Value = "42")]
-    _42 = 42,
+    CustomFieldsQuery = 42,
 
     [EnumMember(Value = "43")]
-    _43 = 43,
+    CreatedTo = 43,
 
     [EnumMember(Value = "44")]
-    _44 = 44,
+    CreatedFrom = 44,
 
     [EnumMember(Value = "45")]
-    _45 = 45,
+    AddedTo = 45,
 
     [EnumMember(Value = "46")]
-    _46 = 46,
+    AddedFrom = 46,
 
     [EnumMember(Value = "47")]
-    _47 = 47
+    MimeTypeIs = 47
 }

@@ -36,14 +36,14 @@ public enum WorkflowActionTypeEnum
     Unknown = -1,
 
     [EnumMember(Value = "1")]
-    _1 = 1,
+    Assignment = 1,
 
     [EnumMember(Value = "2")]
-    _2 = 2,
+    Removal = 2,
 
     [EnumMember(Value = "3")]
-    _3 = 3,
+    Email = 3,
 
     [EnumMember(Value = "4")]
-    _4 = 4
+    Webhook = 4
 }
