@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Apigen.Generator;
 
 /// <summary>
@@ -15,14 +15,14 @@ public class MergeEmailDocumentsResponse : ISpecPatch
     if (document.Components?.Schemas == null) return false;
     if (!document.Components.Schemas.ContainsKey("EmailDocumentsResponse")) return false;
 
-    // Get the canonical schema to use as replacement
-    if (!document.Components.Schemas.TryGetValue("EmailDocumentResponse", out OpenApiSchema? canonical))
+    // Get the canonical schema to verify it exists
+    if (!document.Components.Schemas.ContainsKey("EmailDocumentResponse"))
       return false;
 
     // Rewrite all references in paths
     if (document.Paths != null)
     {
-      RewriteRefs(document.Paths);
+      RewriteRefs(document, document.Paths);
     }
 
     // Remove the duplicate
@@ -30,25 +30,26 @@ public class MergeEmailDocumentsResponse : ISpecPatch
     return true;
   }
 
-  private void RewriteRefs(OpenApiPaths paths)
+  private void RewriteRefs(OpenApiDocument document, OpenApiPaths paths)
   {
     foreach (var path in paths.Values)
     {
+      if (path.Operations == null) continue;
       foreach (var op in path.Operations.Values)
       {
         // Check response schemas
+        if (op.Responses == null) continue;
         foreach (var response in op.Responses.Values)
         {
           if (response.Content == null) continue;
-          foreach (var content in response.Content.Values)
+          foreach (var iContent in response.Content.Values)
           {
-            if (content.Schema?.Reference?.Id == "EmailDocumentsResponse")
+            if (iContent is not OpenApiMediaType content) continue;
+            // In 3.x, content.Schema is IOpenApiSchema; check if it's an OpenApiSchemaReference
+            if (content.Schema is OpenApiSchemaReference schemaRef &&
+                schemaRef.Reference?.Id == "EmailDocumentsResponse")
             {
-              content.Schema.Reference = new OpenApiReference
-              {
-                Type = ReferenceType.Schema,
-                Id = "EmailDocumentResponse"
-              };
+              content.Schema = new OpenApiSchemaReference("EmailDocumentResponse", document);
             }
           }
         }

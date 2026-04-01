@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Apigen.Generator;
 
 /// <summary>
@@ -34,9 +34,9 @@ public class RemoveNullBlankEnums : ISpecPatch
     if (!changed) return false;
 
     // Strip references from oneOf lists in all schemas
-    foreach (var schema in document.Components.Schemas.Values)
+    foreach (var iSchema in document.Components.Schemas.Values)
     {
-      StripFromSchema(schema);
+      StripFromISchema(iSchema);
     }
 
     // Strip references from paths
@@ -44,22 +44,24 @@ public class RemoveNullBlankEnums : ISpecPatch
     {
       foreach (var path in document.Paths.Values)
       {
+        if (path.Operations == null) continue;
         foreach (var op in path.Operations.Values)
         {
           if (op.RequestBody?.Content != null)
           {
             foreach (var content in op.RequestBody.Content.Values)
             {
-              if (content.Schema != null) StripFromSchema(content.Schema);
+              if (content.Schema != null) StripFromISchema(content.Schema);
             }
           }
 
+          if (op.Responses == null) continue;
           foreach (var response in op.Responses.Values)
           {
             if (response.Content == null) continue;
             foreach (var content in response.Content.Values)
             {
-              if (content.Schema != null) StripFromSchema(content.Schema);
+              if (content.Schema != null) StripFromISchema(content.Schema);
             }
           }
         }
@@ -69,40 +71,53 @@ public class RemoveNullBlankEnums : ISpecPatch
     return true;
   }
 
-  private static void StripFromSchema(OpenApiSchema schema)
+  private static void StripFromISchema(IOpenApiSchema iSchema)
   {
+    // In 3.x, schemas in collections may be IOpenApiSchema (including OpenApiSchemaReference)
+    // Only process concrete OpenApiSchema instances (references don't have mutable oneOf/properties)
+    OpenApiSchema schema;
+    if (iSchema is OpenApiSchema concrete)
+      schema = concrete;
+    else if (iSchema is OpenApiSchemaReference schemaRef)
+      schema = schemaRef.RecursiveTarget;
+    else
+      return;
+
+    if (schema == null) return;
+
     // Process properties recursively
     if (schema.Properties != null)
     {
       foreach (var prop in schema.Properties.Values)
       {
-        StripFromSchema(prop);
+        StripFromISchema(prop);
       }
     }
 
     // Process items (arrays)
     if (schema.Items != null)
     {
-      StripFromSchema(schema.Items);
+      StripFromISchema(schema.Items);
     }
 
     // Strip from oneOf
+    // In 3.x, OneOf contains IOpenApiSchema; references are OpenApiSchemaReference
     if (schema.OneOf?.Count > 0)
     {
       schema.OneOf = schema.OneOf
-        .Where(s => s.Reference == null || !SchemasToRemove.Contains(s.Reference.Id))
+        .Where(s => !(s is OpenApiSchemaReference sRef && SchemasToRemove.Contains(sRef.Reference?.Id ?? "")))
         .ToList();
 
       // If oneOf has only one item left, unwrap it
       if (schema.OneOf.Count == 1)
       {
-        OpenApiSchema single = schema.OneOf[0];
+        IOpenApiSchema single = schema.OneOf[0];
         schema.OneOf.Clear();
 
-        // Copy the single item's reference into this schema
-        if (single.Reference != null)
+        // Copy the single item's reference into this schema via allOf
+        if (single is OpenApiSchemaReference)
         {
-          schema.AllOf = new List<OpenApiSchema> { single };
+          schema.AllOf = new List<IOpenApiSchema> { single };
         }
       }
     }
@@ -110,7 +125,7 @@ public class RemoveNullBlankEnums : ISpecPatch
     // Process additionalProperties
     if (schema.AdditionalProperties != null)
     {
-      StripFromSchema(schema.AdditionalProperties);
+      StripFromISchema(schema.AdditionalProperties);
     }
   }
 }

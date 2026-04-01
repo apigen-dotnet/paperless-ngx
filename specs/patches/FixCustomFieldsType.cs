@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Apigen.Generator;
 
 /// <summary>
@@ -10,20 +10,32 @@ public class FixCustomFieldsType : ISpecPatch
 {
   public string Name => "Fix PostDocumentRequest.custom_fields type";
 
+  private static OpenApiSchema ResolveSchema(IOpenApiSchema schema)
+  {
+    if (schema is OpenApiSchema concrete) return concrete;
+    if (schema is OpenApiSchemaReference reference)
+      return reference.RecursiveTarget ?? throw new System.InvalidOperationException(
+        $"Unresolved schema reference: {reference.Reference?.Id ?? "(unknown)"}");
+    return (OpenApiSchema)schema;
+  }
+
   public bool Apply(OpenApiDocument document)
   {
     if (document.Components?.Schemas == null) return false;
-    if (!document.Components.Schemas.TryGetValue("PostDocumentRequest", out OpenApiSchema? schema)) return false;
+    if (!document.Components.Schemas.TryGetValue("PostDocumentRequest", out IOpenApiSchema? iSchema)) return false;
+    OpenApiSchema schema = ResolveSchema(iSchema);
     if (schema.Properties == null) return false;
-    if (!schema.Properties.TryGetValue("custom_fields", out OpenApiSchema? cf)) return false;
+    if (!schema.Properties.TryGetValue("custom_fields", out IOpenApiSchema? cfI)) return false;
+    OpenApiSchema cf = ResolveSchema(cfI);
 
     // Already has a type? Don't patch (idempotent)
-    if (!string.IsNullOrEmpty(cf.Type)) return false;
+    // In 3.x, Type is JsonSchemaType? (flags enum), not a string
+    if (cf.Type != null && cf.Type != (JsonSchemaType)0) return false;
 
-    cf.Type = "array";
+    cf.Type = JsonSchemaType.Array;
     cf.Items = new OpenApiSchema
     {
-      Type = "integer",
+      Type = JsonSchemaType.Integer,
       WriteOnly = true,
       Title = "Custom fields"
     };
