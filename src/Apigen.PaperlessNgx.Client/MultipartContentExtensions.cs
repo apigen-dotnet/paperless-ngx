@@ -1,56 +1,40 @@
 using System.Net.Http;
-using System.Reflection;
-using System.Text.Json.Serialization;
+using System.Text.Json;
+using Apigen.PaperlessNgx.Models;
 
 namespace Apigen.PaperlessNgx.Client;
 
 internal static class MultipartContentExtensions
 {
-  /// <summary>
-  /// Converts a DTO object to MultipartFormDataContent for file upload endpoints.
-  /// Properties of type byte[] are added as file content, all others as string fields.
-  /// Uses JsonPropertyName attribute for field names.
-  /// </summary>
-  public static MultipartFormDataContent ToMultipartContent(this object dto)
+  public static MultipartFormDataContent ToMultipartContent(this Apigen.PaperlessNgx.Models.PostDocumentRequest postDocumentRequest)
   {
     MultipartFormDataContent content = new();
-
-    foreach (PropertyInfo prop in dto.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
-    {
-      object? value = prop.GetValue(dto);
-      if (value == null) continue;
-
-      // Use JsonPropertyName attribute for the field name, fall back to property name
-      string fieldName = prop.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name ?? prop.Name;
-
-      if (value is byte[] bytes)
-      {
-        ByteArrayContent fileContent = new(bytes);
-        content.Add(fileContent, fieldName, fieldName);
-      }
-      else if (value is Stream stream)
-      {
-        StreamContent streamContent = new(stream);
-        content.Add(streamContent, fieldName, fieldName);
-      }
-      else if (value is bool boolValue)
-      {
-        content.Add(new StringContent(boolValue.ToString().ToLowerInvariant()), fieldName);
-      }
-      else if (value is DateTime dateTime)
-      {
-        content.Add(new StringContent(dateTime.ToString("O")), fieldName);
-      }
-      else if (value is DateTimeOffset dateTimeOffset)
-      {
-        content.Add(new StringContent(dateTimeOffset.ToString("O")), fieldName);
-      }
-      else
-      {
-        content.Add(new StringContent(value.ToString() ?? ""), fieldName);
-      }
-    }
-
+    if (postDocumentRequest.Created != null)
+      content.Add(new StringContent(postDocumentRequest.Created.Value.ToString("O")), "created");
+    content.Add(new ByteArrayContent(postDocumentRequest.Document), "document", "document.bin");
+    if (postDocumentRequest.Title != null)
+      content.Add(new StringContent(postDocumentRequest.Title), "title");
+    if (postDocumentRequest.Correspondent != null)
+      content.Add(new StringContent(postDocumentRequest.Correspondent.Value.ToString()), "correspondent");
+    if (postDocumentRequest.DocumentType != null)
+      content.Add(new StringContent(postDocumentRequest.DocumentType.Value.ToString()), "document_type");
+    if (postDocumentRequest.StoragePath != null)
+      content.Add(new StringContent(postDocumentRequest.StoragePath.Value.ToString()), "storage_path");
+    if (postDocumentRequest.Tags != null)
+      content.Add(new StringContent(JsonSerializer.Serialize(postDocumentRequest.Tags, JsonConfig.Default)), "tags");
+    if (postDocumentRequest.ArchiveSerialNumber != null)
+      content.Add(new StringContent(postDocumentRequest.ArchiveSerialNumber.Value.ToString()), "archive_serial_number");
+    if (postDocumentRequest.CustomFields != null)
+      content.Add(new StringContent(JsonSerializer.Serialize(postDocumentRequest.CustomFields, JsonConfig.Default)), "custom_fields");
+    if (postDocumentRequest.FromWebui != null)
+      content.Add(new StringContent(postDocumentRequest.FromWebui.Value.ToString().ToLowerInvariant()), "from_webui");
+    return content;
+  }
+  public static MultipartFormDataContent ToMultipartContent(this Apigen.PaperlessNgx.Models.DocumentListRequest documentListRequest)
+  {
+    MultipartFormDataContent content = new();
+    if (documentListRequest.Documents != null)
+      content.Add(new StringContent(JsonSerializer.Serialize(documentListRequest.Documents, JsonConfig.Default)), "documents");
     return content;
   }
 }
