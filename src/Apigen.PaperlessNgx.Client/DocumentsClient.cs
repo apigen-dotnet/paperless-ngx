@@ -210,7 +210,7 @@ public class DocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/download/
   /// </summary>
-  public async Task<JsonElement> DocumentsDownloadRetrieveAsync(int id, DocumentsDownloadRetrieveRequest? request = null)
+  public async Task<Stream> DocumentsDownloadRetrieveAsync(int id, DocumentsDownloadRetrieveRequest? request = null)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -224,22 +224,17 @@ public class DocumentsClient
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
-    string responseContent;
     try
     {
       response.EnsureSuccessStatusCode();
-      responseContent = await response.Content.ReadAsStringAsync();
     }
     catch (HttpRequestException ex)
     {
-      responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      string errorContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, errorContent, ex);
       throw;
     }
-
-    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
-    return result;
+    return await response.Content.ReadAsStreamAsync();
   }
 
 
@@ -475,7 +470,7 @@ public class DocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/preview/
   /// </summary>
-  public async Task<JsonElement> DocumentsPreviewRetrieveAsync(int id)
+  public async Task<Stream> DocumentsPreviewRetrieveAsync(int id)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -489,22 +484,17 @@ public class DocumentsClient
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
-    string responseContent;
     try
     {
       response.EnsureSuccessStatusCode();
-      responseContent = await response.Content.ReadAsStringAsync();
     }
     catch (HttpRequestException ex)
     {
-      responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      string errorContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, errorContent, ex);
       throw;
     }
-
-    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
-    return result;
+    return await response.Content.ReadAsStreamAsync();
   }
 
 
@@ -586,7 +576,7 @@ public class DocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/thumb/
   /// </summary>
-  public async Task<JsonElement> DocumentsThumbRetrieveAsync(int id)
+  public async Task<Stream> DocumentsThumbRetrieveAsync(int id)
   {
     Dictionary<string, object> pathParams = new()
     {
@@ -600,22 +590,17 @@ public class DocumentsClient
     long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
     HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
-    string responseContent;
     try
     {
       response.EnsureSuccessStatusCode();
-      responseContent = await response.Content.ReadAsStringAsync();
     }
     catch (HttpRequestException ex)
     {
-      responseContent = await response.Content.ReadAsStringAsync();
-      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, responseContent, ex);
+      string errorContent = await response.Content.ReadAsStringAsync();
+      HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "GET", url, errorContent, ex);
       throw;
     }
-
-    HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-    JsonElement result = JsonSerializer.Deserialize<JsonElement>(responseContent, JsonConfig.Default);
-    return result;
+    return await response.Content.ReadAsStreamAsync();
   }
 
 

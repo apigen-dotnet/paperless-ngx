@@ -45,7 +45,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/download/
   /// </summary>
-  Task<JsonElement> DocumentsDownloadRetrieveAsync(int id, DocumentsDownloadRetrieveRequest? request = null);
+  Task<Stream> DocumentsDownloadRetrieveAsync(int id, DocumentsDownloadRetrieveRequest? request = null);
 
   /// <summary>
   /// 
@@ -87,7 +87,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/preview/
   /// </summary>
-  Task<JsonElement> DocumentsPreviewRetrieveAsync(int id);
+  Task<Stream> DocumentsPreviewRetrieveAsync(int id);
 
   /// <summary>
   /// 
@@ -105,7 +105,7 @@ public interface IDocumentsClient
   /// 
   /// Operation: GET /api/documents/{id}/thumb/
   /// </summary>
-  Task<JsonElement> DocumentsThumbRetrieveAsync(int id);
+  Task<Stream> DocumentsThumbRetrieveAsync(int id);
 
   /// <summary>
   /// 
