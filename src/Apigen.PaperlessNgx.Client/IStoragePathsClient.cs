@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for storage_paths operations
 /// </summary>
-public interface IStoragePathsClient
+public partial interface IStoragePathsClient
 {
   /// <summary>
   /// 

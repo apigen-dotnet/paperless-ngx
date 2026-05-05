@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/saved_views/
 /// </summary>
-public class SavedViewsListRequest : BaseRequest
+public partial class SavedViewsListRequest : BaseRequest
 {
   /// <summary>
   /// A page number within the paginated result set.

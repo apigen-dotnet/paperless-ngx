@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedWorkflowTriggerRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedWorkflowTriggerRequest
 /// </summary>
-public class PatchedWorkflowTriggerRequest
+public partial class PatchedWorkflowTriggerRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("id")]
   public int? Id { get; set; }

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Profile from OpenAPI schema.
 /// Schema path: #/components/schemas/Profile
 /// </summary>
-public class Profile
+public partial class Profile
 {
   [EmailAddress]
   [System.Text.Json.Serialization.JsonPropertyName("email")]

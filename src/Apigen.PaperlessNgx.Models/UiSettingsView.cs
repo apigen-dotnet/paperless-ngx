@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// UiSettingsView from OpenAPI schema.
 /// Schema path: #/components/schemas/UiSettingsView
 /// </summary>
-public class UiSettingsView
+public partial class UiSettingsView
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

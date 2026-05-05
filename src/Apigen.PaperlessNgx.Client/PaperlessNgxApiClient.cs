@@ -12,7 +12,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Main API client for accessing all resources
 /// </summary>
-public class PaperlessNgxApiClient
+public partial class PaperlessNgxApiClient
 {
   private readonly HttpClient _httpClient;
   private readonly bool _disposeHttpClient;

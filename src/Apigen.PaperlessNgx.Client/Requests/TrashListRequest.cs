@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/trash/
 /// </summary>
-public class TrashListRequest : BaseRequest
+public partial class TrashListRequest : BaseRequest
 {
   /// <summary>
   /// A page number within the paginated result set.

@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/mail_rules/
 /// </summary>
-public class MailRulesListRequest : BaseRequest
+public partial class MailRulesListRequest : BaseRequest
 {
   /// <summary>
   /// A page number within the paginated result set.

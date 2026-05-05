@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for remote_version operations
 /// </summary>
-public interface IRemoteVersionClient
+public partial interface IRemoteVersionClient
 {
   /// <summary>
   /// 

@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for workflow_triggers operations
 /// </summary>
-public interface IWorkflowTriggersClient
+public partial interface IWorkflowTriggersClient
 {
   /// <summary>
   /// 

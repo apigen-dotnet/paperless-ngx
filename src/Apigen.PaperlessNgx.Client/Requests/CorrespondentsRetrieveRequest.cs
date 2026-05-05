@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/correspondents/{id}/
 /// </summary>
-public class CorrespondentsRetrieveRequest : BaseRequest
+public partial class CorrespondentsRetrieveRequest : BaseRequest
 {
   /// <summary>
   /// full_perms

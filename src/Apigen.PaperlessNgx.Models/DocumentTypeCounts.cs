@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// DocumentTypeCounts from OpenAPI schema.
 /// Schema path: #/components/schemas/DocumentTypeCounts
 /// </summary>
-public class DocumentTypeCounts
+public partial class DocumentTypeCounts
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

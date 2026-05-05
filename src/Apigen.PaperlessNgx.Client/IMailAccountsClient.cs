@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for mail_accounts operations
 /// </summary>
-public interface IMailAccountsClient
+public partial interface IMailAccountsClient
 {
   /// <summary>
   /// 

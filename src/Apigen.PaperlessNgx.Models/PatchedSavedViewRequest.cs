@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedSavedViewRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedSavedViewRequest
 /// </summary>
-public class PatchedSavedViewRequest
+public partial class PatchedSavedViewRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

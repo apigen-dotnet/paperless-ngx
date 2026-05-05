@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// GroupRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/GroupRequest
 /// </summary>
-public class GroupRequest
+public partial class GroupRequest
 {
   [Required]
   [MinLength(1)]

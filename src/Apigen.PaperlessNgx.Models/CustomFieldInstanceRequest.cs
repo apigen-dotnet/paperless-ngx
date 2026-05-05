@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CustomFieldInstanceRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/CustomFieldInstanceRequest
 /// </summary>
-public class CustomFieldInstanceRequest
+public partial class CustomFieldInstanceRequest
 {
   /// <summary>
   /// Given the *incoming* primitive data, return the value for this field

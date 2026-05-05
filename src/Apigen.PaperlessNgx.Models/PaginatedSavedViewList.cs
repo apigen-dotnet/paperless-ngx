@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedSavedViewList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedSavedViewList
 /// </summary>
-public class PaginatedSavedViewList
+public partial class PaginatedSavedViewList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

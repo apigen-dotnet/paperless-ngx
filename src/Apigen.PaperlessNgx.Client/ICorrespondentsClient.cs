@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for correspondents operations
 /// </summary>
-public interface ICorrespondentsClient
+public partial interface ICorrespondentsClient
 {
   /// <summary>
   /// 

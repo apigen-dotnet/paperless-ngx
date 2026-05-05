@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Correspondent from OpenAPI schema.
 /// Schema path: #/components/schemas/Correspondent
 /// </summary>
-public class Correspondent
+public partial class Correspondent
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

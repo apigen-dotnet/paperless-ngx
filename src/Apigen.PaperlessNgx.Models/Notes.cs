@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Notes from OpenAPI schema.
 /// Schema path: #/components/schemas/Notes
 /// </summary>
-public class Notes
+public partial class Notes
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

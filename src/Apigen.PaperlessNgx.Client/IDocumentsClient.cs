@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for documents operations
 /// </summary>
-public interface IDocumentsClient
+public partial interface IDocumentsClient
 {
   /// <summary>
   /// 

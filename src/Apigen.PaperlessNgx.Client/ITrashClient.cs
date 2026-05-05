@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for trash operations
 /// </summary>
-public interface ITrashClient
+public partial interface ITrashClient
 {
   /// <summary>
   /// 

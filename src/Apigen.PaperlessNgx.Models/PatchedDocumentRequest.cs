@@ -26,7 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 
 /// Adds update nested feature
 /// </summary>
-public class PatchedDocumentRequest
+public partial class PatchedDocumentRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("correspondent")]
   public int? Correspondent { get; set; }

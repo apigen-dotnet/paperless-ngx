@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// ApplicationConfigurationRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/ApplicationConfigurationRequest
 /// </summary>
-public class ApplicationConfigurationRequest
+public partial class ApplicationConfigurationRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// WorkflowTrigger from OpenAPI schema.
 /// Schema path: #/components/schemas/WorkflowTrigger
 /// </summary>
-public class WorkflowTrigger
+public partial class WorkflowTrigger
 {
   [System.Text.Json.Serialization.JsonPropertyName("id")]
   public int? Id { get; set; }

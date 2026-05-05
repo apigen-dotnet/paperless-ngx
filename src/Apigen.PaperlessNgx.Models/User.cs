@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// User from OpenAPI schema.
 /// Schema path: #/components/schemas/User
 /// </summary>
-public class User
+public partial class User
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// NotesRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/NotesRequest
 /// </summary>
-public class NotesRequest
+public partial class NotesRequest
 {
   /// <summary>
   /// Note for the document

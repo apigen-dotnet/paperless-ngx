@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/search/
 /// </summary>
-public class SearchRetrieveRequest : BaseRequest
+public partial class SearchRetrieveRequest : BaseRequest
 {
   /// <summary>
   /// Search only the database

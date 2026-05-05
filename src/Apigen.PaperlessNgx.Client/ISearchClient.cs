@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for search operations
 /// </summary>
-public interface ISearchClient
+public partial interface ISearchClient
 {
   /// <summary>
   /// 

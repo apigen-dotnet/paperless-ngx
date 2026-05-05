@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/tasks/
 /// </summary>
-public class TasksListRequest : BaseRequest
+public partial class TasksListRequest : BaseRequest
 {
   /// <summary>
   /// Acknowledged

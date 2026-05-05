@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/custom_fields/
 /// </summary>
-public class CustomFieldsListRequest : BaseRequest
+public partial class CustomFieldsListRequest : BaseRequest
 {
   /// <summary>
   /// id

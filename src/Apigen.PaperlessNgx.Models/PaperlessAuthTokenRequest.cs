@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaperlessAuthTokenRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PaperlessAuthTokenRequest
 /// </summary>
-public class PaperlessAuthTokenRequest
+public partial class PaperlessAuthTokenRequest
 {
   [Required]
   [MinLength(1)]

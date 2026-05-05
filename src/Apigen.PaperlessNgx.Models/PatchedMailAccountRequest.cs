@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedMailAccountRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedMailAccountRequest
 /// </summary>
-public class PatchedMailAccountRequest
+public partial class PatchedMailAccountRequest
 {
   [MinLength(1)]
   [MaxLength(256)]

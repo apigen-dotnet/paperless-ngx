@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for groups operations
 /// </summary>
-public interface IGroupsClient
+public partial interface IGroupsClient
 {
   /// <summary>
   /// 

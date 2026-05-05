@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Database from OpenAPI schema.
 /// Schema path: #/components/schemas/Database
 /// </summary>
-public class Database
+public partial class Database
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("type")]

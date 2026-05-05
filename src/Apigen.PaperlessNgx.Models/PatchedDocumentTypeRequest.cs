@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedDocumentTypeRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedDocumentTypeRequest
 /// </summary>
-public class PatchedDocumentTypeRequest
+public partial class PatchedDocumentTypeRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

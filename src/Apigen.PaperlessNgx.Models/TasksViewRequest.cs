@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// TasksViewRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/TasksViewRequest
 /// </summary>
-public class TasksViewRequest
+public partial class TasksViewRequest
 {
   /// <summary>
   /// Celery ID for the Task that was run

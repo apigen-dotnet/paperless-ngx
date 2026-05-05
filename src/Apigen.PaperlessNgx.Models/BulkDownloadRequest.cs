@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// BulkDownloadRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/BulkDownloadRequest
 /// </summary>
-public class BulkDownloadRequest
+public partial class BulkDownloadRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

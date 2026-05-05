@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// DocumentListRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/DocumentListRequest
 /// </summary>
-public class DocumentListRequest
+public partial class DocumentListRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

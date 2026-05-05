@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for bulk_edit_objects operations
 /// </summary>
-public interface IBulkEditObjectsClient
+public partial interface IBulkEditObjectsClient
 {
   /// <summary>
   /// 

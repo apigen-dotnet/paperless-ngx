@@ -26,7 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 
 /// Adds update nested feature
 /// </summary>
-public class DocumentRequest
+public partial class DocumentRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

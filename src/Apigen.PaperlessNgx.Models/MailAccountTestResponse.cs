@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MailAccountTestResponse from OpenAPI schema.
 /// Schema path: #/components/schemas/MailAccountTestResponse
 /// </summary>
-public class MailAccountTestResponse
+public partial class MailAccountTestResponse
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("success")]

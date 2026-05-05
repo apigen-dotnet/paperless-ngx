@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/document_types/{id}/
 /// </summary>
-public class DocumentTypesRetrieveRequest : BaseRequest
+public partial class DocumentTypesRetrieveRequest : BaseRequest
 {
   /// <summary>
   /// full_perms

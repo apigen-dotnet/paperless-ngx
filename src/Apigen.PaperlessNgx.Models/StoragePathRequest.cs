@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// StoragePathRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/StoragePathRequest
 /// </summary>
-public class StoragePathRequest
+public partial class StoragePathRequest
 {
   [Required]
   [MinLength(1)]

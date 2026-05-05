@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedStoragePathList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedStoragePathList
 /// </summary>
-public class PaginatedStoragePathList
+public partial class PaginatedStoragePathList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

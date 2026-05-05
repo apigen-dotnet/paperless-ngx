@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// TagCounts from OpenAPI schema.
 /// Schema path: #/components/schemas/TagCounts
 /// </summary>
-public class TagCounts
+public partial class TagCounts
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// DocumentType from OpenAPI schema.
 /// Schema path: #/components/schemas/DocumentType
 /// </summary>
-public class DocumentType
+public partial class DocumentType
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

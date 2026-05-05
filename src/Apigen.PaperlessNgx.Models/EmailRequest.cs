@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// EmailRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/EmailRequest
 /// </summary>
-public class EmailRequest
+public partial class EmailRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for share_links operations
 /// </summary>
-public class ShareLinksClient
+public partial class ShareLinksClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

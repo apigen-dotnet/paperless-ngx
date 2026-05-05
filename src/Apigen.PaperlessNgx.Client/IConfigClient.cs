@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for config operations
 /// </summary>
-public interface IConfigClient
+public partial interface IConfigClient
 {
   /// <summary>
   /// 

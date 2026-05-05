@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// LogEntry from OpenAPI schema.
 /// Schema path: #/components/schemas/LogEntry
 /// </summary>
-public class LogEntry
+public partial class LogEntry
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

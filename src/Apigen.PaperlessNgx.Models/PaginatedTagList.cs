@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedTagList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedTagList
 /// </summary>
-public class PaginatedTagList
+public partial class PaginatedTagList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

@@ -21,10 +21,10 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// ProfileTotpCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/ProfileTotpCreateRequest
+/// ProfileTotpCreateRequest (generated from inline request body).
+/// Source: POST /api/profile/totp/ (requestBody)
 /// </summary>
-public class ProfileTotpCreateRequest
+public partial class ProfileTotpCreateRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

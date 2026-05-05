@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for users operations
 /// </summary>
-public class UsersClient
+public partial class UsersClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

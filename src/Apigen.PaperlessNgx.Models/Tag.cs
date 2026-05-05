@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Tag from OpenAPI schema.
 /// Schema path: #/components/schemas/Tag
 /// </summary>
-public class Tag
+public partial class Tag
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

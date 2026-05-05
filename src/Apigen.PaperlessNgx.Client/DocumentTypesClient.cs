@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for document_types operations
 /// </summary>
-public class DocumentTypesClient
+public partial class DocumentTypesClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

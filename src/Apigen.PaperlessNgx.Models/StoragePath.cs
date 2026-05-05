@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// StoragePath from OpenAPI schema.
 /// Schema path: #/components/schemas/StoragePath
 /// </summary>
-public class StoragePath
+public partial class StoragePath
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

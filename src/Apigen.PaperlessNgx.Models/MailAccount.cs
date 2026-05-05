@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MailAccount from OpenAPI schema.
 /// Schema path: #/components/schemas/MailAccount
 /// </summary>
-public class MailAccount
+public partial class MailAccount
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

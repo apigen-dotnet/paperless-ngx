@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// TasksView from OpenAPI schema.
 /// Schema path: #/components/schemas/TasksView
 /// </summary>
-public class TasksView
+public partial class TasksView
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

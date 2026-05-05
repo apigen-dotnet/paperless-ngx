@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for users operations
 /// </summary>
-public interface IUsersClient
+public partial interface IUsersClient
 {
   /// <summary>
   /// 

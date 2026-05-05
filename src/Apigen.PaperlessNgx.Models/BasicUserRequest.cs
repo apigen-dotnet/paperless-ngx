@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// BasicUserRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/BasicUserRequest
 /// </summary>
-public class BasicUserRequest
+public partial class BasicUserRequest
 {
   /// <summary>
   /// Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.

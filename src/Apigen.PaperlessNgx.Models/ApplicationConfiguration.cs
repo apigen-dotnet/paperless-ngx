@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// ApplicationConfiguration from OpenAPI schema.
 /// Schema path: #/components/schemas/ApplicationConfiguration
 /// </summary>
-public class ApplicationConfiguration
+public partial class ApplicationConfiguration
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

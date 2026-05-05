@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PostDocumentRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PostDocumentRequest
 /// </summary>
-public class PostDocumentRequest
+public partial class PostDocumentRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("created")]
   public DateTime? Created { get; set; }

@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/tags/{id}/
 /// </summary>
-public class TagsRetrieveRequest : BaseRequest
+public partial class TagsRetrieveRequest : BaseRequest
 {
   /// <summary>
   /// full_perms

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// DocumentTypeRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/DocumentTypeRequest
 /// </summary>
-public class DocumentTypeRequest
+public partial class DocumentTypeRequest
 {
   [Required]
   [MinLength(1)]

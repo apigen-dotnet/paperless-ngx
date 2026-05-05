@@ -21,10 +21,10 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// AcknowledgeTasksRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/AcknowledgeTasksRequest
+/// AcknowledgeTasksRequest (generated from inline request body).
+/// Source: POST /api/tasks/acknowledge/ (requestBody)
 /// </summary>
-public class AcknowledgeTasksRequest
+public partial class AcknowledgeTasksRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedWorkflowRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedWorkflowRequest
 /// </summary>
-public class PatchedWorkflowRequest
+public partial class PatchedWorkflowRequest
 {
   [MinLength(1)]
   [MaxLength(256)]

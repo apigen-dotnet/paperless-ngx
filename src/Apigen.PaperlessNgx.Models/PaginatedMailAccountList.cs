@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedMailAccountList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedMailAccountList
 /// </summary>
-public class PaginatedMailAccountList
+public partial class PaginatedMailAccountList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

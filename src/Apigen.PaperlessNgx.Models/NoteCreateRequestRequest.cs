@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// NoteCreateRequestRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/NoteCreateRequestRequest
 /// </summary>
-public class NoteCreateRequestRequest
+public partial class NoteCreateRequestRequest
 {
   [Required]
   [MinLength(1)]

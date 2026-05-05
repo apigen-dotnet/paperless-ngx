@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedMailRuleRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedMailRuleRequest
 /// </summary>
-public class PatchedMailRuleRequest
+public partial class PatchedMailRuleRequest
 {
   [MinLength(1)]
   [MaxLength(256)]

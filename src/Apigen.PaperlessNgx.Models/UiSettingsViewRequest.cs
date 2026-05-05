@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// UiSettingsViewRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/UiSettingsViewRequest
 /// </summary>
-public class UiSettingsViewRequest
+public partial class UiSettingsViewRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("settings")]
   public Dictionary<string, object?>? Settings { get; set; }

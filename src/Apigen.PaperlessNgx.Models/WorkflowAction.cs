@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// WorkflowAction from OpenAPI schema.
 /// Schema path: #/components/schemas/WorkflowAction
 /// </summary>
-public class WorkflowAction
+public partial class WorkflowAction
 {
   [System.Text.Json.Serialization.JsonPropertyName("id")]
   public int? Id { get; set; }

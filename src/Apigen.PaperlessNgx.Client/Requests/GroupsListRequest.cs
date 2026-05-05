@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/groups/
 /// </summary>
-public class GroupsListRequest : BaseRequest
+public partial class GroupsListRequest : BaseRequest
 {
   /// <summary>
   /// name__icontains

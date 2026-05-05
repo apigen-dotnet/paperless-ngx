@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for saved_views operations
 /// </summary>
-public interface ISavedViewsClient
+public partial interface ISavedViewsClient
 {
   /// <summary>
   /// 

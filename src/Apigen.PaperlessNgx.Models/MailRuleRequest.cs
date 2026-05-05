@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MailRuleRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/MailRuleRequest
 /// </summary>
-public class MailRuleRequest
+public partial class MailRuleRequest
 {
   [Required]
   [MinLength(1)]

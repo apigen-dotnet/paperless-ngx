@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedCustomFieldList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedCustomFieldList
 /// </summary>
-public class PaginatedCustomFieldList
+public partial class PaginatedCustomFieldList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// EmailDocumentRequestRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/EmailDocumentRequestRequest
 /// </summary>
-public class EmailDocumentRequest
+public partial class EmailDocumentRequest
 {
   /// <summary>
   /// Comma-separated email addresses

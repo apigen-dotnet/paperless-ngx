@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// ProcessedMailRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/ProcessedMailRequest
 /// </summary>
-public class ProcessedMailRequest
+public partial class ProcessedMailRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("owner")]
   public int? Owner { get; set; }

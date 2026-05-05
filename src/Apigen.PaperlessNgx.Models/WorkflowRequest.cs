@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// WorkflowRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/WorkflowRequest
 /// </summary>
-public class WorkflowRequest
+public partial class WorkflowRequest
 {
   [Required]
   [MinLength(1)]

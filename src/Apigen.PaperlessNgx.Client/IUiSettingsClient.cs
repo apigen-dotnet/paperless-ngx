@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for ui_settings operations
 /// </summary>
-public interface IUiSettingsClient
+public partial interface IUiSettingsClient
 {
   /// <summary>
   /// 

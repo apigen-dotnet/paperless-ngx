@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// TrashRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/TrashRequest
 /// </summary>
-public class TrashRequest
+public partial class TrashRequest
 {
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("documents")]

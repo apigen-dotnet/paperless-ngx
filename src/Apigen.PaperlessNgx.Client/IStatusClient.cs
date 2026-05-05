@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for status operations
 /// </summary>
-public interface IStatusClient
+public partial interface IStatusClient
 {
   /// <summary>
   /// 

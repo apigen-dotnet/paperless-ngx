@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Classifier from OpenAPI schema.
 /// Schema path: #/components/schemas/Classifier
 /// </summary>
-public class Classifier
+public partial class Classifier
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("status")]

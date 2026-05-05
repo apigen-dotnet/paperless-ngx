@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for tags operations
 /// </summary>
-public interface ITagsClient
+public partial interface ITagsClient
 {
   /// <summary>
   /// 

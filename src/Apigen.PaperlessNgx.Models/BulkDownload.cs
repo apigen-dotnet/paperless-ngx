@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// BulkDownload from OpenAPI schema.
 /// Schema path: #/components/schemas/BulkDownload
 /// </summary>
-public class BulkDownload
+public partial class BulkDownload
 {
   [System.Text.Json.Serialization.JsonPropertyName("content")]
   public ContentEnum? Content { get; set; }

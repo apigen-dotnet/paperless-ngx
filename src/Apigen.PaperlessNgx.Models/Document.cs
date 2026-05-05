@@ -26,7 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 
 /// Adds update nested feature
 /// </summary>
-public class Document
+public partial class Document
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

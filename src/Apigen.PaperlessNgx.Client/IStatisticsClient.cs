@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for statistics operations
 /// </summary>
-public interface IStatisticsClient
+public partial interface IStatisticsClient
 {
   /// <summary>
   /// 

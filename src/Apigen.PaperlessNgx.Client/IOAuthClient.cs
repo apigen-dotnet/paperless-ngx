@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for oauth operations
 /// </summary>
-public interface IOAuthClient
+public partial interface IOAuthClient
 {
   /// <summary>
   /// 

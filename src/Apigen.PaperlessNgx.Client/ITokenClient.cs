@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for token operations
 /// </summary>
-public interface ITokenClient
+public partial interface ITokenClient
 {
   /// <summary>
   /// 

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// StoragePathCounts from OpenAPI schema.
 /// Schema path: #/components/schemas/StoragePathCounts
 /// </summary>
-public class StoragePathCounts
+public partial class StoragePathCounts
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

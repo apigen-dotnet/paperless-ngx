@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Suggestions from OpenAPI schema.
 /// Schema path: #/components/schemas/Suggestions
 /// </summary>
-public class Suggestions
+public partial class Suggestions
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("correspondents")]

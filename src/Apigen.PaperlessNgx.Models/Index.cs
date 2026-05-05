@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Index from OpenAPI schema.
 /// Schema path: #/components/schemas/Index
 /// </summary>
-public class Index
+public partial class Index
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("status")]

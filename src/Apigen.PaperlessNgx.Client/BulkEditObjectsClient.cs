@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for bulk_edit_objects operations
 /// </summary>
-public class BulkEditObjectsClient
+public partial class BulkEditObjectsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

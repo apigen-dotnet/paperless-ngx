@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for processed_mail operations
 /// </summary>
-public interface IProcessedMailClient
+public partial interface IProcessedMailClient
 {
   /// <summary>
   /// 

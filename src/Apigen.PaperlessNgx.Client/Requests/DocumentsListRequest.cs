@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/documents/
 /// </summary>
-public class DocumentsListRequest : BaseRequest
+public partial class DocumentsListRequest : BaseRequest
 {
   /// <summary>
   /// added__date__gt

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// EmailDocumentResponse from OpenAPI schema.
 /// Schema path: #/components/schemas/EmailDocumentResponse
 /// </summary>
-public class EmailDocumentResponse
+public partial class EmailDocumentResponse
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("message")]

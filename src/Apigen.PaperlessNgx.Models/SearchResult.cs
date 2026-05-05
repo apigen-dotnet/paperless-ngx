@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SearchResult from OpenAPI schema.
 /// Schema path: #/components/schemas/SearchResult
 /// </summary>
-public class SearchResult
+public partial class SearchResult
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("total")]

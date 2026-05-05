@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CustomFieldRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/CustomFieldRequest
 /// </summary>
-public class CustomFieldRequest
+public partial class CustomFieldRequest
 {
   [Required]
   [MinLength(1)]

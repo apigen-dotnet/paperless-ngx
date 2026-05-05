@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Actor from OpenAPI schema.
 /// Schema path: #/components/schemas/Actor
 /// </summary>
-public class Actor
+public partial class Actor
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

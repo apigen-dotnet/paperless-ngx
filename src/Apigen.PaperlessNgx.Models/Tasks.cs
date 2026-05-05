@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Tasks from OpenAPI schema.
 /// Schema path: #/components/schemas/Tasks
 /// </summary>
-public class Tasks
+public partial class Tasks
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("redis_url")]

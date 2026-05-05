@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedWorkflowList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedWorkflowList
 /// </summary>
-public class PaginatedWorkflowList
+public partial class PaginatedWorkflowList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

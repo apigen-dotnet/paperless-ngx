@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MigrationStatus from OpenAPI schema.
 /// Schema path: #/components/schemas/MigrationStatus
 /// </summary>
-public class MigrationStatus
+public partial class MigrationStatus
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("latest_migration")]

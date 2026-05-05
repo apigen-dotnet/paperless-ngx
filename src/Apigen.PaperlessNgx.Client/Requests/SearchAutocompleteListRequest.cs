@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/search/autocomplete/
 /// </summary>
-public class SearchAutocompleteListRequest : BaseRequest
+public partial class SearchAutocompleteListRequest : BaseRequest
 {
   /// <summary>
   /// Number of completions to return

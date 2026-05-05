@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/storage_paths/{id}/
 /// </summary>
-public class StoragePathsRetrieveRequest : BaseRequest
+public partial class StoragePathsRetrieveRequest : BaseRequest
 {
   /// <summary>
   /// full_perms

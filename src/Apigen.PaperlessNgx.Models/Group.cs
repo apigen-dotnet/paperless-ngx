@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Group from OpenAPI schema.
 /// Schema path: #/components/schemas/Group
 /// </summary>
-public class Group
+public partial class Group
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

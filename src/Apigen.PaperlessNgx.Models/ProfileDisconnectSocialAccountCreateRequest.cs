@@ -21,10 +21,10 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// ProfileDisconnectSocialAccountCreateRequest from OpenAPI schema.
-/// Schema path: #/components/schemas/ProfileDisconnectSocialAccountCreateRequest
+/// ProfileDisconnectSocialAccountCreateRequest (generated from inline request body).
+/// Source: POST /api/profile/disconnect_social_account/ (requestBody)
 /// </summary>
-public class ProfileDisconnectSocialAccountCreateRequest
+public partial class ProfileDisconnectSocialAccountCreateRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

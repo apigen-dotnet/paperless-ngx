@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedCustomFieldRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedCustomFieldRequest
 /// </summary>
-public class PatchedCustomFieldRequest
+public partial class PatchedCustomFieldRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

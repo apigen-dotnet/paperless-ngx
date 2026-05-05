@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SelectionData from OpenAPI schema.
 /// Schema path: #/components/schemas/SelectionData
 /// </summary>
-public class SelectionData
+public partial class SelectionData
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("selected_correspondents")]

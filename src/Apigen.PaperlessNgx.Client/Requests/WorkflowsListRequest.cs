@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/workflows/
 /// </summary>
-public class WorkflowsListRequest : BaseRequest
+public partial class WorkflowsListRequest : BaseRequest
 {
   /// <summary>
   /// A page number within the paginated result set.

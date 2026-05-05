@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// AcknowledgeTasks from OpenAPI schema.
 /// Schema path: #/components/schemas/AcknowledgeTasks
 /// </summary>
-public class AcknowledgeTasks
+public partial class AcknowledgeTasks
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("result")]

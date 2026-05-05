@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SocialAccount from OpenAPI schema.
 /// Schema path: #/components/schemas/SocialAccount
 /// </summary>
-public class SocialAccount
+public partial class SocialAccount
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CustomFieldCounts from OpenAPI schema.
 /// Schema path: #/components/schemas/CustomFieldCounts
 /// </summary>
-public class CustomFieldCounts
+public partial class CustomFieldCounts
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

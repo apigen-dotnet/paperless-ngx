@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// Metadata from OpenAPI schema.
 /// Schema path: #/components/schemas/Metadata
 /// </summary>
-public class Metadata
+public partial class Metadata
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("original_checksum")]

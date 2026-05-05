@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedTagRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedTagRequest
 /// </summary>
-public class PatchedTagRequest
+public partial class PatchedTagRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

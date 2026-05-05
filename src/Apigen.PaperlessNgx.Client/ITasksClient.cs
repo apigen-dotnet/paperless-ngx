@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for tasks operations
 /// </summary>
-public interface ITasksClient
+public partial interface ITasksClient
 {
   /// <summary>
   /// 

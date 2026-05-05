@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for config operations
 /// </summary>
-public class ConfigClient
+public partial class ConfigClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

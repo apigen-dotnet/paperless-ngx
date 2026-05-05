@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for statistics operations
 /// </summary>
-public class StatisticsClient
+public partial class StatisticsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

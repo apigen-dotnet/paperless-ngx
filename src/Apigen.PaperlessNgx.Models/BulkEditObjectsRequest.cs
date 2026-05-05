@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// BulkEditObjectsRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/BulkEditObjectsRequest
 /// </summary>
-public class BulkEditObjectsRequest
+public partial class BulkEditObjectsRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.Never)]

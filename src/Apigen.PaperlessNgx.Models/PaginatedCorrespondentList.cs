@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedCorrespondentList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedCorrespondentList
 /// </summary>
-public class PaginatedCorrespondentList
+public partial class PaginatedCorrespondentList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

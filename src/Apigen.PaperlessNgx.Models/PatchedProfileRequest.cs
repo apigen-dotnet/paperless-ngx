@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedProfileRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedProfileRequest
 /// </summary>
-public class PatchedProfileRequest
+public partial class PatchedProfileRequest
 {
   [EmailAddress]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]

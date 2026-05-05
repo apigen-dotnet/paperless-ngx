@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/processed_mail/
 /// </summary>
-public class ProcessedMailListRequest : BaseRequest
+public partial class ProcessedMailListRequest : BaseRequest
 {
   /// <summary>
   /// Which field to use when ordering the results.

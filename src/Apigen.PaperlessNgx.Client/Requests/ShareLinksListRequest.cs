@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/share_links/
 /// </summary>
-public class ShareLinksListRequest : BaseRequest
+public partial class ShareLinksListRequest : BaseRequest
 {
   /// <summary>
   /// created__date__gt

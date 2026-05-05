@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedGroupRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedGroupRequest
 /// </summary>
-public class PatchedGroupRequest
+public partial class PatchedGroupRequest
 {
   [MinLength(1)]
   [MaxLength(150)]

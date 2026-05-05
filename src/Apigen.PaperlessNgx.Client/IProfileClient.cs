@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for profile operations
 /// </summary>
-public interface IProfileClient
+public partial interface IProfileClient
 {
   /// <summary>
   /// 

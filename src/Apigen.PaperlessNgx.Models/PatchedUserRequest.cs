@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedUserRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedUserRequest
 /// </summary>
-public class PatchedUserRequest
+public partial class PatchedUserRequest
 {
   /// <summary>
   /// Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.

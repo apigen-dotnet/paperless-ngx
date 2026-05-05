@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for custom_fields operations
 /// </summary>
-public interface ICustomFieldsClient
+public partial interface ICustomFieldsClient
 {
   /// <summary>
   /// 

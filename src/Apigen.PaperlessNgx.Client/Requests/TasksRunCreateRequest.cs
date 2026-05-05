@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: POST /api/tasks/run/
 /// </summary>
-public class TasksRunCreateRequest : BaseRequest
+public partial class TasksRunCreateRequest : BaseRequest
 {
   /// <summary>
   /// Filter tasks by Celery UUID

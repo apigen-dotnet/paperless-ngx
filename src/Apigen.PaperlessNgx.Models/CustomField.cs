@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CustomField from OpenAPI schema.
 /// Schema path: #/components/schemas/CustomField
 /// </summary>
-public class CustomField
+public partial class CustomField
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

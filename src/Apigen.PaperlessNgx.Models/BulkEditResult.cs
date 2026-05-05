@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// BulkEditResult from OpenAPI schema.
 /// Schema path: #/components/schemas/BulkEditResult
 /// </summary>
-public class BulkEditResult
+public partial class BulkEditResult
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("result")]

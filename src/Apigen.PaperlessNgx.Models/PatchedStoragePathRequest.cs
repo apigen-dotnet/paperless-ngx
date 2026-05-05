@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedStoragePathRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedStoragePathRequest
 /// </summary>
-public class PatchedStoragePathRequest
+public partial class PatchedStoragePathRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

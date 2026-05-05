@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// ShareLinkRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/ShareLinkRequest
 /// </summary>
-public class ShareLinkRequest
+public partial class ShareLinkRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("expiration")]
   public DateTime? Expiration { get; set; }

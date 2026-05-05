@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for search operations
 /// </summary>
-public class SearchClient
+public partial class SearchClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

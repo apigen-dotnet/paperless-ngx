@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/users/
 /// </summary>
-public class UsersListRequest : BaseRequest
+public partial class UsersListRequest : BaseRequest
 {
   /// <summary>
   /// Which field to use when ordering the results.

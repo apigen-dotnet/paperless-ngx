@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for share_links operations
 /// </summary>
-public interface IShareLinksClient
+public partial interface IShareLinksClient
 {
   /// <summary>
   /// 

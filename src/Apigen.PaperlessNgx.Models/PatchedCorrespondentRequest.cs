@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedCorrespondentRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedCorrespondentRequest
 /// </summary>
-public class PatchedCorrespondentRequest
+public partial class PatchedCorrespondentRequest
 {
   [MinLength(1)]
   [MaxLength(128)]

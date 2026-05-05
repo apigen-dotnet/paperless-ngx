@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CorrespondentRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/CorrespondentRequest
 /// </summary>
-public class CorrespondentRequest
+public partial class CorrespondentRequest
 {
   [Required]
   [MinLength(1)]

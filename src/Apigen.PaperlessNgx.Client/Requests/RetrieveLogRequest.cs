@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: GET /api/logs/{id}/
 /// </summary>
-public class RetrieveLogRequest : BaseRequest
+public partial class RetrieveLogRequest : BaseRequest
 {
   /// <summary>
   /// Return only the last N entries from the log file

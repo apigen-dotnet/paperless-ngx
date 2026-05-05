@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaperlessAuthToken from OpenAPI schema.
 /// Schema path: #/components/schemas/PaperlessAuthToken
 /// </summary>
-public class PaperlessAuthToken
+public partial class PaperlessAuthToken
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("token")]

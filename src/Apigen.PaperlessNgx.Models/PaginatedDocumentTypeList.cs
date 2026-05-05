@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedDocumentTypeList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedDocumentTypeList
 /// </summary>
-public class PaginatedDocumentTypeList
+public partial class PaginatedDocumentTypeList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

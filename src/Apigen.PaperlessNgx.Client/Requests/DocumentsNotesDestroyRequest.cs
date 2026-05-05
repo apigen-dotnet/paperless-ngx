@@ -11,7 +11,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// Request parameters for 
 /// Operation: DELETE /api/documents/{id}/notes/
 /// </summary>
-public class DocumentsNotesDestroyRequest : BaseRequest
+public partial class DocumentsNotesDestroyRequest : BaseRequest
 {
   /// <summary>
   /// Note ID to delete (used only for DELETE requests)

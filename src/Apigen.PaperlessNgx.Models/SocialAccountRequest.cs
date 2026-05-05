@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SocialAccountRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/SocialAccountRequest
 /// </summary>
-public class SocialAccountRequest
+public partial class SocialAccountRequest
 {
   [Required]
   [MinLength(1)]

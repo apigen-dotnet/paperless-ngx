@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for mail_rules operations
 /// </summary>
-public class MailRulesClient
+public partial class MailRulesClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

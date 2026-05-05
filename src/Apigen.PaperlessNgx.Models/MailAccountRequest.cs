@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MailAccountRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/MailAccountRequest
 /// </summary>
-public class MailAccountRequest
+public partial class MailAccountRequest
 {
   [Required]
   [MinLength(1)]

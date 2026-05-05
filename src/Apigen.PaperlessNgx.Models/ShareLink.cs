@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// ShareLink from OpenAPI schema.
 /// Schema path: #/components/schemas/ShareLink
 /// </summary>
-public class ShareLink
+public partial class ShareLink
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

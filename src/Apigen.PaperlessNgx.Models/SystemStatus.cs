@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SystemStatus from OpenAPI schema.
 /// Schema path: #/components/schemas/SystemStatus
 /// </summary>
-public class SystemStatus
+public partial class SystemStatus
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("pngx_version")]

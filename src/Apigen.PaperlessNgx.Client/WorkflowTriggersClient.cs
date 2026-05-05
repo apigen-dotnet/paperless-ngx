@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for workflow_triggers operations
 /// </summary>
-public class WorkflowTriggersClient
+public partial class WorkflowTriggersClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

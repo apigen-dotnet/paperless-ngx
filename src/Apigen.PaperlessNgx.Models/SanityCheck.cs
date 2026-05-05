@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SanityCheck from OpenAPI schema.
 /// Schema path: #/components/schemas/SanityCheck
 /// </summary>
-public class SanityCheck
+public partial class SanityCheck
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("status")]

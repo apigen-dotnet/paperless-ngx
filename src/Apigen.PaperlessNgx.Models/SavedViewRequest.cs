@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SavedViewRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/SavedViewRequest
 /// </summary>
-public class SavedViewRequest
+public partial class SavedViewRequest
 {
   [Required]
   [MinLength(1)]

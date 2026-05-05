@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for mail_rules operations
 /// </summary>
-public interface IMailRulesClient
+public partial interface IMailRulesClient
 {
   /// <summary>
   /// 

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SavedView from OpenAPI schema.
 /// Schema path: #/components/schemas/SavedView
 /// </summary>
-public class SavedView
+public partial class SavedView
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// CorrespondentCounts from OpenAPI schema.
 /// Schema path: #/components/schemas/CorrespondentCounts
 /// </summary>
-public class CorrespondentCounts
+public partial class CorrespondentCounts
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]

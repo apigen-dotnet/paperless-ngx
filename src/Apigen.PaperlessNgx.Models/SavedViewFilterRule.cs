@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SavedViewFilterRule from OpenAPI schema.
 /// Schema path: #/components/schemas/SavedViewFilterRule
 /// </summary>
-public class SavedViewFilterRule
+public partial class SavedViewFilterRule
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("rule_type")]

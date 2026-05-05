@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// TagRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/TagRequest
 /// </summary>
-public class TagRequest
+public partial class TagRequest
 {
   [Required]
   [MinLength(1)]

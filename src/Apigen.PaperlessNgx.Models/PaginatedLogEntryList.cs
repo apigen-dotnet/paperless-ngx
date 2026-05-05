@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedLogEntryList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedLogEntryList
 /// </summary>
-public class PaginatedLogEntryList
+public partial class PaginatedLogEntryList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

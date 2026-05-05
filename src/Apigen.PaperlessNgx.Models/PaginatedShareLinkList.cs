@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PaginatedShareLinkList from OpenAPI schema.
 /// Schema path: #/components/schemas/PaginatedShareLinkList
 /// </summary>
-public class PaginatedShareLinkList
+public partial class PaginatedShareLinkList
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("count")]

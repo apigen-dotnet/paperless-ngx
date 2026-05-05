@@ -9,7 +9,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Interface for logs operations
 /// </summary>
-public interface ILogsClient
+public partial interface ILogsClient
 {
   /// <summary>
   /// 

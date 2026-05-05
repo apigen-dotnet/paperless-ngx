@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// PatchedApplicationConfigurationRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/PatchedApplicationConfigurationRequest
 /// </summary>
-public class PatchedApplicationConfigurationRequest
+public partial class PatchedApplicationConfigurationRequest
 {
   [System.Text.Json.Serialization.JsonPropertyName("user_args")]
   public object? UserArgs { get; set; }

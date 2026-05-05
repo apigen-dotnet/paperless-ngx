@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// SavedViewFilterRuleRequest from OpenAPI schema.
 /// Schema path: #/components/schemas/SavedViewFilterRuleRequest
 /// </summary>
-public class SavedViewFilterRuleRequest
+public partial class SavedViewFilterRuleRequest
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("rule_type")]

@@ -14,7 +14,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for status operations
 /// </summary>
-public class StatusClient
+public partial class StatusClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

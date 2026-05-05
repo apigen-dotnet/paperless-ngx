@@ -24,7 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// MailRule from OpenAPI schema.
 /// Schema path: #/components/schemas/MailRule
 /// </summary>
-public class MailRule
+public partial class MailRule
 {
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("id")]
