@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface IRemoteVersionClient
   /// 
   /// Operation: GET /api/remote_version/
   /// </summary>
-  Task<JsonElement> RemoteVersionRetrieveAsync();
+  Task<JsonElement> RemoteVersionRetrieveAsync(CancellationToken cancellationToken = default);
 
 }

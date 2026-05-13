@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,36 +16,36 @@ public partial interface IWorkflowActionsClient
   /// 
   /// Operation: GET /api/workflow_actions/
   /// </summary>
-  Task<PaginatedWorkflowActionList> WorkflowActionsListAsync(WorkflowActionsListRequest? request = null);
+  Task<PaginatedWorkflowActionList> WorkflowActionsListAsync(WorkflowActionsListRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: POST /api/workflow_actions/
   /// </summary>
-  Task<WorkflowAction> WorkflowActionsCreateAsync(Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest);
+  Task<WorkflowAction> WorkflowActionsCreateAsync(Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: GET /api/workflow_actions/{id}/
   /// </summary>
-  Task<WorkflowAction> WorkflowActionsRetrieveAsync(int id);
+  Task<WorkflowAction> WorkflowActionsRetrieveAsync(int id, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: PUT /api/workflow_actions/{id}/
   /// </summary>
-  Task<WorkflowAction> WorkflowActionsUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest);
+  Task<WorkflowAction> WorkflowActionsUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: PATCH /api/workflow_actions/{id}/
   /// </summary>
-  Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest);
+  Task<WorkflowAction> WorkflowActionsPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.WorkflowActionRequest workflowActionRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: DELETE /api/workflow_actions/{id}/
   /// </summary>
-  Task WorkflowActionsDestroyAsync(int id);
+  Task WorkflowActionsDestroyAsync(int id, CancellationToken cancellationToken = default);
 
 }

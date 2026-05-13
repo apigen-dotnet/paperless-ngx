@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface IStatisticsClient
   /// 
   /// Operation: GET /api/statistics/
   /// </summary>
-  Task<JsonElement> StatisticsRetrieveAsync();
+  Task<JsonElement> StatisticsRetrieveAsync(CancellationToken cancellationToken = default);
 
 }

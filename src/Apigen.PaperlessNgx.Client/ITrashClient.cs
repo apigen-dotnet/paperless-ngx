@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,12 +16,12 @@ public partial interface ITrashClient
   /// 
   /// Operation: GET /api/trash/
   /// </summary>
-  Task TrashListAsync(TrashListRequest? request = null);
+  Task TrashListAsync(TrashListRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: POST /api/trash/
   /// </summary>
-  Task TrashCreateAsync(Apigen.PaperlessNgx.Models.TrashRequest trashRequest);
+  Task TrashCreateAsync(Apigen.PaperlessNgx.Models.TrashRequest trashRequest, CancellationToken cancellationToken = default);
 
 }

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface IStatusClient
   /// 
   /// Operation: GET /api/status/
   /// </summary>
-  Task<SystemStatus> StatusRetrieveAsync();
+  Task<SystemStatus> StatusRetrieveAsync(CancellationToken cancellationToken = default);
 
 }

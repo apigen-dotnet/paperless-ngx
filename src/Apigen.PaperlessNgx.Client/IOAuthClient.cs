@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface IOAuthClient
   /// 
   /// Operation: GET /api/oauth/callback/
   /// </summary>
-  Task OauthCallbackRetrieveAsync();
+  Task OauthCallbackRetrieveAsync(CancellationToken cancellationToken = default);
 
 }

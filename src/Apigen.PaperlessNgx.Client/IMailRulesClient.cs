@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,36 +16,36 @@ public partial interface IMailRulesClient
   /// 
   /// Operation: GET /api/mail_rules/
   /// </summary>
-  Task<PaginatedMailRuleList> MailRulesListAsync(MailRulesListRequest? request = null);
+  Task<PaginatedMailRuleList> MailRulesListAsync(MailRulesListRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: POST /api/mail_rules/
   /// </summary>
-  Task<MailRule> MailRulesCreateAsync(Apigen.PaperlessNgx.Models.MailRuleRequest mailRuleRequest);
+  Task<MailRule> MailRulesCreateAsync(Apigen.PaperlessNgx.Models.MailRuleRequest mailRuleRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: GET /api/mail_rules/{id}/
   /// </summary>
-  Task<MailRule> MailRulesRetrieveAsync(int id);
+  Task<MailRule> MailRulesRetrieveAsync(int id, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: PUT /api/mail_rules/{id}/
   /// </summary>
-  Task<MailRule> MailRulesUpdateAsync(int id, Apigen.PaperlessNgx.Models.MailRuleRequest mailRuleRequest);
+  Task<MailRule> MailRulesUpdateAsync(int id, Apigen.PaperlessNgx.Models.MailRuleRequest mailRuleRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: PATCH /api/mail_rules/{id}/
   /// </summary>
-  Task<MailRule> MailRulesPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedMailRuleRequest patchedMailRuleRequest);
+  Task<MailRule> MailRulesPartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedMailRuleRequest patchedMailRuleRequest, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: DELETE /api/mail_rules/{id}/
   /// </summary>
-  Task MailRulesDestroyAsync(int id);
+  Task MailRulesDestroyAsync(int id, CancellationToken cancellationToken = default);
 
 }

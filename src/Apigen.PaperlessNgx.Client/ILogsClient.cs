@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,12 +16,12 @@ public partial interface ILogsClient
   /// 
   /// Operation: GET /api/logs/
   /// </summary>
-  Task<JsonElement> LogsListAsync();
+  Task<JsonElement> LogsListAsync(CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: GET /api/logs/{id}/
   /// </summary>
-  Task<JsonElement> RetrieveLogAsync(string id, RetrieveLogRequest? request = null);
+  Task<JsonElement> RetrieveLogAsync(string id, RetrieveLogRequest? request = null, CancellationToken cancellationToken = default);
 
 }

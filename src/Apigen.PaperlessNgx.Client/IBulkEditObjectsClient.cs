@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface IBulkEditObjectsClient
   /// 
   /// Operation: POST /api/bulk_edit_objects/
   /// </summary>
-  Task<BulkEditResult> BulkAsync(Apigen.PaperlessNgx.Models.BulkEditObjectsRequest bulkEditObjectsRequest);
+  Task<BulkEditResult> BulkAsync(Apigen.PaperlessNgx.Models.BulkEditObjectsRequest bulkEditObjectsRequest, CancellationToken cancellationToken = default);
 
 }

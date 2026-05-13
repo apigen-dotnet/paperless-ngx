@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,24 +16,24 @@ public partial interface ITasksClient
   /// 
   /// Operation: GET /api/tasks/
   /// </summary>
-  Task<List<TasksView>> TasksListAsync(TasksListRequest? request = null);
+  Task<List<TasksView>> TasksListAsync(TasksListRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: GET /api/tasks/{id}/
   /// </summary>
-  Task<TasksView> TasksRetrieveAsync(int id, TasksRetrieveRequest? request = null);
+  Task<TasksView> TasksRetrieveAsync(int id, TasksRetrieveRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: POST /api/tasks/acknowledge/
   /// </summary>
-  Task<AcknowledgeTasks> AcknowledgeTasksAsync(Apigen.PaperlessNgx.Models.AcknowledgeTasksRequest acknowledgeTasksRequest, AcknowledgeTasksRequest? request = null);
+  Task<AcknowledgeTasks> AcknowledgeTasksAsync(Apigen.PaperlessNgx.Models.AcknowledgeTasksRequest acknowledgeTasksRequest, AcknowledgeTasksRequest? request = null, CancellationToken cancellationToken = default);
 
   /// <summary>
   /// 
   /// Operation: POST /api/tasks/run/
   /// </summary>
-  Task<TasksView> TasksRunCreateAsync(Apigen.PaperlessNgx.Models.TasksViewRequest tasksViewRequest, TasksRunCreateRequest? request = null);
+  Task<TasksView> TasksRunCreateAsync(Apigen.PaperlessNgx.Models.TasksViewRequest tasksViewRequest, TasksRunCreateRequest? request = null, CancellationToken cancellationToken = default);
 
 }

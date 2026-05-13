@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Apigen.PaperlessNgx.Models;
 
@@ -15,6 +16,6 @@ public partial interface ITokenClient
   /// 
   /// Operation: POST /api/token/
   /// </summary>
-  Task<PaperlessAuthToken> TokenCreateAsync(Apigen.PaperlessNgx.Models.PaperlessAuthTokenRequest paperlessAuthTokenRequest);
+  Task<PaperlessAuthToken> TokenCreateAsync(Apigen.PaperlessNgx.Models.PaperlessAuthTokenRequest paperlessAuthTokenRequest, CancellationToken cancellationToken = default);
 
 }
