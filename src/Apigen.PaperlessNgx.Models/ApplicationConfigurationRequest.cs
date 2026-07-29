@@ -36,6 +36,7 @@ public partial class ApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("barcode_tag_mapping")]
   public object? BarcodeTagMapping { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("output_type")]
   public OutputTypeEnum? OutputType { get; set; }
 
@@ -47,9 +48,11 @@ public partial class ApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("language")]
   public string? Language { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("mode")]
   public ModeEnum? Mode { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("skip_archive_file")]
   public SkipArchiveFileEnum? SkipArchiveFile { get; set; }
 
@@ -57,6 +60,7 @@ public partial class ApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("image_dpi")]
   public int? ImageDpi { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("unpaper_clean")]
   public UnpaperCleanEnum? UnpaperClean { get; set; }
 
@@ -72,6 +76,7 @@ public partial class ApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("max_image_pixels")]
   public double? MaxImagePixels { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("color_conversion_strategy")]
   public ColorConversionStrategyEnum? ColorConversionStrategy { get; set; }
 

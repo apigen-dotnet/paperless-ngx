@@ -50,6 +50,7 @@ public partial class WorkflowActionWebhookRequest
   /// <summary>
   /// The parameters to send with the webhook URL if body not used.
   /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("params")]
   public object? Params { get; set; }
 
@@ -62,6 +63,7 @@ public partial class WorkflowActionWebhookRequest
   /// <summary>
   /// The headers to send with the webhook URL.
   /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("headers")]
   public object? Headers { get; set; }
 

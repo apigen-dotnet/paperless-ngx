@@ -52,6 +52,7 @@ public partial class CustomFieldRequest
   /// <summary>
   /// Extra data for the custom field, such as select options
   /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("extra_data")]
   public object? ExtraData { get; set; }
 }

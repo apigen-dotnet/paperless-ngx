@@ -78,6 +78,7 @@ public partial class WorkflowActionRequest
   /// <summary>
   /// Optional values to assign to the custom fields.
   /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("assign_custom_fields_values")]
   public object? AssignCustomFieldsValues { get; set; }
 
@@ -149,9 +150,11 @@ public partial class WorkflowActionRequest
   [System.Text.Json.Serialization.JsonPropertyName("remove_change_groups")]
   public List<int>? RemoveChangeGroups { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("email")]
   public WorkflowActionEmailRequest? Email { get; set; }
 
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("webhook")]
   public WorkflowActionWebhookRequest? Webhook { get; set; }
 }
