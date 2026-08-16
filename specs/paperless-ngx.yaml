@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Paperless-ngx REST API
-  version: 6.0.0 (9)
+  version: 6.0.0 (10)
   description: OpenAPI Spec for Paperless-ngx
 paths:
   /api/bulk_edit_objects/:
@@ -896,18 +896,22 @@ paths:
         name: content__icontains
         schema:
           type: string
+          minLength: 1
       - in: query
         name: content__iendswith
         schema:
           type: string
+          minLength: 1
       - in: query
         name: content__iexact
         schema:
           type: string
+          minLength: 1
       - in: query
         name: content__istartswith
         schema:
           type: string
+          minLength: 1
       - in: query
         name: correspondent__id
         schema:
@@ -1208,7 +1212,7 @@ paths:
         name: query
         schema:
           type: string
-        description: Advanced search query string
+        description: Advanced Tantivy search query string
       - name: search
         required: false
         in: query
@@ -1289,6 +1293,11 @@ paths:
         schema:
           type: string
       - in: query
+        name: text
+        schema:
+          type: string
+        description: Simple Tantivy-backed text search query string
+      - in: query
         name: title__icontains
         schema:
           type: string
@@ -1309,6 +1318,11 @@ paths:
         schema:
           type: string
           minLength: 1
+      - in: query
+        name: title_search
+        schema:
+          type: string
+        description: Simple Tantivy-backed title-only search query string
       tags:
       - documents
       security:
@@ -1360,7 +1374,8 @@ paths:
           description: No response body
     put:
       operationId: documents_update
-      description: Pass a user object to serializer
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -1395,7 +1410,8 @@ paths:
           description: ''
     patch:
       operationId: documents_partial_update
-      description: Pass a user object to serializer
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -1429,7 +1445,8 @@ paths:
           description: ''
     delete:
       operationId: documents_destroy
-      description: Pass a user object to serializer
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -1446,11 +1463,46 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/documents/{id}/ai_suggestions/:
+    get:
+      operationId: documents_ai_suggestions_retrieve
+      description: View AI suggestions for the document
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - documents
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AISuggestions'
+          description: ''
+        '400':
+          description: No response body
+        '403':
+          description: No response body
+        '404':
+          description: No response body
   /api/documents/{id}/download/:
     get:
       operationId: documents_download_retrieve
       description: Download the document
       parameters:
+      - in: query
+        name: follow_formatting
+        schema:
+          type: boolean
+        description: Whether or not to use the filename on disk
       - in: path
         name: id
         schema:
@@ -1477,7 +1529,7 @@ paths:
           description: ''
   /api/documents/{id}/email/:
     post:
-      operationId: documents_email_create
+      operationId: documents_email_document
       description: Email the document to one or more recipients as an attachment.
       parameters:
       - in: path
@@ -1738,6 +1790,31 @@ paths:
                 type: string
                 format: binary
           description: ''
+  /api/documents/{id}/root/:
+    get:
+      operationId: documents_root
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - documents
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentRootResponse'
+          description: ''
   /api/documents/{id}/share_links/:
     get:
       operationId: document_share_links
@@ -1835,16 +1912,25 @@ paths:
                 type: string
                 format: binary
           description: ''
-  /api/documents/bulk_download/:
+  /api/documents/{id}/update_version/:
     post:
-      operationId: documents_bulk_download_create
+      operationId: documents_update_version
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
       tags:
       - documents
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/BulkDownloadRequest'
+              $ref: '#/components/schemas/DocumentVersionRequest'
         required: true
       security:
       - PaperelessBasicAuthentication: []
@@ -1855,8 +1941,99 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkDownload'
+                type: string
           description: ''
+  /api/documents/{id}/versions/{version_id}/:
+    patch:
+      operationId: documents_update_version_label
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      - in: path
+        name: version_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentVersionLabelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentVersionLabelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDocumentVersionLabelRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateDocumentVersionLabelResult'
+          description: ''
+    delete:
+      operationId: documents_delete_version
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      - in: path
+        name: version_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - documents
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/documents/bulk_download/:
+    post:
+      operationId: bulk_download
+      description: Download multiple documents as a ZIP archive.
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkDownloadRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '403':
+          description: No response body
   /api/documents/bulk_edit/:
     post:
       operationId: bulk_edit
@@ -1882,6 +2059,79 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BulkEditDocumentsResult'
+          description: ''
+  /api/documents/chat/:
+    post:
+      operationId: documents_chat_create
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatStreamingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChatStreamingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChatStreamingRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatStreaming'
+          description: ''
+  /api/documents/delete/:
+    post:
+      operationId: documents_delete
+      description: Move selected documents to trash
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteDocumentsRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteDocumentsResult'
+          description: ''
+  /api/documents/edit_pdf/:
+    post:
+      operationId: documents_edit_pdf
+      description: Perform PDF edit operations on a selected document
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditPdfDocumentsRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditPdfDocumentsResult'
           description: ''
   /api/documents/email/:
     post:
@@ -1920,6 +2170,29 @@ paths:
           description: No response body
         '500':
           description: No response body
+  /api/documents/merge/:
+    post:
+      operationId: documents_merge
+      description: Merge selected documents into a new document
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeDocumentsRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeDocumentsResult'
+          description: ''
   /api/documents/next_asn/:
     get:
       operationId: documents_next_asn_retrieve
@@ -1962,6 +2235,74 @@ paths:
             application/json:
               schema:
                 type: string
+          description: ''
+  /api/documents/remove_password/:
+    post:
+      operationId: documents_remove_password
+      description: Remove password protection from selected PDFs
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemovePasswordDocumentsRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RemovePasswordDocumentsResult'
+          description: ''
+  /api/documents/reprocess/:
+    post:
+      operationId: documents_reprocess
+      description: Reprocess selected documents
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReprocessDocumentsRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReprocessDocumentsResult'
+          description: ''
+  /api/documents/rotate/:
+    post:
+      operationId: documents_rotate
+      description: Rotate one or more documents
+      tags:
+      - documents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RotateDocumentsRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RotateDocumentsResult'
           description: ''
   /api/documents/selection_data/:
     post:
@@ -2229,6 +2570,7 @@ paths:
   /api/mail_accounts/:
     get:
       operationId: mail_accounts_list
+      description: Pass a user object to serializer
       parameters:
       - name: page
         required: false
@@ -2257,6 +2599,7 @@ paths:
           description: ''
     post:
       operationId: mail_accounts_create
+      description: Pass a user object to serializer
       tags:
       - mail_accounts
       requestBody:
@@ -2285,6 +2628,7 @@ paths:
   /api/mail_accounts/{id}/:
     get:
       operationId: mail_accounts_retrieve
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2307,6 +2651,7 @@ paths:
           description: ''
     put:
       operationId: mail_accounts_update
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2341,6 +2686,7 @@ paths:
           description: ''
     patch:
       operationId: mail_accounts_partial_update
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2374,6 +2720,7 @@ paths:
           description: ''
     delete:
       operationId: mail_accounts_destroy
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2466,6 +2813,7 @@ paths:
   /api/mail_rules/:
     get:
       operationId: mail_rules_list
+      description: Pass a user object to serializer
       parameters:
       - name: page
         required: false
@@ -2494,6 +2842,7 @@ paths:
           description: ''
     post:
       operationId: mail_rules_create
+      description: Pass a user object to serializer
       tags:
       - mail_rules
       requestBody:
@@ -2522,6 +2871,7 @@ paths:
   /api/mail_rules/{id}/:
     get:
       operationId: mail_rules_retrieve
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2544,6 +2894,7 @@ paths:
           description: ''
     put:
       operationId: mail_rules_update
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2578,6 +2929,7 @@ paths:
           description: ''
     patch:
       operationId: mail_rules_partial_update
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2611,6 +2963,7 @@ paths:
           description: ''
     delete:
       operationId: mail_rules_destroy
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2643,6 +2996,7 @@ paths:
   /api/processed_mail/:
     get:
       operationId: processed_mail_list
+      description: Pass a user object to serializer
       parameters:
       - name: ordering
         required: false
@@ -2686,6 +3040,7 @@ paths:
   /api/processed_mail/{id}/:
     get:
       operationId: processed_mail_retrieve
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -2708,20 +3063,22 @@ paths:
           description: ''
   /api/processed_mail/bulk_delete/:
     post:
-      operationId: processed_mail_bulk_delete_create
+      operationId: processed_mail_bulk_delete
+      description: Delete multiple processed mail records by ID.
       tags:
       - processed_mail
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProcessedMailRequest'
+              $ref: '#/components/schemas/BulkDeleteMailRequestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ProcessedMailRequest'
+              $ref: '#/components/schemas/BulkDeleteMailRequestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ProcessedMailRequest'
+              $ref: '#/components/schemas/BulkDeleteMailRequestRequest'
+        required: true
       security:
       - PaperelessBasicAuthentication: []
       - tokenAuth: []
@@ -2731,8 +3088,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProcessedMail'
+                $ref: '#/components/schemas/BulkDeleteMailResponse'
           description: ''
+        '400':
+          description: No response body
+        '403':
+          description: No response body
   /api/profile/:
     get:
       operationId: profile_retrieve
@@ -2939,7 +3300,19 @@ paths:
   /api/saved_views/:
     get:
       operationId: saved_views_list
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
+      - in: query
+        name: full_perms
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -2967,6 +3340,8 @@ paths:
           description: ''
     post:
       operationId: saved_views_create
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       tags:
       - saved_views
       requestBody:
@@ -2995,7 +3370,13 @@ paths:
   /api/saved_views/{id}/:
     get:
       operationId: saved_views_retrieve
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
+      - in: query
+        name: full_perms
+        schema:
+          type: boolean
       - in: path
         name: id
         schema:
@@ -3017,6 +3398,8 @@ paths:
           description: ''
     put:
       operationId: saved_views_update
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -3051,6 +3434,8 @@ paths:
           description: ''
     patch:
       operationId: saved_views_partial_update
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -3084,6 +3469,8 @@ paths:
           description: ''
     delete:
       operationId: saved_views_destroy
+      description: Prefetch Django-Guardian permissions for a list before serialization,
+        to avoid N+1 queries.
       parameters:
       - in: path
         name: id
@@ -3159,9 +3546,350 @@ paths:
                 items:
                   type: string
           description: ''
+  /api/share_link_bundles/:
+    get:
+      operationId: share_link_bundles_list
+      description: Pass a user object to serializer
+      parameters:
+      - in: query
+        name: created__date__gt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: created__date__gte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: created__date__lt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: created__date__lte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: created__day
+        schema:
+          type: number
+      - in: query
+        name: created__gt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__lt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__lte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__month
+        schema:
+          type: number
+      - in: query
+        name: created__year
+        schema:
+          type: number
+      - in: query
+        name: documents
+        schema:
+          type: integer
+      - in: query
+        name: expiration__date__gt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: expiration__date__gte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: expiration__date__lt
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: expiration__date__lte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: expiration__day
+        schema:
+          type: number
+      - in: query
+        name: expiration__gt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: expiration__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: expiration__lt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: expiration__lte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: expiration__month
+        schema:
+          type: number
+      - in: query
+        name: expiration__year
+        schema:
+          type: number
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - failed
+          - pending
+          - processing
+          - ready
+        description: |-
+          * `pending` - Pending
+          * `processing` - Processing
+          * `ready` - Ready
+          * `failed` - Failed
+      tags:
+      - share_link_bundles
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedShareLinkBundleList'
+          description: ''
+    post:
+      operationId: share_link_bundles_create
+      description: Pass a user object to serializer
+      tags:
+      - share_link_bundles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLinkBundle'
+          description: ''
+  /api/share_link_bundles/{id}/:
+    get:
+      operationId: share_link_bundles_retrieve
+      description: Pass a user object to serializer
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this share link bundle.
+        required: true
+      tags:
+      - share_link_bundles
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLinkBundle'
+          description: ''
+    put:
+      operationId: share_link_bundles_update
+      description: Pass a user object to serializer
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this share link bundle.
+        required: true
+      tags:
+      - share_link_bundles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLinkBundle'
+          description: ''
+    patch:
+      operationId: share_link_bundles_partial_update
+      description: Pass a user object to serializer
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this share link bundle.
+        required: true
+      tags:
+      - share_link_bundles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedShareLinkBundleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedShareLinkBundleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedShareLinkBundleRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLinkBundle'
+          description: ''
+    delete:
+      operationId: share_link_bundles_destroy
+      description: Pass a user object to serializer
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this share link bundle.
+        required: true
+      tags:
+      - share_link_bundles
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/share_link_bundles/{id}/rebuild/:
+    post:
+      operationId: share_link_bundles_rebuild
+      description: Reset and re-queue a share link bundle for processing.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this share link bundle.
+        required: true
+      tags:
+      - share_link_bundles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShareLinkBundleRequest'
+        required: true
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareLinkBundle'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RebuildBundleError'
+          description: ''
   /api/share_links/:
     get:
       operationId: share_links_list
+      description: Pass a user object to serializer
       parameters:
       - in: query
         name: created__date__gt
@@ -3300,6 +4028,7 @@ paths:
           description: ''
     post:
       operationId: share_links_create
+      description: Pass a user object to serializer
       tags:
       - share_links
       requestBody:
@@ -3327,6 +4056,7 @@ paths:
   /api/share_links/{id}/:
     get:
       operationId: share_links_retrieve
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -3336,72 +4066,6 @@ paths:
         required: true
       tags:
       - share_links
-      security:
-      - PaperelessBasicAuthentication: []
-      - tokenAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ShareLink'
-          description: ''
-    put:
-      operationId: share_links_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this share link.
-        required: true
-      tags:
-      - share_links
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ShareLinkRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ShareLinkRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ShareLinkRequest'
-      security:
-      - PaperelessBasicAuthentication: []
-      - tokenAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ShareLink'
-          description: ''
-    patch:
-      operationId: share_links_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this share link.
-        required: true
-      tags:
-      - share_links
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedShareLinkRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedShareLinkRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedShareLinkRequest'
       security:
       - PaperelessBasicAuthentication: []
       - tokenAuth: []
@@ -3415,6 +4079,7 @@ paths:
           description: ''
     delete:
       operationId: share_links_destroy
+      description: Pass a user object to serializer
       parameters:
       - in: path
         name: id
@@ -3699,21 +4364,21 @@ paths:
           description: No response body
   /api/storage_paths/test/:
     post:
-      operationId: storage_paths_test_create
-      description: Test storage path against a document
+      operationId: storage_paths_test
+      description: Test a storage path template against a document.
       tags:
       - storage_paths
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StoragePathRequest'
+              $ref: '#/components/schemas/StoragePathTestRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/StoragePathRequest'
+              $ref: '#/components/schemas/StoragePathTestRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/StoragePathRequest'
+              $ref: '#/components/schemas/StoragePathTestRequest'
         required: true
       security:
       - PaperelessBasicAuthentication: []
@@ -3724,7 +4389,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StoragePath'
+                type: string
           description: ''
   /api/tags/:
     get:
@@ -3953,6 +4618,28 @@ paths:
         schema:
           type: boolean
         description: Acknowledged
+      - in: query
+        name: date_created_after
+        schema:
+          type: string
+          format: date-time
+        description: Created After
+      - in: query
+        name: date_created_before
+        schema:
+          type: string
+          format: date-time
+        description: Created Before
+      - in: query
+        name: is_complete
+        schema:
+          type: boolean
+        description: Is Complete
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name
       - name: ordering
         required: false
         in: query
@@ -3960,65 +4647,310 @@ paths:
         schema:
           type: string
       - in: query
-        name: status
+        name: owner
+        schema:
+          type: integer
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: result
         schema:
           type: string
-          title: Task State
-          enum:
-          - FAILURE
-          - PENDING
-          - RECEIVED
-          - RETRY
-          - REVOKED
-          - STARTED
-          - SUCCESS
+        description: Result
+      - in: query
+        name: status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - failure
+            - pending
+            - revoked
+            - started
+            - success
         description: |-
-          Current state of the task being run
+          Status
 
-          * `FAILURE` - FAILURE
-          * `PENDING` - PENDING
-          * `RECEIVED` - RECEIVED
-          * `RETRY` - RETRY
-          * `REVOKED` - REVOKED
-          * `STARTED` - STARTED
-          * `SUCCESS` - SUCCESS
+          * `pending` - Pending
+          * `started` - Started
+          * `success` - Success
+          * `failure` - Failure
+          * `revoked` - Revoked
+        explode: true
+        style: form
       - in: query
         name: task_id
         schema:
           type: string
         description: Filter tasks by Celery UUID
       - in: query
-        name: task_name
+        name: task_type
         schema:
-          type: string
-          nullable: true
-          enum:
-          - check_sanity
-          - consume_file
-          - index_optimize
-          - train_classifier
+          type: array
+          items:
+            type: string
+            enum:
+            - build_share_link
+            - bulk_delete
+            - bulk_update
+            - check_workflows
+            - consume_file
+            - empty_trash
+            - index_optimize
+            - llm_index
+            - mail_fetch
+            - reprocess_document
+            - sanity_check
+            - train_classifier
         description: |-
-          Name of the task that was run
+          Task Type
 
           * `consume_file` - Consume File
           * `train_classifier` - Train Classifier
-          * `check_sanity` - Check Sanity
+          * `sanity_check` - Sanity Check
           * `index_optimize` - Index Optimize
+          * `mail_fetch` - Mail Fetch
+          * `llm_index` - LLM Index
+          * `empty_trash` - Empty Trash
+          * `check_workflows` - Check Workflows
+          * `bulk_update` - Bulk Update
+          * `reprocess_document` - Reprocess Document
+          * `build_share_link` - Build Share Link
+          * `bulk_delete` - Bulk Delete
+        explode: true
+        style: form
       - in: query
-        name: type
+        name: trigger_source
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - api_upload
+            - email_consume
+            - folder_consume
+            - manual
+            - scheduled
+            - system
+            - web_ui
+        description: |-
+          Trigger Source
+
+          * `scheduled` - Scheduled
+          * `web_ui` - Web UI
+          * `api_upload` - API Upload
+          * `folder_consume` - Folder Consume
+          * `email_consume` - Email Consume
+          * `system` - System
+          * `manual` - Manual
+        explode: true
+        style: form
+      tags:
+      - tasks
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTaskSerializerV10List'
+          description: ''
+  /api/tasks/{id}/:
+    get:
+      operationId: tasks_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Task.
+        required: true
+      tags:
+      - tasks
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskSerializerV10'
+          description: ''
+  /api/tasks/acknowledge/:
+    post:
+      operationId: acknowledge_tasks
+      description: Acknowledge a list of tasks, or all visible unacknowledged tasks
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcknowledgeTasksViewRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcknowledgeTasksViewRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcknowledgeTasksViewRequest'
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcknowledgeTasks'
+          description: ''
+  /api/tasks/active/:
+    get:
+      operationId: tasks_active_list
+      description: Currently pending and running tasks (capped at 50).
+      parameters:
+      - in: query
+        name: acknowledged
+        schema:
+          type: boolean
+        description: Acknowledged
+      - in: query
+        name: date_created_after
         schema:
           type: string
-          title: Task Type
-          enum:
-          - auto_task
-          - manual_task
-          - scheduled_task
+          format: date-time
+        description: Created After
+      - in: query
+        name: date_created_before
+        schema:
+          type: string
+          format: date-time
+        description: Created Before
+      - in: query
+        name: is_complete
+        schema:
+          type: boolean
+        description: Is Complete
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: owner
+        schema:
+          type: integer
+      - in: query
+        name: result
+        schema:
+          type: string
+        description: Result
+      - in: query
+        name: status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - failure
+            - pending
+            - revoked
+            - started
+            - success
         description: |-
-          The type of task that was run
+          Status
 
-          * `auto_task` - Auto Task
-          * `scheduled_task` - Scheduled Task
-          * `manual_task` - Manual Task
+          * `pending` - Pending
+          * `started` - Started
+          * `success` - Success
+          * `failure` - Failure
+          * `revoked` - Revoked
+        explode: true
+        style: form
+      - in: query
+        name: task_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - build_share_link
+            - bulk_delete
+            - bulk_update
+            - check_workflows
+            - consume_file
+            - empty_trash
+            - index_optimize
+            - llm_index
+            - mail_fetch
+            - reprocess_document
+            - sanity_check
+            - train_classifier
+        description: |-
+          Task Type
+
+          * `consume_file` - Consume File
+          * `train_classifier` - Train Classifier
+          * `sanity_check` - Sanity Check
+          * `index_optimize` - Index Optimize
+          * `mail_fetch` - Mail Fetch
+          * `llm_index` - LLM Index
+          * `empty_trash` - Empty Trash
+          * `check_workflows` - Check Workflows
+          * `bulk_update` - Bulk Update
+          * `reprocess_document` - Reprocess Document
+          * `build_share_link` - Build Share Link
+          * `bulk_delete` - Bulk Delete
+        explode: true
+        style: form
+      - in: query
+        name: trigger_source
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - api_upload
+            - email_consume
+            - folder_consume
+            - manual
+            - scheduled
+            - system
+            - web_ui
+        description: |-
+          Trigger Source
+
+          * `scheduled` - Scheduled
+          * `web_ui` - Web UI
+          * `api_upload` - API Upload
+          * `folder_consume` - Folder Consume
+          * `email_consume` - Email Consume
+          * `system` - System
+          * `manual` - Manual
+        explode: true
+        style: form
       tags:
       - tasks
       security:
@@ -4032,95 +4964,25 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TasksView'
+                  $ref: '#/components/schemas/TaskSerializerV10'
           description: ''
-  /api/tasks/{id}/:
-    get:
-      operationId: tasks_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this paperless task.
-        required: true
-      - in: query
-        name: task_id
-        schema:
-          type: string
-        description: Filter tasks by Celery UUID
-      tags:
-      - tasks
-      security:
-      - PaperelessBasicAuthentication: []
-      - tokenAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TasksView'
-          description: ''
-  /api/tasks/acknowledge/:
-    post:
-      operationId: acknowledge_tasks
-      description: Acknowledge a list of tasks
-      parameters:
-      - in: query
-        name: task_id
-        schema:
-          type: string
-        description: Filter tasks by Celery UUID
-      tags:
-      - tasks
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                tasks:
-                  type: array
-                  items:
-                    type: integer
-              required:
-              - tasks
-      security:
-      - PaperelessBasicAuthentication: []
-      - tokenAuth: []
-      - cookieAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcknowledgeTasks'
-          description: ''
-        '400':
-          description: No response body
   /api/tasks/run/:
     post:
-      operationId: tasks_run_create
-      parameters:
-      - in: query
-        name: task_id
-        schema:
-          type: string
-        description: Filter tasks by Celery UUID
+      operationId: run_task
+      description: Manually dispatch a background task. Superuser only.
       tags:
       - tasks
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TasksViewRequest'
+              $ref: '#/components/schemas/RunTaskRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TasksViewRequest'
+              $ref: '#/components/schemas/RunTaskRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TasksViewRequest'
+              $ref: '#/components/schemas/RunTaskRequest'
         required: true
       security:
       - PaperelessBasicAuthentication: []
@@ -4131,7 +4993,186 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TasksView'
+                $ref: '#/components/schemas/RunTask'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunTaskError'
+          description: ''
+  /api/tasks/status_counts/:
+    get:
+      operationId: tasks_status_counts_retrieve
+      description: Aggregated task counts for task UI sections.
+      tags:
+      - tasks
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskStatusCounts'
+          description: ''
+  /api/tasks/summary/:
+    get:
+      operationId: tasks_summary_list
+      description: Aggregated task statistics per task_type over the last N days (default
+        30).
+      parameters:
+      - in: query
+        name: acknowledged
+        schema:
+          type: boolean
+        description: Acknowledged
+      - in: query
+        name: date_created_after
+        schema:
+          type: string
+          format: date-time
+        description: Created After
+      - in: query
+        name: date_created_before
+        schema:
+          type: string
+          format: date-time
+        description: Created Before
+      - in: query
+        name: days
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 365
+          default: 30
+        description: Number of days to include in aggregation (default 30, min 1,
+          max 365)
+      - in: query
+        name: is_complete
+        schema:
+          type: boolean
+        description: Is Complete
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Name
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: owner
+        schema:
+          type: integer
+      - in: query
+        name: result
+        schema:
+          type: string
+        description: Result
+      - in: query
+        name: status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - failure
+            - pending
+            - revoked
+            - started
+            - success
+        description: |-
+          Status
+
+          * `pending` - Pending
+          * `started` - Started
+          * `success` - Success
+          * `failure` - Failure
+          * `revoked` - Revoked
+        explode: true
+        style: form
+      - in: query
+        name: task_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - build_share_link
+            - bulk_delete
+            - bulk_update
+            - check_workflows
+            - consume_file
+            - empty_trash
+            - index_optimize
+            - llm_index
+            - mail_fetch
+            - reprocess_document
+            - sanity_check
+            - train_classifier
+        description: |-
+          Task Type
+
+          * `consume_file` - Consume File
+          * `train_classifier` - Train Classifier
+          * `sanity_check` - Sanity Check
+          * `index_optimize` - Index Optimize
+          * `mail_fetch` - Mail Fetch
+          * `llm_index` - LLM Index
+          * `empty_trash` - Empty Trash
+          * `check_workflows` - Check Workflows
+          * `bulk_update` - Bulk Update
+          * `reprocess_document` - Reprocess Document
+          * `build_share_link` - Build Share Link
+          * `bulk_delete` - Bulk Delete
+        explode: true
+        style: form
+      - in: query
+        name: trigger_source
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - api_upload
+            - email_consume
+            - folder_consume
+            - manual
+            - scheduled
+            - system
+            - web_ui
+        description: |-
+          Trigger Source
+
+          * `scheduled` - Scheduled
+          * `web_ui` - Web UI
+          * `api_upload` - API Upload
+          * `folder_consume` - Folder Consume
+          * `email_consume` - Email Consume
+          * `system` - System
+          * `manual` - Manual
+        explode: true
+        style: form
+      tags:
+      - tasks
+      security:
+      - PaperelessBasicAuthentication: []
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskSummary'
           description: ''
   /api/token/:
     post:
@@ -4958,6 +5999,59 @@ paths:
           description: No response body
 components:
   schemas:
+    AISuggestions:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+        correspondents:
+          type: array
+          items:
+            type: integer
+        suggested_correspondents:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: integer
+        suggested_tags:
+          type: array
+          items:
+            type: string
+        document_types:
+          type: array
+          items:
+            type: integer
+        suggested_document_types:
+          type: array
+          items:
+            type: string
+        storage_paths:
+          type: array
+          items:
+            type: integer
+        suggested_storage_paths:
+          type: array
+          items:
+            type: string
+        dates:
+          type: array
+          items:
+            type: string
+      required:
+      - correspondents
+      - dates
+      - document_types
+      - storage_paths
+      - suggested_correspondents
+      - suggested_document_types
+      - suggested_storage_paths
+      - suggested_tags
+      - tags
+      - title
     AccountTypeEnum:
       enum:
       - 1
@@ -4975,6 +6069,18 @@ components:
           type: integer
       required:
       - result
+    AcknowledgeTasksViewRequest:
+      type: object
+      properties:
+        tasks:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
     Actor:
       type: object
       properties:
@@ -4995,6 +6101,9 @@ components:
           nullable: true
         barcode_tag_mapping:
           nullable: true
+        llm_api_key:
+          type: string
+          nullable: true
         output_type:
           nullable: true
           title: Sets the output PDF type
@@ -5004,7 +6113,7 @@ components:
           - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Do OCR from page 1 to this value
@@ -5020,16 +6129,16 @@ components:
           - $ref: '#/components/schemas/ModeEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        skip_archive_file:
+        archive_file_generation:
           nullable: true
-          title: Controls the generation of an archive file
+          title: Controls archive file generation
           oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/ArchiveFileGenerationEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets image DPI fallback value
@@ -5112,13 +6221,13 @@ components:
           title: Sets the barcode upscale factor
         barcode_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the barcode DPI
         barcode_max_pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the maximum pages for barcode
@@ -5126,6 +6235,71 @@ components:
           type: boolean
           nullable: true
           title: Enables tag barcode
+        barcode_tag_split:
+          type: boolean
+          nullable: true
+          title: Enables splitting on tag barcodes
+        ai_enabled:
+          type: boolean
+          nullable: true
+          title: Enables AI features
+        llm_embedding_backend:
+          nullable: true
+          title: Sets the LLM embedding backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmEmbeddingBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_embedding_model:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding model
+          maxLength: 128
+        llm_embedding_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding endpoint, optional
+          maxLength: 256
+        llm_embedding_chunk_size:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM embedding chunk size
+        llm_context_size:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          title: Sets the LLM context size
+        llm_backend:
+          nullable: true
+          title: Sets the LLM backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_model:
+          type: string
+          nullable: true
+          title: Sets the LLM model
+          maxLength: 128
+        llm_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM endpoint, optional
+          maxLength: 256
+        llm_output_language:
+          type: string
+          nullable: true
+          title: Sets the LLM output language
+          maxLength: 32
+        llm_request_timeout:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM timeout in seconds
       required:
       - barcode_tag_mapping
       - id
@@ -5137,6 +6311,10 @@ components:
           nullable: true
         barcode_tag_mapping:
           nullable: true
+        llm_api_key:
+          type: string
+          nullable: true
+          minLength: 1
         output_type:
           nullable: true
           title: Sets the output PDF type
@@ -5146,7 +6324,7 @@ components:
           - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Do OCR from page 1 to this value
@@ -5162,16 +6340,16 @@ components:
           - $ref: '#/components/schemas/ModeEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        skip_archive_file:
+        archive_file_generation:
           nullable: true
-          title: Controls the generation of an archive file
+          title: Controls archive file generation
           oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/ArchiveFileGenerationEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets image DPI fallback value
@@ -5254,13 +6432,13 @@ components:
           title: Sets the barcode upscale factor
         barcode_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the barcode DPI
         barcode_max_pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the maximum pages for barcode
@@ -5268,9 +6446,100 @@ components:
           type: boolean
           nullable: true
           title: Enables tag barcode
+        barcode_tag_split:
+          type: boolean
+          nullable: true
+          title: Enables splitting on tag barcodes
+        ai_enabled:
+          type: boolean
+          nullable: true
+          title: Enables AI features
+        llm_embedding_backend:
+          nullable: true
+          title: Sets the LLM embedding backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmEmbeddingBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_embedding_model:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding model
+          maxLength: 128
+        llm_embedding_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding endpoint, optional
+          maxLength: 256
+        llm_embedding_chunk_size:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM embedding chunk size
+        llm_context_size:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          title: Sets the LLM context size
+        llm_backend:
+          nullable: true
+          title: Sets the LLM backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_model:
+          type: string
+          nullable: true
+          title: Sets the LLM model
+          maxLength: 128
+        llm_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM endpoint, optional
+          maxLength: 256
+        llm_output_language:
+          type: string
+          nullable: true
+          title: Sets the LLM output language
+          maxLength: 32
+        llm_request_timeout:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM timeout in seconds
       required:
       - barcode_tag_mapping
       - user_args
+    ArchiveFileGenerationEnum:
+      enum:
+      - auto
+      - always
+      - never
+      type: string
+      description: |-
+        * `auto` - auto
+        * `always` - always
+        * `never` - never
+    ArchiveMetadataEntry:
+      type: object
+      properties:
+        namespace:
+          type: string
+        prefix:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+      required:
+      - key
+      - namespace
+      - prefix
+      - value
     AssignCorrespondentFromEnum:
       enum:
       - 1
@@ -5343,20 +6612,27 @@ components:
     BlankEnum:
       enum:
       - ''
-    BulkDownload:
+    BulkDeleteMailRequestRequest:
       type: object
       properties:
-        content:
-          allOf:
-          - $ref: '#/components/schemas/ContentEnum'
-          default: archive
-        compression:
-          allOf:
-          - $ref: '#/components/schemas/CompressionEnum'
-          default: none
-        follow_formatting:
-          type: boolean
-          default: false
+        mail_ids:
+          type: array
+          items:
+            type: integer
+      required:
+      - mail_ids
+    BulkDeleteMailResponse:
+      type: object
+      properties:
+        result:
+          type: string
+        deleted_mail_ids:
+          type: array
+          items:
+            type: integer
+      required:
+      - deleted_mail_ids
+      - result
     BulkDownloadRequest:
       type: object
       properties:
@@ -5364,6 +6640,14 @@ components:
           type: array
           items:
             type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
           writeOnly: true
         content:
           allOf:
@@ -5376,8 +6660,6 @@ components:
         follow_formatting:
           type: boolean
           default: false
-      required:
-      - documents
     BulkEditDocumentsResult:
       type: object
       properties:
@@ -5392,6 +6674,14 @@ components:
           type: array
           items:
             type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
           writeOnly: true
         object_type:
           allOf:
@@ -5415,7 +6705,6 @@ components:
           default: false
       required:
       - object_type
-      - objects
       - operation
     BulkEditRequest:
       type: object
@@ -5424,6 +6713,14 @@ components:
           type: array
           items:
             type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
           writeOnly: true
         method:
           allOf:
@@ -5434,8 +6731,10 @@ components:
           additionalProperties: {}
           writeOnly: true
           default: {}
+        from_webui:
+          type: boolean
+          default: false
       required:
-      - documents
       - method
     BulkEditResult:
       type: object
@@ -5444,6 +6743,29 @@ components:
           type: string
       required:
       - result
+    ChatStreaming:
+      type: object
+      properties:
+        q:
+          type: string
+          maxLength: 4000
+        document_id:
+          type: integer
+          nullable: true
+      required:
+      - q
+    ChatStreamingRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        document_id:
+          type: integer
+          nullable: true
+      required:
+      - q
     Classifier:
       type: object
       properties:
@@ -5523,7 +6845,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         document_count:
@@ -5597,7 +6919,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -5761,6 +7083,29 @@ components:
       - status
       - type
       - url
+    DeleteDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+    DeleteDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
     DisplayModeEnum:
       enum:
       - table
@@ -5832,6 +7177,11 @@ components:
           type: string
           nullable: true
           readOnly: true
+        duplicate_documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DuplicateDocumentSummary'
+          readOnly: true
         owner:
           type: integer
           nullable: true
@@ -5883,11 +7233,20 @@ components:
         mime_type:
           type: string
           readOnly: true
+        root_document:
+          type: integer
+          readOnly: true
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentVersionInfo'
+          readOnly: true
       required:
       - added
       - archived_file_name
       - correspondent
       - document_type
+      - duplicate_documents
       - id
       - is_shared_by_requester
       - mime_type
@@ -5896,9 +7255,11 @@ components:
       - original_file_name
       - page_count
       - permissions
+      - root_document
       - storage_path
       - tags
       - user_can_change
+      - versions
     DocumentListRequest:
       type: object
       properties:
@@ -5994,6 +7355,13 @@ components:
       - document_type
       - storage_path
       - tags
+    DocumentRootResponse:
+      type: object
+      properties:
+        root_id:
+          type: integer
+      required:
+      - root_id
     DocumentType:
       type: object
       properties:
@@ -6013,7 +7381,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         document_count:
@@ -6082,7 +7450,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -6116,6 +7484,91 @@ components:
           writeOnly: true
       required:
       - name
+    DocumentVersionInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        added:
+          type: string
+          format: date-time
+        version_label:
+          type: string
+          nullable: true
+        checksum:
+          type: string
+          nullable: true
+        is_root:
+          type: boolean
+      required:
+      - added
+      - id
+      - is_root
+    DocumentVersionRequest:
+      type: object
+      properties:
+        document:
+          type: string
+          format: binary
+          writeOnly: true
+        version_label:
+          type: string
+          nullable: true
+          maxLength: 64
+      required:
+      - document
+    DuplicateDocumentSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - deleted_at
+      - id
+      - title
+    EditPdfDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        operations:
+          type: array
+          items: {}
+        delete_original:
+          type: boolean
+          default: false
+        update_document:
+          type: boolean
+          default: false
+        include_metadata:
+          type: boolean
+          default: true
+        source_mode:
+          type: string
+          minLength: 1
+          default: latest_version
+        from_webui:
+          type: boolean
+          default: false
+      required:
+      - documents
+      - operations
+    EditPdfDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
     EmailDocumentRequestRequest:
       type: object
       properties:
@@ -6248,6 +7701,24 @@ components:
       - error
       - last_modified
       - status
+    LlmBackendEnum:
+      enum:
+      - openai-like
+      - ollama
+      type: string
+      description: |-
+        * `openai-like` - OpenAI-compatible
+        * `ollama` - Ollama
+    LlmEmbeddingBackendEnum:
+      enum:
+      - openai-like
+      - huggingface
+      - ollama
+      type: string
+      description: |-
+        * `openai-like` - OpenAI-compatible
+        * `huggingface` - Huggingface
+        * `ollama` - Ollama
     LogEntry:
       type: object
       properties:
@@ -6284,7 +7755,7 @@ components:
         imap_port:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
           nullable: true
           description: This is usually 143 for unencrypted and STARTTLS connections,
             and 993 for SSL connections.
@@ -6292,7 +7763,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         username:
           type: string
           maxLength: 256
@@ -6316,7 +7787,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AccountTypeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         expiration:
           type: string
           format: date-time
@@ -6349,7 +7820,7 @@ components:
         imap_port:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
           nullable: true
           description: This is usually 143 for unencrypted and STARTTLS connections,
             and 993 for SSL connections.
@@ -6357,7 +7828,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         username:
           type: string
           minLength: 1
@@ -6407,7 +7878,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AccountTypeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         expiration:
           type: string
           format: date-time
@@ -6475,14 +7946,14 @@ components:
           maxLength: 256
         maximum_age:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Specified in days.
         action:
           allOf:
           - $ref: '#/components/schemas/MailRuleActionEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         action_parameter:
           type: string
           nullable: true
@@ -6491,7 +7962,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignTitleFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_tags:
           type: array
           items:
@@ -6501,7 +7972,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignCorrespondentFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_correspondent:
           type: integer
           nullable: true
@@ -6522,23 +7993,28 @@ components:
             * `1` - Only process attachments.
             * `2` - Process all files, including 'inline' attachments.
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         consumption_scope:
           allOf:
           - $ref: '#/components/schemas/ConsumptionScopeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         pdf_layout:
           allOf:
           - $ref: '#/components/schemas/PdfLayoutEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         owner:
           type: integer
           nullable: true
         user_can_change:
           type: boolean
           readOnly: true
+        stop_processing:
+          type: boolean
+          title: Stop processing further rules
+          description: If True, no further rules will be processed after this one
+            if any document is queued.
       required:
       - account
       - id
@@ -6607,14 +8083,14 @@ components:
           maxLength: 256
         maximum_age:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Specified in days.
         action:
           allOf:
           - $ref: '#/components/schemas/MailRuleActionEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         action_parameter:
           type: string
           nullable: true
@@ -6624,7 +8100,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignTitleFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_tags:
           type: array
           items:
@@ -6634,7 +8110,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignCorrespondentFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_correspondent:
           type: integer
           nullable: true
@@ -6655,17 +8131,17 @@ components:
             * `1` - Only process attachments.
             * `2` - Process all files, including 'inline' attachments.
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         consumption_scope:
           allOf:
           - $ref: '#/components/schemas/ConsumptionScopeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         pdf_layout:
           allOf:
           - $ref: '#/components/schemas/PdfLayoutEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         owner:
           type: integer
           nullable: true
@@ -6695,6 +8171,11 @@ components:
                   items:
                     type: integer
           writeOnly: true
+        stop_processing:
+          type: boolean
+          title: Stop processing further rules
+          description: If True, no further rules will be processed after this one
+            if any document is queued.
       required:
       - account
       - name
@@ -6716,6 +8197,39 @@ components:
         * `4` - Regular expression
         * `5` - Fuzzy word
         * `6` - Automatic
+    MergeDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        metadata_document_id:
+          type: integer
+          nullable: true
+        delete_originals:
+          type: boolean
+          default: false
+        archive_fallback:
+          type: boolean
+          default: false
+        source_mode:
+          type: string
+          minLength: 1
+          default: latest_version
+        from_webui:
+          type: boolean
+          default: false
+      required:
+      - documents
+    MergeDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
     Metadata:
       type: object
       properties:
@@ -6730,26 +8244,28 @@ components:
         has_archive_version:
           type: boolean
         original_metadata:
-          type: object
-          additionalProperties: {}
+          type: array
+          items:
+            $ref: '#/components/schemas/OriginalMetadataEntry'
         archive_checksum:
           type: string
+          nullable: true
         archive_media_filename:
           type: string
+          nullable: true
         original_filename:
           type: string
         archive_size:
           type: integer
+          nullable: true
         archive_metadata:
-          type: object
-          additionalProperties: {}
+          type: array
+          items:
+            $ref: '#/components/schemas/ArchiveMetadataEntry'
+          nullable: true
         lang:
           type: string
       required:
-      - archive_checksum
-      - archive_media_filename
-      - archive_metadata
-      - archive_size
       - has_archive_version
       - lang
       - media_filename
@@ -6767,14 +8283,15 @@ components:
       - remove_tag
       - modify_tags
       - modify_custom_fields
+      - set_permissions
       - delete
       - reprocess
-      - set_permissions
       - rotate
       - merge
+      - edit_pdf
+      - remove_password
       - split
       - delete_pages
-      - edit_pdf
       type: string
       description: |-
         * `set_correspondent` - set_correspondent
@@ -6784,14 +8301,15 @@ components:
         * `remove_tag` - remove_tag
         * `modify_tags` - modify_tags
         * `modify_custom_fields` - modify_custom_fields
+        * `set_permissions` - set_permissions
         * `delete` - delete
         * `reprocess` - reprocess
-        * `set_permissions` - set_permissions
         * `rotate` - rotate
         * `merge` - merge
+        * `edit_pdf` - edit_pdf
+        * `remove_password` - remove_password
         * `split` - split
         * `delete_pages` - delete_pages
-        * `edit_pdf` - edit_pdf
     MigrationStatus:
       type: object
       properties:
@@ -6806,16 +8324,16 @@ components:
       - unapplied_migrations
     ModeEnum:
       enum:
-      - skip
-      - redo
+      - auto
       - force
-      - skip_noarchive
+      - redo
+      - 'off'
       type: string
       description: |-
-        * `skip` - skip
-        * `redo` - redo
+        * `auto` - auto
         * `force` - force
-        * `skip_noarchive` - skip_noarchive
+        * `redo` - redo
+        * `off` - off
     NoteCreateRequestRequest:
       type: object
       properties:
@@ -6877,6 +8395,22 @@ components:
       description: |-
         * `set_permissions` - set_permissions
         * `delete` - delete
+    OriginalMetadataEntry:
+      type: object
+      properties:
+        namespace:
+          type: string
+        prefix:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+      required:
+      - key
+      - namespace
+      - prefix
+      - value
     OutputTypeEnum:
       enum:
       - pdf
@@ -6914,11 +8448,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Correspondent'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedCustomFieldList:
       type: object
       required:
@@ -6942,11 +8471,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomField'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedDocumentList:
       type: object
       required:
@@ -6970,11 +8494,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Document'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedDocumentTypeList:
       type: object
       required:
@@ -6998,11 +8517,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentType'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedGroupList:
       type: object
       required:
@@ -7026,11 +8540,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Group'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedLogEntryList:
       type: object
       required:
@@ -7054,11 +8563,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LogEntry'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedMailAccountList:
       type: object
       required:
@@ -7082,11 +8586,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MailAccount'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedMailRuleList:
       type: object
       required:
@@ -7110,11 +8609,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MailRule'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedProcessedMailList:
       type: object
       required:
@@ -7138,11 +8632,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProcessedMail'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedSavedViewList:
       type: object
       required:
@@ -7166,11 +8655,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SavedView'
-        all:
+    PaginatedShareLinkBundleList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
           type: array
-          example: '[1, 2, 3]'
           items:
-            type: integer
+            $ref: '#/components/schemas/ShareLinkBundle'
     PaginatedShareLinkList:
       type: object
       required:
@@ -7194,11 +8701,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ShareLink'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedStoragePathList:
       type: object
       required:
@@ -7222,11 +8724,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StoragePath'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedTagList:
       type: object
       required:
@@ -7250,11 +8747,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
-        all:
+    PaginatedTaskSerializerV10List:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
           type: array
-          example: '[1, 2, 3]'
           items:
-            type: integer
+            $ref: '#/components/schemas/TaskSerializerV10'
     PaginatedUserList:
       type: object
       required:
@@ -7278,11 +8793,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedWorkflowActionList:
       type: object
       required:
@@ -7306,11 +8816,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WorkflowAction'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedWorkflowList:
       type: object
       required:
@@ -7334,11 +8839,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Workflow'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaginatedWorkflowTriggerList:
       type: object
       required:
@@ -7362,11 +8862,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WorkflowTrigger'
-        all:
-          type: array
-          example: '[1, 2, 3]'
-          items:
-            type: integer
     PaperlessAuthToken:
       type: object
       properties:
@@ -7401,6 +8896,10 @@ components:
           nullable: true
         barcode_tag_mapping:
           nullable: true
+        llm_api_key:
+          type: string
+          nullable: true
+          minLength: 1
         output_type:
           nullable: true
           title: Sets the output PDF type
@@ -7410,7 +8909,7 @@ components:
           - $ref: '#/components/schemas/NullEnum'
         pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Do OCR from page 1 to this value
@@ -7426,16 +8925,16 @@ components:
           - $ref: '#/components/schemas/ModeEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        skip_archive_file:
+        archive_file_generation:
           nullable: true
-          title: Controls the generation of an archive file
+          title: Controls archive file generation
           oneOf:
-          - $ref: '#/components/schemas/SkipArchiveFileEnum'
+          - $ref: '#/components/schemas/ArchiveFileGenerationEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         image_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets image DPI fallback value
@@ -7518,13 +9017,13 @@ components:
           title: Sets the barcode upscale factor
         barcode_dpi:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the barcode DPI
         barcode_max_pages:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 1
           nullable: true
           title: Sets the maximum pages for barcode
@@ -7532,6 +9031,71 @@ components:
           type: boolean
           nullable: true
           title: Enables tag barcode
+        barcode_tag_split:
+          type: boolean
+          nullable: true
+          title: Enables splitting on tag barcodes
+        ai_enabled:
+          type: boolean
+          nullable: true
+          title: Enables AI features
+        llm_embedding_backend:
+          nullable: true
+          title: Sets the LLM embedding backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmEmbeddingBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_embedding_model:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding model
+          maxLength: 128
+        llm_embedding_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM embedding endpoint, optional
+          maxLength: 256
+        llm_embedding_chunk_size:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM embedding chunk size
+        llm_context_size:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          title: Sets the LLM context size
+        llm_backend:
+          nullable: true
+          title: Sets the LLM backend
+          oneOf:
+          - $ref: '#/components/schemas/LlmBackendEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        llm_model:
+          type: string
+          nullable: true
+          title: Sets the LLM model
+          maxLength: 128
+        llm_endpoint:
+          type: string
+          nullable: true
+          title: Sets the LLM endpoint, optional
+          maxLength: 256
+        llm_output_language:
+          type: string
+          nullable: true
+          title: Sets the LLM output language
+          maxLength: 32
+        llm_request_timeout:
+          type: integer
+          maximum: 32767
+          minimum: 1
+          nullable: true
+          title: Sets the LLM timeout in seconds
     PatchedCorrespondentRequest:
       type: object
       properties:
@@ -7546,7 +9110,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -7684,7 +9248,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -7716,6 +9280,13 @@ components:
                   items:
                     type: integer
           writeOnly: true
+    PatchedDocumentVersionLabelRequest:
+      type: object
+      properties:
+        version_label:
+          type: string
+          nullable: true
+          maxLength: 64
     PatchedGroupRequest:
       type: object
       properties:
@@ -7742,7 +9313,7 @@ components:
         imap_port:
           type: integer
           maximum: 2147483647
-          minimum: -2147483648
+          minimum: 0
           nullable: true
           description: This is usually 143 for unencrypted and STARTTLS connections,
             and 993 for SSL connections.
@@ -7750,7 +9321,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ImapSecurityEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         username:
           type: string
           minLength: 1
@@ -7800,7 +9371,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AccountTypeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         expiration:
           type: string
           format: date-time
@@ -7855,14 +9426,14 @@ components:
           maxLength: 256
         maximum_age:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Specified in days.
         action:
           allOf:
           - $ref: '#/components/schemas/MailRuleActionEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         action_parameter:
           type: string
           nullable: true
@@ -7872,7 +9443,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignTitleFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_tags:
           type: array
           items:
@@ -7882,7 +9453,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/AssignCorrespondentFromEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_correspondent:
           type: integer
           nullable: true
@@ -7903,17 +9474,17 @@ components:
             * `1` - Only process attachments.
             * `2` - Process all files, including 'inline' attachments.
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         consumption_scope:
           allOf:
           - $ref: '#/components/schemas/ConsumptionScopeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         pdf_layout:
           allOf:
           - $ref: '#/components/schemas/PdfLayoutEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         owner:
           type: integer
           nullable: true
@@ -7943,6 +9514,11 @@ components:
                   items:
                     type: integer
           writeOnly: true
+        stop_processing:
+          type: boolean
+          title: Stop processing further rules
+          description: If True, no further rules will be processed after this one
+            if any document is queued.
     PatchedProfileRequest:
       type: object
       properties:
@@ -7965,10 +9541,6 @@ components:
           type: string
           minLength: 1
           maxLength: 128
-        show_on_dashboard:
-          type: boolean
-        show_in_sidebar:
-          type: boolean
         sort_field:
           type: string
           nullable: true
@@ -7998,17 +9570,48 @@ components:
         owner:
           type: integer
           nullable: true
-    PatchedShareLinkRequest:
+        set_permissions:
+          type: object
+          properties:
+            view:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+            change:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+          writeOnly: true
+    PatchedShareLinkBundleRequest:
       type: object
       properties:
-        expiration:
-          type: string
-          format: date-time
-          nullable: true
-        document:
+        expiration_days:
           type: integer
+          minimum: 1
+          writeOnly: true
+          nullable: true
         file_version:
           $ref: '#/components/schemas/FileVersionEnum'
+        document_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          writeOnly: true
     PatchedStoragePathRequest:
       type: object
       properties:
@@ -8026,7 +9629,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -8076,7 +9679,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         is_inbox_tag:
@@ -8178,7 +9781,7 @@ components:
           - $ref: '#/components/schemas/WorkflowActionTypeEnum'
           title: Workflow Action Type
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_title:
           type: string
           nullable: true
@@ -8317,6 +9920,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowActionWebhookRequest'
           nullable: true
+        passwords:
+          nullable: true
+          description: Passwords to try when removing PDF protection. Separate with
+            commas or new lines.
     PatchedWorkflowRequest:
       type: object
       properties:
@@ -8374,7 +9981,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowTriggerMatchingAlgorithmEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         match:
           type: string
           maxLength: 256
@@ -8402,18 +10009,36 @@ components:
           type: string
           nullable: true
           description: JSON-encoded custom field query expression.
+        filter_has_any_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Has one of these correspondents
+          title: Has one of these correspondents
         filter_has_not_correspondents:
           type: array
           items:
             type: integer
             title: Does not have these correspondent(s)
           title: Does not have these correspondent(s)
+        filter_has_any_document_types:
+          type: array
+          items:
+            type: integer
+            title: Has one of these document types
+          title: Has one of these document types
         filter_has_not_document_types:
           type: array
           items:
             type: integer
             title: Does not have these document type(s)
           title: Does not have these document type(s)
+        filter_has_any_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Has one of these storage paths
+          title: Has one of these storage paths
         filter_has_not_storage_paths:
           type: array
           items:
@@ -8569,12 +10194,6 @@ components:
       - status
       - subject
       - uid
-    ProcessedMailRequest:
-      type: object
-      properties:
-        owner:
-          type: integer
-          nullable: true
     Profile:
       type: object
       properties:
@@ -8608,6 +10227,107 @@ components:
       - has_usable_password
       - is_mfa_enabled
       - social_accounts
+    RebuildBundleError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    RemovePasswordDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        password:
+          type: string
+          minLength: 1
+        update_document:
+          type: boolean
+          default: false
+        delete_original:
+          type: boolean
+          default: false
+        include_metadata:
+          type: boolean
+          default: true
+        source_mode:
+          type: string
+          minLength: 1
+          default: latest_version
+        from_webui:
+          type: boolean
+          default: false
+      required:
+      - documents
+      - password
+    RemovePasswordDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
+    ReprocessDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+    ReprocessDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
+    RotateDocumentsRequest:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        all:
+          type: boolean
+          writeOnly: true
+          default: false
+        filters:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+        degrees:
+          type: integer
+        source_mode:
+          type: string
+          minLength: 1
+          default: latest_version
+        from_webui:
+          type: boolean
+          default: false
+      required:
+      - degrees
+    RotateDocumentsResult:
+      type: object
+      properties:
+        result:
+          type: string
+      required:
+      - result
     RuleTypeEnum:
       enum:
       - 0
@@ -8658,6 +10378,8 @@ components:
       - 45
       - 46
       - 47
+      - 48
+      - 49
       type: integer
       description: |-
         * `0` - title contains
@@ -8708,6 +10430,31 @@ components:
         * `45` - added to
         * `46` - added from
         * `47` - mime type is
+        * `48` - simple title search
+        * `49` - simple text search
+    RunTask:
+      type: object
+      properties:
+        task_id:
+          type: string
+      required:
+      - task_id
+    RunTaskError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+    RunTaskRequest:
+      type: object
+      properties:
+        task_type:
+          allOf:
+          - $ref: '#/components/schemas/TaskTypeEnum'
+          writeOnly: true
+      required:
+      - task_type
     SanityCheck:
       type: object
       properties:
@@ -8731,10 +10478,6 @@ components:
         name:
           type: string
           maxLength: 128
-        show_on_dashboard:
-          type: boolean
-        show_in_sidebar:
-          type: boolean
         sort_field:
           type: string
           nullable: true
@@ -8764,6 +10507,32 @@ components:
         owner:
           type: integer
           nullable: true
+        permissions:
+          type: object
+          properties:
+            view:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+            change:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+          readOnly: true
         user_can_change:
           type: boolean
           readOnly: true
@@ -8771,8 +10540,7 @@ components:
       - filter_rules
       - id
       - name
-      - show_in_sidebar
-      - show_on_dashboard
+      - permissions
       - user_can_change
     SavedViewFilterRule:
       type: object
@@ -8781,7 +10549,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/RuleTypeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         value:
           type: string
           nullable: true
@@ -8795,7 +10563,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/RuleTypeEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         value:
           type: string
           nullable: true
@@ -8809,10 +10577,6 @@ components:
           type: string
           minLength: 1
           maxLength: 128
-        show_on_dashboard:
-          type: boolean
-        show_in_sidebar:
-          type: boolean
         sort_field:
           type: string
           nullable: true
@@ -8842,11 +10606,35 @@ components:
         owner:
           type: integer
           nullable: true
+        set_permissions:
+          type: object
+          properties:
+            view:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+            change:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                groups:
+                  type: array
+                  items:
+                    type: integer
+          writeOnly: true
       required:
       - filter_rules
       - name
-      - show_in_sidebar
-      - show_on_dashboard
     ScheduleDateFieldEnum:
       enum:
       - added
@@ -8981,6 +10769,93 @@ components:
       - created
       - id
       - slug
+    ShareLinkBundle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        expiration:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        file_version:
+          $ref: '#/components/schemas/FileVersionEnum'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ShareLinkBundleStatusEnum'
+          readOnly: true
+        size_bytes:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Size (bytes)
+        last_error:
+          readOnly: true
+          nullable: true
+        built_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        documents:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        document_count:
+          type: integer
+          readOnly: true
+      required:
+      - built_at
+      - created
+      - document_count
+      - documents
+      - expiration
+      - id
+      - last_error
+      - size_bytes
+      - slug
+      - status
+    ShareLinkBundleRequest:
+      type: object
+      properties:
+        expiration_days:
+          type: integer
+          minimum: 1
+          writeOnly: true
+          nullable: true
+        file_version:
+          $ref: '#/components/schemas/FileVersionEnum'
+        document_ids:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+          writeOnly: true
+      required:
+      - document_ids
+    ShareLinkBundleStatusEnum:
+      enum:
+      - pending
+      - processing
+      - ready
+      - failed
+      type: string
+      description: |-
+        * `pending` - Pending
+        * `processing` - Processing
+        * `ready` - Ready
+        * `failed` - Failed
     ShareLinkRequest:
       type: object
       properties:
@@ -8992,16 +10867,6 @@ components:
           type: integer
         file_version:
           $ref: '#/components/schemas/FileVersionEnum'
-    SkipArchiveFileEnum:
-      enum:
-      - never
-      - with_text
-      - always
-      type: string
-      description: |-
-        * `never` - never
-        * `with_text` - with_text
-        * `always` - always
     SocialAccount:
       type: object
       properties:
@@ -9039,24 +10904,6 @@ components:
         * `2` - Api Upload
         * `3` - Mail Fetch
         * `4` - Web UI
-    StatusEnum:
-      enum:
-      - FAILURE
-      - PENDING
-      - RECEIVED
-      - RETRY
-      - REVOKED
-      - STARTED
-      - SUCCESS
-      type: string
-      description: |-
-        * `FAILURE` - FAILURE
-        * `PENDING` - PENDING
-        * `RECEIVED` - RECEIVED
-        * `RETRY` - RETRY
-        * `REVOKED` - REVOKED
-        * `STARTED` - STARTED
-        * `SUCCESS` - SUCCESS
     Storage:
       type: object
       properties:
@@ -9088,7 +10935,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         document_count:
@@ -9134,7 +10981,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         owner:
@@ -9168,6 +11015,19 @@ components:
           writeOnly: true
       required:
       - name
+      - path
+    StoragePathTestRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          writeOnly: true
+          minLength: 1
+        document:
+          type: integer
+          writeOnly: true
+      required:
+      - document
       - path
     Suggestions:
       type: object
@@ -9254,7 +11114,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         is_inbox_tag:
@@ -9314,7 +11174,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/MatchingAlgorithm'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         is_insensitive:
           type: boolean
         is_inbox_tag:
@@ -9355,18 +11215,234 @@ components:
           nullable: true
       required:
       - name
-    TaskNameEnum:
+    TaskSerializerV10:
+      type: object
+      description: Task serializer for API v10+ using new field names.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        task_id:
+          type: string
+          readOnly: true
+          description: Celery task ID
+        task_type:
+          allOf:
+          - $ref: '#/components/schemas/TaskTypeEnum'
+          readOnly: true
+          description: |-
+            The kind of work being performed
+
+            * `consume_file` - Consume File
+            * `train_classifier` - Train Classifier
+            * `sanity_check` - Sanity Check
+            * `index_optimize` - Index Optimize
+            * `mail_fetch` - Mail Fetch
+            * `llm_index` - LLM Index
+            * `empty_trash` - Empty Trash
+            * `check_workflows` - Check Workflows
+            * `bulk_update` - Bulk Update
+            * `reprocess_document` - Reprocess Document
+            * `build_share_link` - Build Share Link
+            * `bulk_delete` - Bulk Delete
+        task_type_display:
+          type: string
+          readOnly: true
+        trigger_source:
+          allOf:
+          - $ref: '#/components/schemas/TriggerSourceEnum'
+          readOnly: true
+          description: |-
+            What initiated this task
+
+            * `scheduled` - Scheduled
+            * `web_ui` - Web UI
+            * `api_upload` - API Upload
+            * `folder_consume` - Folder Consume
+            * `email_consume` - Email Consume
+            * `system` - System
+            * `manual` - Manual
+        trigger_source_display:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/TaskSerializerV10StatusEnum'
+          readOnly: true
+        status_display:
+          type: string
+          readOnly: true
+        date_created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Created
+        date_started:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Started
+        date_done:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Completed
+        duration_seconds:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+          title: Duration (seconds)
+          description: Elapsed time from start to completion
+        wait_time_seconds:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+          title: Wait Time (seconds)
+          description: Time from task creation to worker pickup
+        input_data:
+          readOnly: true
+          description: Structured input parameters for the task
+        result_data:
+          readOnly: true
+          nullable: true
+          description: Structured result data from task execution
+        related_document_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        acknowledged:
+          type: boolean
+          readOnly: true
+        owner:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - acknowledged
+      - date_created
+      - date_done
+      - date_started
+      - duration_seconds
+      - id
+      - input_data
+      - owner
+      - related_document_ids
+      - result_data
+      - status
+      - status_display
+      - task_id
+      - task_type
+      - task_type_display
+      - trigger_source
+      - trigger_source_display
+      - wait_time_seconds
+    TaskSerializerV10StatusEnum:
+      enum:
+      - pending
+      - started
+      - success
+      - failure
+      - revoked
+      type: string
+      description: |-
+        * `pending` - Pending
+        * `started` - Started
+        * `success` - Success
+        * `failure` - Failure
+        * `revoked` - Revoked
+    TaskStatusCounts:
+      type: object
+      properties:
+        all:
+          type: integer
+        needs_attention:
+          type: integer
+        in_progress:
+          type: integer
+        completed:
+          type: integer
+      required:
+      - all
+      - completed
+      - in_progress
+      - needs_attention
+    TaskSummary:
+      type: object
+      properties:
+        task_type:
+          type: string
+        total_count:
+          type: integer
+        pending_count:
+          type: integer
+        success_count:
+          type: integer
+        failure_count:
+          type: integer
+        avg_duration_seconds:
+          type: number
+          format: double
+          nullable: true
+        avg_wait_time_seconds:
+          type: number
+          format: double
+          nullable: true
+        last_run:
+          type: string
+          format: date-time
+          nullable: true
+        last_success:
+          type: string
+          format: date-time
+          nullable: true
+        last_failure:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - avg_duration_seconds
+      - avg_wait_time_seconds
+      - failure_count
+      - last_failure
+      - last_run
+      - last_success
+      - pending_count
+      - success_count
+      - task_type
+      - total_count
+    TaskTypeEnum:
       enum:
       - consume_file
       - train_classifier
-      - check_sanity
+      - sanity_check
       - index_optimize
+      - mail_fetch
+      - llm_index
+      - empty_trash
+      - check_workflows
+      - bulk_update
+      - reprocess_document
+      - build_share_link
+      - bulk_delete
       type: string
       description: |-
         * `consume_file` - Consume File
         * `train_classifier` - Train Classifier
-        * `check_sanity` - Check Sanity
+        * `sanity_check` - Sanity Check
         * `index_optimize` - Index Optimize
+        * `mail_fetch` - Mail Fetch
+        * `llm_index` - LLM Index
+        * `empty_trash` - Empty Trash
+        * `check_workflows` - Check Workflows
+        * `bulk_update` - Bulk Update
+        * `reprocess_document` - Reprocess Document
+        * `build_share_link` - Build Share Link
+        * `bulk_delete` - Bulk Delete
     Tasks:
       type: object
       properties:
@@ -9378,181 +11454,33 @@ components:
           type: string
         celery_status:
           type: string
+        summary:
+          $ref: '#/components/schemas/TasksSummaryOverview'
       required:
       - celery_status
       - redis_error
       - redis_status
       - redis_url
-    TasksView:
+      - summary
+    TasksSummaryOverview:
       type: object
       properties:
-        id:
+        days:
           type: integer
-          readOnly: true
-        task_id:
-          type: string
-          description: Celery ID for the Task that was run
-          maxLength: 255
-        task_name:
-          nullable: true
-          description: |-
-            Name of the task that was run
-
-            * `consume_file` - Consume File
-            * `train_classifier` - Train Classifier
-            * `check_sanity` - Check Sanity
-            * `index_optimize` - Index Optimize
-          oneOf:
-          - $ref: '#/components/schemas/TaskNameEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        task_file_name:
-          type: string
-          nullable: true
-          title: Task Filename
-          description: Name of the file which the Task was run for
-          maxLength: 255
-        date_created:
-          type: string
-          format: date-time
-          nullable: true
-          title: Created DateTime
-          description: Datetime field when the task result was created in UTC
-        date_done:
-          type: string
-          format: date-time
-          nullable: true
-          title: Completed DateTime
-          description: Datetime field when the task was completed in UTC
-        type:
-          allOf:
-          - $ref: '#/components/schemas/TasksViewTypeEnum'
-          title: Task Type
-          description: |-
-            The type of task that was run
-
-            * `auto_task` - Auto Task
-            * `scheduled_task` - Scheduled Task
-            * `manual_task` - Manual Task
-        status:
-          allOf:
-          - $ref: '#/components/schemas/StatusEnum'
-          title: Task State
-          description: |-
-            Current state of the task being run
-
-            * `FAILURE` - FAILURE
-            * `PENDING` - PENDING
-            * `RECEIVED` - RECEIVED
-            * `RETRY` - RETRY
-            * `REVOKED` - REVOKED
-            * `STARTED` - STARTED
-            * `SUCCESS` - SUCCESS
-        result:
-          type: string
-          nullable: true
-          title: Result Data
-          description: The data returned by the task
-        acknowledged:
-          type: boolean
-          description: If the task is acknowledged via the frontend or API
-        related_document:
-          type: string
-          nullable: true
-          readOnly: true
-        owner:
+        total_count:
           type: integer
-          nullable: true
+        pending_count:
+          type: integer
+        success_count:
+          type: integer
+        failure_count:
+          type: integer
       required:
-      - id
-      - related_document
-      - task_id
-    TasksViewRequest:
-      type: object
-      properties:
-        task_id:
-          type: string
-          minLength: 1
-          description: Celery ID for the Task that was run
-          maxLength: 255
-        task_name:
-          nullable: true
-          description: |-
-            Name of the task that was run
-
-            * `consume_file` - Consume File
-            * `train_classifier` - Train Classifier
-            * `check_sanity` - Check Sanity
-            * `index_optimize` - Index Optimize
-          oneOf:
-          - $ref: '#/components/schemas/TaskNameEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        task_file_name:
-          type: string
-          nullable: true
-          minLength: 1
-          title: Task Filename
-          description: Name of the file which the Task was run for
-          maxLength: 255
-        date_created:
-          type: string
-          format: date-time
-          nullable: true
-          title: Created DateTime
-          description: Datetime field when the task result was created in UTC
-        date_done:
-          type: string
-          format: date-time
-          nullable: true
-          title: Completed DateTime
-          description: Datetime field when the task was completed in UTC
-        type:
-          allOf:
-          - $ref: '#/components/schemas/TasksViewTypeEnum'
-          title: Task Type
-          description: |-
-            The type of task that was run
-
-            * `auto_task` - Auto Task
-            * `scheduled_task` - Scheduled Task
-            * `manual_task` - Manual Task
-        status:
-          allOf:
-          - $ref: '#/components/schemas/StatusEnum'
-          title: Task State
-          description: |-
-            Current state of the task being run
-
-            * `FAILURE` - FAILURE
-            * `PENDING` - PENDING
-            * `RECEIVED` - RECEIVED
-            * `RETRY` - RETRY
-            * `REVOKED` - REVOKED
-            * `STARTED` - STARTED
-            * `SUCCESS` - SUCCESS
-        result:
-          type: string
-          nullable: true
-          minLength: 1
-          title: Result Data
-          description: The data returned by the task
-        acknowledged:
-          type: boolean
-          description: If the task is acknowledged via the frontend or API
-        owner:
-          type: integer
-          nullable: true
-      required:
-      - task_id
-    TasksViewTypeEnum:
-      enum:
-      - auto_task
-      - scheduled_task
-      - manual_task
-      type: string
-      description: |-
-        * `auto_task` - Auto Task
-        * `scheduled_task` - Scheduled Task
-        * `manual_task` - Manual Task
+      - days
+      - failure_count
+      - pending_count
+      - success_count
+      - total_count
     TrashActionEnum:
       enum:
       - restore
@@ -9575,6 +11503,24 @@ components:
           writeOnly: true
       required:
       - action
+    TriggerSourceEnum:
+      enum:
+      - scheduled
+      - web_ui
+      - api_upload
+      - folder_consume
+      - email_consume
+      - system
+      - manual
+      type: string
+      description: |-
+        * `scheduled` - Scheduled
+        * `web_ui` - Web UI
+        * `api_upload` - API Upload
+        * `folder_consume` - Folder Consume
+        * `email_consume` - Email Consume
+        * `system` - System
+        * `manual` - Manual
     UiSettingsView:
       type: object
       properties:
@@ -9604,6 +11550,26 @@ components:
         * `clean` - clean
         * `clean-final` - clean-final
         * `none` - none
+    UpdateDocumentVersionLabelResult:
+      type: object
+      properties:
+        id:
+          type: integer
+        added:
+          type: string
+          format: date-time
+        version_label:
+          type: string
+          nullable: true
+        checksum:
+          type: string
+          nullable: true
+        is_root:
+          type: boolean
+      required:
+      - added
+      - id
+      - is_root
     User:
       type: object
       properties:
@@ -9760,7 +11726,7 @@ components:
           - $ref: '#/components/schemas/WorkflowActionTypeEnum'
           title: Workflow Action Type
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_title:
           type: string
           nullable: true
@@ -9899,6 +11865,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowActionWebhook'
           nullable: true
+        passwords:
+          nullable: true
+          description: Passwords to try when removing PDF protection. Separate with
+            commas or new lines.
     WorkflowActionEmail:
       type: object
       properties:
@@ -9969,7 +11939,7 @@ components:
           - $ref: '#/components/schemas/WorkflowActionTypeEnum'
           title: Workflow Action Type
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         assign_title:
           type: string
           nullable: true
@@ -10108,18 +12078,26 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowActionWebhookRequest'
           nullable: true
+        passwords:
+          nullable: true
+          description: Passwords to try when removing PDF protection. Separate with
+            commas or new lines.
     WorkflowActionTypeEnum:
       enum:
       - 1
       - 2
       - 3
       - 4
+      - 5
+      - 6
       type: integer
       description: |-
         * `1` - Assignment
         * `2` - Removal
         * `3` - Email
         * `4` - Webhook
+        * `5` - Password removal
+        * `6` - Move to trash
     WorkflowActionWebhook:
       type: object
       properties:
@@ -10252,7 +12230,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowTriggerMatchingAlgorithmEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         match:
           type: string
           maxLength: 256
@@ -10280,18 +12258,36 @@ components:
           type: string
           nullable: true
           description: JSON-encoded custom field query expression.
+        filter_has_any_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Has one of these correspondents
+          title: Has one of these correspondents
         filter_has_not_correspondents:
           type: array
           items:
             type: integer
             title: Does not have these correspondent(s)
           title: Does not have these correspondent(s)
+        filter_has_any_document_types:
+          type: array
+          items:
+            type: integer
+            title: Has one of these document types
+          title: Has one of these document types
         filter_has_not_document_types:
           type: array
           items:
             type: integer
             title: Does not have these document type(s)
           title: Does not have these document type(s)
+        filter_has_any_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Has one of these storage paths
+          title: Has one of these storage paths
         filter_has_not_storage_paths:
           type: array
           items:
@@ -10393,7 +12389,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/WorkflowTriggerMatchingAlgorithmEnum'
           minimum: 0
-          maximum: 2147483647
+          maximum: 32767
         match:
           type: string
           maxLength: 256
@@ -10421,18 +12417,36 @@ components:
           type: string
           nullable: true
           description: JSON-encoded custom field query expression.
+        filter_has_any_correspondents:
+          type: array
+          items:
+            type: integer
+            title: Has one of these correspondents
+          title: Has one of these correspondents
         filter_has_not_correspondents:
           type: array
           items:
             type: integer
             title: Does not have these correspondent(s)
           title: Does not have these correspondent(s)
+        filter_has_any_document_types:
+          type: array
+          items:
+            type: integer
+            title: Has one of these document types
+          title: Has one of these document types
         filter_has_not_document_types:
           type: array
           items:
             type: integer
             title: Does not have these document type(s)
           title: Does not have these document type(s)
+        filter_has_any_storage_paths:
+          type: array
+          items:
+            type: integer
+            title: Has one of these storage paths
+          title: Has one of these storage paths
         filter_has_not_storage_paths:
           type: array
           items:

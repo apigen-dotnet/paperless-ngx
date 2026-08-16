@@ -72,6 +72,13 @@ required_headers = []
 [naming]
 overrides = { "longtext" = "LongText", "documentlink" = "DocumentLink" }
 
+# POST /api/documents/delete/ is a bulk operation; without this it becomes a second
+# DeleteAsync next to deleting a single document.
+# The names below are human choices, not something the generator can derive: the spec speaks
+# Django REST framework ("retrieve", "destroy", "create"), which says how the endpoint is wired
+# rather than what it does. DownloadRetrieveAsync reads as "retrieve a download".
+operation_id_overrides = { "documents_delete" = "BulkDelete", "documents_download_retrieve" = "Download", "documents_preview_retrieve" = "Preview", "documents_thumb_retrieve" = "Thumbnail", "documents_metadata_retrieve" = "GetMetadata", "documents_next_asn_retrieve" = "GetNextAsn", "documents_notes_destroy" = "DeleteNote", "documents_selection_data_create" = "GetSelectionData", "tasks_status_counts_retrieve" = "GetStatusCounts", "profile_totp_destroy" = "DisableTotp", "users_deactivate_totp_create" = "DeactivateTotp" }
+
 # Code formatting preferences
 [formatting]
 use_spaces = true
@@ -88,19 +95,80 @@ custom_text = "Paperless-ngx API Models - Auto-generated from OpenAPI specificat
 
 # Type name overrides to avoid conflicts
 [[type_name_overrides]]
-original_name = "Task"
-new_name = "PaperlessTask"
-reason = "Conflicts with System.Threading.Task"
-
-[[type_name_overrides]]
 original_name = "Oauth"
 new_name = "OAuth"
 reason = "Proper casing for OAuth acronym"
 
 [[type_name_overrides]]
-original_name = "EmailDocumentRequestRequest"
-new_name = "EmailDocumentRequest"
-reason = "Remove duplicate Request suffix from upstream Django naming"
+pattern = "RequestRequest$"
+new_name = "Request"
+reason = "Remove duplicate Request suffix from upstream Django naming (EmailDocumentRequestRequest, NoteCreateRequestRequest, BulkDeleteMailRequestRequest)"
+
+[[type_name_overrides]]
+pattern = "TaskSerializerV10"
+new_name = "PaperlessTask"
+reason = "Django serializer class name; also covers TaskSerializerV10StatusEnum and PaginatedTaskSerializerV10List"
+
+[[type_name_overrides]]
+original_name = "Notes"
+new_name = "Note"
+reason = "Schema describes a single note, not a collection"
+
+[[type_name_overrides]]
+original_name = "NotesRequest"
+new_name = "NoteRequest"
+reason = "Schema describes a single note, not a collection"
+
+[[type_name_overrides]]
+original_name = "Tasks"
+new_name = "TaskQueueStatus"
+applies_to = "schemas"
+reason = "Redis/celery block of SystemStatus, unrelated to the tasks API; must not rename the tasks resource client"
+
+[[type_name_overrides]]
+original_name = "Index"
+new_name = "SearchIndexStatus"
+reason = "Search index block of SystemStatus; bare Index is ambiguous with System.Index for callers"
+
+[[type_name_overrides]]
+original_name = "Storage"
+new_name = "StorageStatus"
+reason = "Storage block of SystemStatus"
+
+[[type_name_overrides]]
+original_name = "Database"
+new_name = "DatabaseStatus"
+reason = "Database block of SystemStatus"
+
+[[type_name_overrides]]
+original_name = "AcknowledgeTasks"
+new_name = "AcknowledgeTasksResult"
+reason = "Schema is the response of the acknowledge call, not the action"
+
+[[type_name_overrides]]
+original_name = "AcknowledgeTasksViewRequest"
+new_name = "AcknowledgeTasksRequest"
+reason = "View is the Django view name, not part of the API"
+
+[[type_name_overrides]]
+original_name = "UiSettingsView"
+new_name = "UiSettings"
+reason = "View is the Django view name, not part of the API"
+
+[[type_name_overrides]]
+original_name = "UiSettingsViewRequest"
+new_name = "UiSettingsRequest"
+reason = "View is the Django view name, not part of the API"
+
+# Names for object schemas that the spec leaves inline and therefore anonymous
+[[inline_type_names]]
+property_filter = "^(set_)?permissions$"
+name = "PermissionsSet"
+
+[[inline_type_names]]
+property_filter = "^(view|change)$"
+schema_filter = "^PermissionsSet$"
+name = "PermissionsMembers"
 
 
 
@@ -108,5 +176,5 @@ reason = "Remove duplicate Request suffix from upstream Django naming"
 [[response_type_overrides]]
 operation_filter = "documents_notes_create"
 original_type = "PaginatedNotesList"
-target_type = "List<Notes>"
+target_type = "List<Note>"
 reason = "API returns array of Notes, not paginated list"
