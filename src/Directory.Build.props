@@ -14,7 +14,7 @@
 
   <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Apigen.PaperlessNgx.Client'">
     <PackageId>Apigen.PaperlessNgx.Client</PackageId>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Description>Generated C# client for the Paperless-ngx document management API</Description>
     <PackageTags>paperless-ngx;api;client;openapi;apigen;documents</PackageTags>
     <PackageReadmeFile>NUGET.md</PackageReadmeFile>

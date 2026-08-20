@@ -126,7 +126,7 @@ public partial class Document
 
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("root_document")]
-  public int RootDocument { get; set; }
+  public int? RootDocument { get; set; }
 
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("versions")]
