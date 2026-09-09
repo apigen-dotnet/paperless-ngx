@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for saved_views operations
 /// </summary>
-public partial class SavedViewsClient
+public partial class SavedViewsClient : ISavedViewsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

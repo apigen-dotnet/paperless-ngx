@@ -164,4 +164,25 @@ public partial class WorkflowActionRequest
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("passwords")]
   public object? Passwords { get; set; }
+
+  /// <summary>
+  /// Which of the AI-suggested fields to apply to the document.
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("ai_suggestion_fields")]
+  public object? AiSuggestionFields { get; set; }
+
+  /// <summary>
+  /// Create suggested tags, correspondents, document types and storage paths that do not already exist instead of skipping them.
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("ai_create_missing")]
+  public bool? AiCreateMissing { get; set; }
+
+  /// <summary>
+  /// Apply suggestions even if the document already has a value for that field. Tags are always added to, never replaced.
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("ai_overwrite_existing")]
+  public bool? AiOverwriteExisting { get; set; }
 }

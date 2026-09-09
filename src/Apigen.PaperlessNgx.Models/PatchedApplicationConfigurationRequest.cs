@@ -35,16 +35,22 @@ public partial class PatchedApplicationConfigurationRequest
   public object? BarcodeTagMapping { get; set; }
 
   [MinLength(1)]
+  [MaxLength(1024)]
   [System.Text.Json.Serialization.JsonPropertyName("llm_api_key")]
   public string? LlmApiKey { get; set; }
+
+  [MinLength(1)]
+  [MaxLength(1024)]
+  [System.Text.Json.Serialization.JsonPropertyName("remote_ocr_api_key")]
+  public string? RemoteOcrApiKey { get; set; }
 
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("output_type")]
   public OutputTypeEnum? OutputType { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("pages")]
-  public int? Pages { get; set; }
+  public long? Pages { get; set; }
 
   [MaxLength(32)]
   [System.Text.Json.Serialization.JsonPropertyName("language")]
@@ -58,9 +64,9 @@ public partial class PatchedApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("archive_file_generation")]
   public ArchiveFileGenerationEnum? ArchiveFileGeneration { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("image_dpi")]
-  public int? ImageDpi { get; set; }
+  public long? ImageDpi { get; set; }
 
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("unpaper_clean")]
@@ -113,19 +119,31 @@ public partial class PatchedApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("barcode_upscale")]
   public double? BarcodeUpscale { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("barcode_dpi")]
-  public int? BarcodeDpi { get; set; }
+  public long? BarcodeDpi { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("barcode_max_pages")]
-  public int? BarcodeMaxPages { get; set; }
+  public long? BarcodeMaxPages { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("barcode_enable_tag")]
   public bool? BarcodeEnableTag { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("barcode_tag_split")]
   public bool? BarcodeTagSplit { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("remote_ocr_engine")]
+  public RemoteOcrEngineEnum? RemoteOcrEngine { get; set; }
+
+  [MaxLength(256)]
+  [System.Text.Json.Serialization.JsonPropertyName("remote_ocr_endpoint")]
+  public string? RemoteOcrEndpoint { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("remote_ocr_mode")]
+  public RemoteOcrModeEnum? RemoteOcrMode { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("ai_enabled")]
   public bool? AiEnabled { get; set; }
@@ -142,13 +160,13 @@ public partial class PatchedApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("llm_embedding_endpoint")]
   public string? LlmEmbeddingEndpoint { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("llm_embedding_chunk_size")]
-  public int? LlmEmbeddingChunkSize { get; set; }
+  public long? LlmEmbeddingChunkSize { get; set; }
 
-  [Range(1, 2147483647)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("llm_context_size")]
-  public int? LlmContextSize { get; set; }
+  public long? LlmContextSize { get; set; }
 
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("llm_backend")]
@@ -166,7 +184,7 @@ public partial class PatchedApplicationConfigurationRequest
   [System.Text.Json.Serialization.JsonPropertyName("llm_output_language")]
   public string? LlmOutputLanguage { get; set; }
 
-  [Range(1, 32767)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("llm_request_timeout")]
-  public int? LlmRequestTimeout { get; set; }
+  public long? LlmRequestTimeout { get; set; }
 }

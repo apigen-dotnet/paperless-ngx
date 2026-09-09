@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for share_link_bundles operations
 /// </summary>
-public partial class ShareLinkBundlesClient
+public partial class ShareLinkBundlesClient : IShareLinkBundlesClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;
@@ -179,112 +179,6 @@ public partial class ShareLinkBundlesClient
     catch (HttpRequestException ex) when (ex is not ApiException)
     {
       HttpClientLog.LogErrorTransportFailure(_logger, "GET", url, ex);
-      throw;
-    }
-  }
-
-
-  /// <summary>
-  /// 
-  /// Operation: PUT /api/share_link_bundles/{id}/
-  /// </summary>
-  public async Task<ShareLinkBundle> UpdateAsync(int id, Apigen.PaperlessNgx.Models.ShareLinkBundleRequest shareLinkBundleRequest, CancellationToken cancellationToken = default)
-  {
-    Dictionary<string, object> pathParams = new()
-    {
-      ["id"] = id
-    };
-    string url = "share_link_bundles/{id}/".BuildUrl(pathParams);
-
-    try
-    {
-      long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-      HttpClientLog.LogDebugRequestStarted(_logger, "PUT", url);
-      string json = JsonSerializer.Serialize(shareLinkBundleRequest, JsonConfig.Default);
-      HttpClientLog.LogTraceRequestBody(_logger, "PUT", "application/json", json);
-      StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-      HttpResponseMessage response = await _httpClient.PutAsync(url, content, cancellationToken);
-      long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-      HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "PUT", url, durationMs);
-
-      if (!response.IsSuccessStatusCode)
-      {
-        string errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
-        HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "PUT", url, errorBody, null);
-        throw new ApiException(response.StatusCode, "PUT", url, errorBody, response.Headers, response.Content.Headers);
-      }
-
-      string responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-      HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-      ShareLinkBundle? result = JsonSerializer.Deserialize<ShareLinkBundle>(responseContent, JsonConfig.Default);
-      return result ?? new ShareLinkBundle();
-    }
-    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-    {
-      HttpClientLog.LogDebugRequestCancelled(_logger, "PUT", url);
-      throw;
-    }
-    catch (OperationCanceledException ex)
-    {
-      HttpClientLog.LogErrorRequestTimeout(_logger, "PUT", url, ex);
-      throw;
-    }
-    catch (HttpRequestException ex) when (ex is not ApiException)
-    {
-      HttpClientLog.LogErrorTransportFailure(_logger, "PUT", url, ex);
-      throw;
-    }
-  }
-
-
-  /// <summary>
-  /// 
-  /// Operation: PATCH /api/share_link_bundles/{id}/
-  /// </summary>
-  public async Task<ShareLinkBundle> PartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedShareLinkBundleRequest patchedShareLinkBundleRequest, CancellationToken cancellationToken = default)
-  {
-    Dictionary<string, object> pathParams = new()
-    {
-      ["id"] = id
-    };
-    string url = "share_link_bundles/{id}/".BuildUrl(pathParams);
-
-    try
-    {
-      long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
-      HttpClientLog.LogDebugRequestStarted(_logger, "PATCH", url);
-      string json = JsonSerializer.Serialize(patchedShareLinkBundleRequest, JsonConfig.Default);
-      HttpClientLog.LogTraceRequestBody(_logger, "PATCH", "application/json", json);
-      StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-      HttpResponseMessage response = await _httpClient.PatchAsync(url, content, cancellationToken);
-      long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
-      HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "PATCH", url, durationMs);
-
-      if (!response.IsSuccessStatusCode)
-      {
-        string errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
-        HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "PATCH", url, errorBody, null);
-        throw new ApiException(response.StatusCode, "PATCH", url, errorBody, response.Headers, response.Content.Headers);
-      }
-
-      string responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-      HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
-      ShareLinkBundle? result = JsonSerializer.Deserialize<ShareLinkBundle>(responseContent, JsonConfig.Default);
-      return result ?? new ShareLinkBundle();
-    }
-    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-    {
-      HttpClientLog.LogDebugRequestCancelled(_logger, "PATCH", url);
-      throw;
-    }
-    catch (OperationCanceledException ex)
-    {
-      HttpClientLog.LogErrorRequestTimeout(_logger, "PATCH", url, ex);
-      throw;
-    }
-    catch (HttpRequestException ex) when (ex is not ApiException)
-    {
-      HttpClientLog.LogErrorTransportFailure(_logger, "PATCH", url, ex);
       throw;
     }
   }

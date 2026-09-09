@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for correspondents operations
 /// </summary>
-public partial class CorrespondentsClient
+public partial class CorrespondentsClient : ICorrespondentsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

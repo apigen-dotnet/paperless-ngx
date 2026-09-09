@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for tags operations
 /// </summary>
-public partial class TagsClient
+public partial class TagsClient : ITagsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

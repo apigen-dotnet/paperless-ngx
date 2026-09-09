@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for remote_version operations
 /// </summary>
-public partial class RemoteVersionClient
+public partial class RemoteVersionClient : IRemoteVersionClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

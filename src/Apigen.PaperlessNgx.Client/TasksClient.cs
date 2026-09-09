@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for tasks operations
 /// </summary>
-public partial class TasksClient
+public partial class TasksClient : ITasksClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

@@ -27,7 +27,10 @@ namespace Apigen.PaperlessNgx.Models;
 /// 4 - Webhook
 /// 5 - Password removal
 /// 6 - Move to trash
+/// 7 - Remote OCR
+/// 8 - Apply AI suggestions
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<WorkflowActionTypeEnum>))]
 public enum WorkflowActionTypeEnum
 {
     /// <summary>
@@ -53,5 +56,11 @@ public enum WorkflowActionTypeEnum
     _5 = 5,
 
     [EnumMember(Value = "6")]
-    _6 = 6
+    _6 = 6,
+
+    [EnumMember(Value = "7")]
+    _7 = 7,
+
+    [EnumMember(Value = "8")]
+    _8 = 8
 }

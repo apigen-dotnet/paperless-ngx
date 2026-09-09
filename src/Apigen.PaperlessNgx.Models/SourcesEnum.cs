@@ -26,6 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 3 - Mail Fetch
 /// 4 - Web UI
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<SourcesEnum>))]
 public enum SourcesEnum
 {
     /// <summary>

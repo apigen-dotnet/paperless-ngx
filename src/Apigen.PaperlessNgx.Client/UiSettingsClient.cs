@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for ui_settings operations
 /// </summary>
-public partial class UiSettingsClient
+public partial class UiSettingsClient : IUiSettingsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

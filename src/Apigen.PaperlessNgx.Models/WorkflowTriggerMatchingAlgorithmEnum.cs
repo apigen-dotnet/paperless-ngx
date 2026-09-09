@@ -28,6 +28,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 4 - Regular expression
 /// 5 - Fuzzy word
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<WorkflowTriggerMatchingAlgorithmEnum>))]
 public enum WorkflowTriggerMatchingAlgorithmEnum
 {
     /// <summary>

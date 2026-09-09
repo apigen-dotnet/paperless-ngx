@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for trash operations
 /// </summary>
-public partial class TrashClient
+public partial class TrashClient : ITrashClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

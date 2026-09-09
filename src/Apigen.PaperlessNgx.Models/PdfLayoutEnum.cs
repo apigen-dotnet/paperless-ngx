@@ -27,6 +27,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 3 - HTML only
 /// 4 - Text only
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<PdfLayoutEnum>))]
 public enum PdfLayoutEnum
 {
     /// <summary>

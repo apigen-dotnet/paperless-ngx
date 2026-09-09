@@ -26,6 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 3 - Document Updated
 /// 4 - Scheduled
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<WorkflowTriggerTypeEnum>))]
 public enum WorkflowTriggerTypeEnum
 {
     /// <summary>

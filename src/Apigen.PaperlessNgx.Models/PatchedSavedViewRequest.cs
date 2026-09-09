@@ -32,6 +32,69 @@ public partial class PatchedSavedViewRequest
   [System.Text.Json.Serialization.JsonPropertyName("name")]
   public string? Name { get; set; }
 
+  /// <summary>
+  /// archive - Archive
+  /// bank - Bank
+  /// basket - Basket
+  /// bell - Bell
+  /// bookmark - Bookmark
+  /// boxes - Boxes
+  /// briefcase - Briefcase
+  /// building - Building
+  /// calculator - Calculator
+  /// calendar - Calendar
+  /// camera - Camera
+  /// card-checklist - Checklist
+  /// cash - Cash
+  /// chat-left-text - Chat
+  /// check-circle - Check
+  /// clipboard - Clipboard
+  /// clock-history - Clock
+  /// credit-card - Credit card
+  /// download - Download
+  /// envelope - Envelope
+  /// exclamation-triangle - Warning
+  /// file-earmark - File
+  /// file-earmark-check - Checked file
+  /// file-earmark-lock - Locked file
+  /// file-earmark-medical - Medical file
+  /// file-earmark-person - Person file
+  /// file-earmark-spreadsheet - Spreadsheet
+  /// file-text - Text file
+  /// files - Files
+  /// folder - Folder
+  /// funnel - Filter
+  /// gear - Gear
+  /// globe2 - Globe
+  /// hash - Hash
+  /// heart - Heart
+  /// house - House
+  /// inbox - Inbox
+  /// journals - Journals
+  /// list-task - Task list
+  /// newspaper - Newspaper
+  /// paperclip - Attachment
+  /// people - People
+  /// person - Person
+  /// printer - Printer
+  /// receipt - Receipt
+  /// safe - Safe
+  /// search - Search
+  /// send - Send
+  /// shop - Shop
+  /// stack - Stack
+  /// stars - Stars
+  /// tag - Tag
+  /// tags - Tags
+  /// telephone - Telephone
+  /// truck - Truck
+  /// upc-scan - Barcode
+  /// wallet2 - Wallet
+  /// </summary>
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("icon")]
+  public IconEnum? Icon { get; set; }
+
   [MaxLength(128)]
   [System.Text.Json.Serialization.JsonPropertyName("sort_field")]
   public string? SortField { get; set; }
@@ -44,9 +107,9 @@ public partial class PatchedSavedViewRequest
   [System.Text.Json.Serialization.JsonPropertyName("filter_rules")]
   public List<SavedViewFilterRuleRequest>? FilterRules { get; set; }
 
-  [Range(1, 2147483647)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("page_size")]
-  public int? PageSize { get; set; }
+  public long? PageSize { get; set; }
 
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("display_mode")]

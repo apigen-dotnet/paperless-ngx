@@ -54,6 +54,7 @@ public partial class PaperlessTask
   /// reprocess_document - Reprocess Document
   /// build_share_link - Build Share Link
   /// bulk_delete - Bulk Delete
+  /// apply_ai_suggestions - Apply AI Suggestions
   /// </summary>
   [Required]
   [System.Text.Json.Serialization.JsonPropertyName("task_type")]

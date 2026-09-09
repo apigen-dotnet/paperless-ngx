@@ -195,6 +195,12 @@ public partial interface IDocumentsClient
 
   /// <summary>
   /// 
+  /// Operation: POST /api/documents/merge_as_versions/
+  /// </summary>
+  Task<MergeDocumentsAsVersionsResult> MergeAsVersionsAsync(Apigen.PaperlessNgx.Models.MergeDocumentsAsVersionsRequest mergeDocumentsAsVersionsRequest, CancellationToken cancellationToken = default);
+
+  /// <summary>
+  /// 
   /// Operation: GET /api/documents/next_asn/
   /// </summary>
   Task<int> GetNextAsnAsync(CancellationToken cancellationToken = default);

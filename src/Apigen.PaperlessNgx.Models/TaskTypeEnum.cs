@@ -33,6 +33,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// reprocess_document - Reprocess Document
 /// build_share_link - Build Share Link
 /// bulk_delete - Bulk Delete
+/// apply_ai_suggestions - Apply AI Suggestions
 /// </summary>
 public enum TaskTypeEnum
 {
@@ -77,5 +78,8 @@ public enum TaskTypeEnum
     BuildShareLink,
 
     [EnumMember(Value = "bulk_delete")]
-    BulkDelete
+    BulkDelete,
+
+    [EnumMember(Value = "apply_ai_suggestions")]
+    ApplyAiSuggestions
 }

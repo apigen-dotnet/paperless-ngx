@@ -45,18 +45,6 @@ public partial interface IShareLinkBundlesClient
 
   /// <summary>
   /// 
-  /// Operation: PUT /api/share_link_bundles/{id}/
-  /// </summary>
-  Task<ShareLinkBundle> UpdateAsync(int id, Apigen.PaperlessNgx.Models.ShareLinkBundleRequest shareLinkBundleRequest, CancellationToken cancellationToken = default);
-
-  /// <summary>
-  /// 
-  /// Operation: PATCH /api/share_link_bundles/{id}/
-  /// </summary>
-  Task<ShareLinkBundle> PartialUpdateAsync(int id, Apigen.PaperlessNgx.Models.PatchedShareLinkBundleRequest patchedShareLinkBundleRequest, CancellationToken cancellationToken = default);
-
-  /// <summary>
-  /// 
   /// Operation: DELETE /api/share_link_bundles/{id}/
   /// </summary>
   Task DeleteAsync(int id, CancellationToken cancellationToken = default);

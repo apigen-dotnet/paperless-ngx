@@ -108,9 +108,9 @@ public partial class WorkflowTrigger
   /// <summary>
   /// The number of days to offset the schedule trigger by.
   /// </summary>
-  [Range(-2147483648, 2147483647)]
+  [Range(-9223372036854775808, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("schedule_offset_days")]
-  public int? ScheduleOffsetDays { get; set; }
+  public long? ScheduleOffsetDays { get; set; }
 
   /// <summary>
   /// If the schedule should be recurring.
@@ -121,9 +121,9 @@ public partial class WorkflowTrigger
   /// <summary>
   /// The number of days between recurring schedule triggers.
   /// </summary>
-  [Range(1, 2147483647)]
+  [Range(1, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonPropertyName("schedule_recurring_interval_days")]
-  public int? ScheduleRecurringIntervalDays { get; set; }
+  public long? ScheduleRecurringIntervalDays { get; set; }
 
   /// <summary>
   /// The field to check for a schedule trigger.

@@ -40,12 +40,9 @@ public partial class MailAccount
   [System.Text.Json.Serialization.JsonPropertyName("imap_server")]
   public string? ImapServer { get; set; }
 
-  /// <summary>
-  /// This is usually 143 for unencrypted and STARTTLS connections, and 993 for SSL connections.
-  /// </summary>
-  [Range(0, 2147483647)]
+  [Required]
   [System.Text.Json.Serialization.JsonPropertyName("imap_port")]
-  public int? ImapPort { get; set; }
+  public int ImapPort { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("imap_security")]
   public ImapSecurityEnum? ImapSecurity { get; set; }

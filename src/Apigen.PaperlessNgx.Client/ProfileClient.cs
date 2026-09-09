@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for profile operations
 /// </summary>
-public partial class ProfileClient
+public partial class ProfileClient : IProfileClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

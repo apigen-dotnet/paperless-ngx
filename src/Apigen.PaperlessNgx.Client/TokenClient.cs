@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for token operations
 /// </summary>
-public partial class TokenClient
+public partial class TokenClient : ITokenClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

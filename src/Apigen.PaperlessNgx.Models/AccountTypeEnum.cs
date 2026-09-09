@@ -25,6 +25,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 2 - Gmail OAuth
 /// 3 - Outlook OAuth
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<AccountTypeEnum>))]
 public enum AccountTypeEnum
 {
     /// <summary>

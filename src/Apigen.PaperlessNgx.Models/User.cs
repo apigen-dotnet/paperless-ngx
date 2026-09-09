@@ -39,10 +39,8 @@ public partial class User
   [System.Text.Json.Serialization.JsonPropertyName("username")]
   public string? Username { get; set; }
 
-  [MaxLength(254)]
-  [EmailAddress]
   [System.Text.Json.Serialization.JsonPropertyName("email")]
-  public string? Email { get; set; }
+  public object? Email { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("password")]
   public string? Password { get; set; }

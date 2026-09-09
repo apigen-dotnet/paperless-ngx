@@ -37,4 +37,8 @@ public partial class ReprocessDocumentsRequest
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("filters")]
   public Dictionary<string, object?>? Filters { get; set; }
+
+  [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+  [System.Text.Json.Serialization.JsonPropertyName("remote_ocr")]
+  public bool? RemoteOcr { get; set; }
 }

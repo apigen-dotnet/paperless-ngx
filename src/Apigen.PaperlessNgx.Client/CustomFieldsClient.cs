@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for custom_fields operations
 /// </summary>
-public partial class CustomFieldsClient
+public partial class CustomFieldsClient : ICustomFieldsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

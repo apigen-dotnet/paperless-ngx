@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for documents operations
 /// </summary>
-public partial class DocumentsClient
+public partial class DocumentsClient : IDocumentsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;
@@ -353,7 +353,7 @@ public partial class DocumentsClient
     {
       long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
       HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
-      HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
+      HttpResponseMessage response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
       long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
       HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
@@ -706,7 +706,7 @@ public partial class DocumentsClient
     {
       long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
       HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
-      HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
+      HttpResponseMessage response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
       long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
       HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
@@ -903,7 +903,7 @@ public partial class DocumentsClient
     {
       long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
       HttpClientLog.LogDebugRequestStarted(_logger, "GET", url);
-      HttpResponseMessage response = await _httpClient.GetAsync(url, cancellationToken);
+      HttpResponseMessage response = await _httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
       long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
       HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "GET", url, durationMs);
 
@@ -1408,6 +1408,55 @@ public partial class DocumentsClient
       HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
       MergeDocumentsResult? result = JsonSerializer.Deserialize<MergeDocumentsResult>(responseContent, JsonConfig.Default);
       return result ?? new MergeDocumentsResult();
+    }
+    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+    {
+      HttpClientLog.LogDebugRequestCancelled(_logger, "POST", url);
+      throw;
+    }
+    catch (OperationCanceledException ex)
+    {
+      HttpClientLog.LogErrorRequestTimeout(_logger, "POST", url, ex);
+      throw;
+    }
+    catch (HttpRequestException ex) when (ex is not ApiException)
+    {
+      HttpClientLog.LogErrorTransportFailure(_logger, "POST", url, ex);
+      throw;
+    }
+  }
+
+
+  /// <summary>
+  /// 
+  /// Operation: POST /api/documents/merge_as_versions/
+  /// </summary>
+  public async Task<MergeDocumentsAsVersionsResult> MergeAsVersionsAsync(Apigen.PaperlessNgx.Models.MergeDocumentsAsVersionsRequest mergeDocumentsAsVersionsRequest, CancellationToken cancellationToken = default)
+  {
+    string url = "documents/merge_as_versions/";
+
+    try
+    {
+      long startTimestamp = System.Diagnostics.Stopwatch.GetTimestamp();
+      HttpClientLog.LogDebugRequestStarted(_logger, "POST", url);
+      string json = JsonSerializer.Serialize(mergeDocumentsAsVersionsRequest, JsonConfig.Default);
+      HttpClientLog.LogTraceRequestBody(_logger, "POST", "application/json", json);
+      StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+      HttpResponseMessage response = await _httpClient.PostAsync(url, content, cancellationToken);
+      long durationMs = (long)System.Diagnostics.Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
+      HttpClientLog.LogDebugRequestCompleted(_logger, (int)response.StatusCode, "POST", url, durationMs);
+
+      if (!response.IsSuccessStatusCode)
+      {
+        string errorBody = await response.Content.ReadAsStringAsync(cancellationToken);
+        HttpClientLog.LogErrorRequestFailed(_logger, (int)response.StatusCode, "POST", url, errorBody, null);
+        throw new ApiException(response.StatusCode, "POST", url, errorBody, response.Headers, response.Content.Headers);
+      }
+
+      string responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
+      HttpClientLog.LogTraceResponseBody(_logger, url, responseContent);
+      MergeDocumentsAsVersionsResult? result = JsonSerializer.Deserialize<MergeDocumentsAsVersionsResult>(responseContent, JsonConfig.Default);
+      return result ?? new MergeDocumentsAsVersionsResult();
     }
     catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
     {

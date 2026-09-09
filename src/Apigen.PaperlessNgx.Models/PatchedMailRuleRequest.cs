@@ -82,10 +82,10 @@ public partial class PatchedMailRuleRequest
   /// <summary>
   /// Specified in days.
   /// </summary>
-  [Range(0, 32767)]
+  [Range(0, 9223372036854775807)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("maximum_age")]
-  public int? MaximumAge { get; set; }
+  public long? MaximumAge { get; set; }
 
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("action")]

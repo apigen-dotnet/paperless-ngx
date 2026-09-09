@@ -26,10 +26,9 @@ namespace Apigen.PaperlessNgx.Models;
 /// </summary>
 public partial class PatchedProfileRequest
 {
-  [EmailAddress]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
   [System.Text.Json.Serialization.JsonPropertyName("email")]
-  public string? Email { get; set; }
+  public object? Email { get; set; }
 
   [MinLength(1)]
   [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]

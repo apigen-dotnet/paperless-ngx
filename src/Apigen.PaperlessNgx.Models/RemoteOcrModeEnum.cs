@@ -21,12 +21,10 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// 1 - Use subject as title
-/// 2 - Use attachment filename as title
-/// 3 - Do not assign title from rule
+/// always - All supported documents
+/// workflow_only - Only when a workflow enables it
 /// </summary>
-[JsonConverter(typeof(JsonNumberEnumConverter<AssignTitleFromEnum>))]
-public enum AssignTitleFromEnum
+public enum RemoteOcrModeEnum
 {
     /// <summary>
     /// Unknown or unrecognized value
@@ -35,12 +33,9 @@ public enum AssignTitleFromEnum
     [Description("Unknown")]
     Unknown = -1,
 
-    [EnumMember(Value = "1")]
-    _1 = 1,
+    [EnumMember(Value = "always")]
+    Always,
 
-    [EnumMember(Value = "2")]
-    _2 = 2,
-
-    [EnumMember(Value = "3")]
-    _3 = 3
+    [EnumMember(Value = "workflow_only")]
+    WorkflowOnly
 }

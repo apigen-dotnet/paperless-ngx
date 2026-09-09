@@ -101,6 +101,7 @@ public partial class TasksActiveListRequest : BaseRequest
   /// * `reprocess_document` - Reprocess Document
   /// * `build_share_link` - Build Share Link
   /// * `bulk_delete` - Bulk Delete
+  /// * `apply_ai_suggestions` - Apply AI Suggestions
   /// </summary>
   [JsonPropertyName("task_type")]
   public List<string>? TaskType { get; set; }

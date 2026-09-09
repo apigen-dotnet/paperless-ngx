@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for processed_mail operations
 /// </summary>
-public partial class ProcessedMailClient
+public partial class ProcessedMailClient : IProcessedMailClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

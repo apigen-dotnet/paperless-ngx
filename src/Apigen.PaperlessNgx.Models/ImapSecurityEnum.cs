@@ -25,6 +25,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 2 - Use SSL
 /// 3 - Use STARTTLS
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<ImapSecurityEnum>))]
 public enum ImapSecurityEnum
 {
     /// <summary>

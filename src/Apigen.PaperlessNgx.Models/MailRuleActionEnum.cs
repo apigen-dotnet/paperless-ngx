@@ -27,6 +27,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 4 - Flag the mail, don&apos;t process flagged mails
 /// 5 - Tag the mail with specified tag, don&apos;t process tagged mails
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<MailRuleActionEnum>))]
 public enum MailRuleActionEnum
 {
     /// <summary>

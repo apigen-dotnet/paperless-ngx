@@ -26,9 +26,8 @@ namespace Apigen.PaperlessNgx.Models;
 /// </summary>
 public partial class Profile
 {
-  [EmailAddress]
   [System.Text.Json.Serialization.JsonPropertyName("email")]
-  public string? Email { get; set; }
+  public object? Email { get; set; }
 
   [System.Text.Json.Serialization.JsonPropertyName("password")]
   public string? Password { get; set; }

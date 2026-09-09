@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for oauth operations
 /// </summary>
-public partial class OAuthClient
+public partial class OAuthClient : IOAuthClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

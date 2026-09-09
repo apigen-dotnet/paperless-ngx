@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for groups operations
 /// </summary>
-public partial class GroupsClient
+public partial class GroupsClient : IGroupsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

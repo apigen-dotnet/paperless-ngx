@@ -1,4 +1,5 @@
 enabled = false
+# Stable schema exported from the official 3.1.3 image; see README.md.
 # No known stable upstream URL for the OpenAPI spec
 # url = ""
 # target = ""

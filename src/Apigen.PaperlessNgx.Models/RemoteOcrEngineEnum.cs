@@ -21,12 +21,9 @@ using System.Text.Json.Serialization;
 namespace Apigen.PaperlessNgx.Models;
 
 /// <summary>
-/// 1 - Use subject as title
-/// 2 - Use attachment filename as title
-/// 3 - Do not assign title from rule
+/// azureai - Azure AI Document Intelligence
 /// </summary>
-[JsonConverter(typeof(JsonNumberEnumConverter<AssignTitleFromEnum>))]
-public enum AssignTitleFromEnum
+public enum RemoteOcrEngineEnum
 {
     /// <summary>
     /// Unknown or unrecognized value
@@ -35,12 +32,6 @@ public enum AssignTitleFromEnum
     [Description("Unknown")]
     Unknown = -1,
 
-    [EnumMember(Value = "1")]
-    _1 = 1,
-
-    [EnumMember(Value = "2")]
-    _2 = 2,
-
-    [EnumMember(Value = "3")]
-    _3 = 3
+    [EnumMember(Value = "azureai")]
+    Azureai
 }

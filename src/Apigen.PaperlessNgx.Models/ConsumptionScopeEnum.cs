@@ -25,6 +25,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 2 - Process full Mail (with embedded attachments in file) as .eml
 /// 3 - Process full Mail (with embedded attachments in file) as .eml + process attachments as separate documents
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<ConsumptionScopeEnum>))]
 public enum ConsumptionScopeEnum
 {
     /// <summary>

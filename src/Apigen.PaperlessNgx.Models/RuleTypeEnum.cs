@@ -72,6 +72,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 48 - simple title search
 /// 49 - simple text search
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<RuleTypeEnum>))]
 public enum RuleTypeEnum
 {
     /// <summary>

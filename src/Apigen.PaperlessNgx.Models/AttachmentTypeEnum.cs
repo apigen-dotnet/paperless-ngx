@@ -24,6 +24,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 1 - Only process attachments.
 /// 2 - Process all files, including &apos;inline&apos; attachments.
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<AttachmentTypeEnum>))]
 public enum AttachmentTypeEnum
 {
     /// <summary>

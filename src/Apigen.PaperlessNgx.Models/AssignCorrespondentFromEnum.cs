@@ -26,6 +26,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 3 - Use name (or mail address if not available)
 /// 4 - Use correspondent selected below
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<AssignCorrespondentFromEnum>))]
 public enum AssignCorrespondentFromEnum
 {
     /// <summary>

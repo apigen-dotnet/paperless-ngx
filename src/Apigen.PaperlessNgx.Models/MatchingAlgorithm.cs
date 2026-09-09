@@ -29,6 +29,7 @@ namespace Apigen.PaperlessNgx.Models;
 /// 5 - Fuzzy word
 /// 6 - Automatic
 /// </summary>
+[JsonConverter(typeof(JsonNumberEnumConverter<MatchingAlgorithm>))]
 public enum MatchingAlgorithm
 {
     /// <summary>

@@ -104,7 +104,7 @@ public static class QueryStringExtensions
   /// <param name="pathParams">Dictionary with path parameter values. Keys must match template placeholders exactly.</param>
   /// <param name="request">Request object with ToQueryString method for query parameters</param>
   /// <returns>Complete URL with path parameters substituted and query string appended</returns>
-  public static string BuildUrl(this string template, Dictionary<string, object>? pathParams = null, object? request = null)
+  public static string BuildUrl(this string template, Dictionary<string, object>? pathParams = null, object? request = null, ICollection<string>? pathSegmentParameters = null)
   {
     string url = template;
 
@@ -141,7 +141,19 @@ public static class QueryStringExtensions
         string paramName = template.Substring(openBrace + 1, closeBrace - openBrace - 1);
         if (pathParams.TryGetValue(paramName, out object? paramValue))
         {
-          result.Append(Uri.EscapeDataString(FormatValue(paramValue)));
+          if (pathSegmentParameters?.Contains(paramName) == true)
+          {
+            string[] segments = FormatValue(paramValue).Split('/', StringSplitOptions.RemoveEmptyEntries);
+            if (Array.Exists(segments, segment => segment is "." or ".."))
+              throw new ArgumentException("Path segments cannot be '.' or '..'.", paramName);
+            result.Append(string.Join("/", Array.ConvertAll(segments, Uri.EscapeDataString)));
+            if (segments.Length == 0 && result.Length > 0 && result[result.Length - 1] == '/' && closeBrace + 1 < template.Length && template[closeBrace + 1] == '/')
+              closeBrace++;
+          }
+          else
+          {
+            result.Append(Uri.EscapeDataString(FormatValue(paramValue)));
+          }
         }
         else
         {

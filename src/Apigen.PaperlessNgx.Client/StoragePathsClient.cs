@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for storage_paths operations
 /// </summary>
-public partial class StoragePathsClient
+public partial class StoragePathsClient : IStoragePathsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;

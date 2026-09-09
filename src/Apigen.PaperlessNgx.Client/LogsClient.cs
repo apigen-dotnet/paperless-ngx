@@ -28,7 +28,7 @@ namespace Apigen.PaperlessNgx.Client;
 /// <summary>
 /// Client for logs operations
 /// </summary>
-public partial class LogsClient
+public partial class LogsClient : ILogsClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger? _logger;
